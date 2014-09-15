@@ -1,5 +1,5 @@
 {
-  "name": "inspector.js",
+  "name": "js-inspector",
   "version": "0.0.0",
   "description": "Detect structural similarities in your code",
   "keywords": [
@@ -16,10 +16,10 @@
     "MIT"
   ],
   "main": "bin/inspector",
-  "homepage": "https://github.com/danielstjules/inspector.js",
+  "homepage": "https://github.com/danielstjules/js-inspector",
   "repository": {
     "type": "git",
-    "url": "https://github.com/danielstjules/inspector.js.git"
+    "url": "https://github.com/danielstjules/js-inspector.git"
   },
   "devDependencies": {
     "mocha": "*",

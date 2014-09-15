@@ -1,3 +1,3 @@
-![inspector.js](http://danielstjules.com/github/inspectorjs-logo-r2.png)
+![js-inspector](http://danielstjules.com/github/jsinspector-logo.png)
 
 Detect structural similarities in your code
