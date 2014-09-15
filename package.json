@@ -1,0 +1,31 @@
+{
+  "name": "inspector.js",
+  "version": "0.0.0",
+  "description": "Detect structural similarities in your code",
+  "keywords": [
+    "inspect",
+    "detect",
+    "code",
+    "duplicate",
+    "structure",
+    "copy",
+    "paste"
+  ],
+  "author": "Daniel St. Jules <danielst.jules@gmail.com>",
+  "licenses": [
+    "MIT"
+  ],
+  "main": "bin/inspector",
+  "homepage": "https://github.com/danielstjules/inspector.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danielstjules/inspector.js.git"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "expect.js": "*"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --recursive -R spec spec"
+  }
+}
