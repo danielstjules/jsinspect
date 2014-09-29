@@ -12,18 +12,24 @@
     "paste"
   ],
   "author": "Daniel St. Jules <danielst.jules@gmail.com>",
-  "licenses": [
-    "MIT"
-  ],
-  "main": "bin/inspector",
+  "license": "MIT",
   "homepage": "https://github.com/danielstjules/js-inspector",
   "repository": {
     "type": "git",
     "url": "https://github.com/danielstjules/js-inspector.git"
   },
+  "dependencies": {
+    "acorn": "0.7.0",
+    "commander": "*",
+    "node-filepaths": "*",
+    "chalk": "*"
+  },
   "devDependencies": {
     "mocha": "*",
     "expect.js": "*"
+  },
+  "bin": {
+    "js-inspector": "./bin/js-inspector"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha --recursive -R spec spec"

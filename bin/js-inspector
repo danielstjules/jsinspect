@@ -1,0 +1,59 @@
+#!/usr/bin/env node
+
+var chalk     = require('chalk');
+var filepaths = require('node-filepaths');
+var program   = require('commander');
+var Inspector = require('../lib/inspector');
+
+program
+  .version(require('../package.json').version)
+  .usage('[options] <paths ...>')
+  .option('-f, --fuzzy [head|tail|both]', 'fuzzy matching type (default: head)')
+  .option('-d, --distance <number>',
+    'max edit distance for fuzzy matching (default: 0)')
+  .option('-D, --no-diff', 'display a diff of similar code')
+  .option('-t, --threshold <number>', 'minimum size of nodes (default: 1)')
+  .option('-r, --reporter [default|json]', 'specify the reporter to use')
+  .option('-C, --no-color', 'disables colors')
+  .parse(process.argv);
+
+// Assume all unconsumed arguments are paths
+var suppliedPaths = program.args || [];
+if (!suppliedPaths.length) {
+  console.log('Please provide a list of filenames or directories');
+  process.exit(0);
+}
+
+// chalk doesn't support short flags by default
+if (!program.color) {
+  chalk.enabled = false;
+}
+
+try {
+  var paths = filepaths.getSync(suppliedPaths, {
+    suffix: '.js',
+    ignore: 'node_modules'
+  });
+} catch(e) {
+  console.log(e.message);
+  process.exit(3);
+}
+
+if (!paths.length) {
+  console.log('No .js files found in the list of paths');
+  process.exit(0);
+}
+
+var inspector = new Inspector(paths, {
+  fuzzy:     program.fuzzy,
+  distance:  program.distance,
+  threshold: program.threshold,
+  diff:      program.diff
+});
+
+try {
+  process.exit(inspector.run());
+} catch(err) {
+  console.log(err);
+  process.exit(1);
+}
