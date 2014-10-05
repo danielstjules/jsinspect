@@ -11,7 +11,7 @@ program
   .option('-d, --distance <number>',
     'max edit distance for fuzzy matching (default: 0)')
   .option('-D, --no-diff', 'display a diff of similar code')
-  .option('-t, --threshold <number>', 'minimum size of nodes (default: 20)')
+  .option('-t, --threshold <number>', 'minimum size of nodes (default: 15)')
   .option('-r, --reporter [default|json]', 'specify the reporter to use')
   .option('-C, --no-color', 'disables colors')
   .parse(process.argv);

@@ -2,6 +2,7 @@ var expect       = require('expect.js');
 var EventEmitter = require('events').EventEmitter;
 var fs           = require('fs');
 var Inspector    = require('../lib/inspector.js');
+var Match        = require('../lib/match.js');
 var fixtures     = require('./fixtures');
 
 describe('Inspector', function() {
@@ -46,9 +47,9 @@ describe('Inspector', function() {
       expect(inspector._distance).to.be(0);
     });
 
-    it('assigns a default threshold of 20', function() {
+    it('assigns a default threshold of 15', function() {
       var inspector = new Inspector([]);
-      expect(inspector._threshold).to.be(20);
+      expect(inspector._threshold).to.be(15);
     });
   });
 
@@ -75,12 +76,12 @@ describe('Inspector', function() {
       expect(emitted).to.be(true);
     });
 
-    it('emits the "identical" event when an exact match is found', function() {
+    it('emits the "match" event when a match is found', function() {
       var inspector = new Inspector([fixtures['intersection.js']], {
         threshold: 11
       });
 
-      inspector.on('identical', listener);
+      inspector.on('match', listener);
       inspector.run();
 
       expect(found).to.have.length(1);
@@ -92,19 +93,21 @@ describe('Inspector', function() {
       threshold: 11
     });
 
-    inspector.on('identical', listener);
+    inspector.on('match', listener);
     inspector.run();
 
+    var match = found[0];
     expect(found).to.have.length(1);
-    expect(found[0]).to.have.length(2);
+    expect(match.type).to.be(Match.types.identical);
+    expect(match.nodes).to.have.length(2);
 
-    expect(found[0][0].type).to.be('FunctionDeclaration');
-    expect(found[0][0].loc.start).to.eql({line: 1, column: 0});
-    expect(found[0][0].loc.end).to.eql({line: 5, column: 1});
+    expect(match.nodes[0].type).to.be('FunctionDeclaration');
+    expect(match.nodes[0].loc.start).to.eql({line: 1, column: 0});
+    expect(match.nodes[0].loc.end).to.eql({line: 5, column: 1});
 
-    expect(found[0][1].type).to.be('FunctionDeclaration');
-    expect(found[0][1].loc.start).to.eql({line: 7, column: 0});
-    expect(found[0][1].loc.end).to.eql({line: 11, column: 1});
+    expect(match.nodes[1].type).to.be('FunctionDeclaration');
+    expect(match.nodes[1].loc.start).to.eql({line: 7, column: 0});
+    expect(match.nodes[1].loc.end).to.eql({line: 11, column: 1});
   });
 
   it('will find the largest match between two nodes', function() {
@@ -112,19 +115,21 @@ describe('Inspector', function() {
       threshold: 11
     });
 
-    inspector.on('identical', listener);
+    inspector.on('match', listener);
     inspector.run();
 
+    var match = found[0];
     expect(found).to.have.length(1);
-    expect(found[0]).to.have.length(2);
+    expect(match.type).to.be(Match.types.identical);
+    expect(match.nodes).to.have.length(2);
 
-    expect(found[0][0].type).to.be('FunctionDeclaration');
-    expect(found[0][0].loc.start).to.eql({line: 1, column: 0});
-    expect(found[0][0].loc.end).to.eql({line: 9, column: 1});
+    expect(match.nodes[0].type).to.be('FunctionDeclaration');
+    expect(match.nodes[0].loc.start).to.eql({line: 1, column: 0});
+    expect(match.nodes[0].loc.end).to.eql({line: 9, column: 1});
 
-    expect(found[0][1].type).to.be('FunctionDeclaration');
-    expect(found[0][1].loc.start).to.eql({line: 11, column: 0});
-    expect(found[0][1].loc.end).to.eql({line: 19, column: 1});
+    expect(match.nodes[1].type).to.be('FunctionDeclaration');
+    expect(match.nodes[1].loc.start).to.eql({line: 11, column: 0});
+    expect(match.nodes[1].loc.end).to.eql({line: 19, column: 1});
   });
 
   it('can use fuzzy matching', function() {
@@ -133,19 +138,21 @@ describe('Inspector', function() {
       distance: 1
     });
 
-    inspector.on('fuzzy', listener);
+    inspector.on('match', listener);
     inspector.run();
 
+    var match = found[0];
     expect(found).to.have.length(1);
-    expect(found[0]).to.have.length(2);
+    expect(match.type).to.be(Match.types.fuzzy);
+    expect(match.nodes).to.have.length(2);
 
-    expect(found[0][0].type).to.be('FunctionDeclaration');
-    expect(found[0][0].loc.start).to.eql({line: 1, column: 0});
-    expect(found[0][0].loc.end).to.eql({line: 9, column: 1});
+    expect(match.nodes[0].type).to.be('FunctionDeclaration');
+    expect(match.nodes[0].loc.start).to.eql({line: 1, column: 0});
+    expect(match.nodes[0].loc.end).to.eql({line: 9, column: 1});
 
-    expect(found[0][1].type).to.be('FunctionExpression');
-    expect(found[0][1].loc.start).to.eql({line: 11, column: 11});
-    expect(found[0][1].loc.end).to.eql({line: 19, column: 1});
+    expect(match.nodes[1].type).to.be('FunctionExpression');
+    expect(match.nodes[1].loc.start).to.eql({line: 11, column: 11});
+    expect(match.nodes[1].loc.end).to.eql({line: 19, column: 1});
   });
 
   it('will find the largest fuzzy match between two nodes', function() {
@@ -154,18 +161,41 @@ describe('Inspector', function() {
       distance: 1
     });
 
-    inspector.on('fuzzy', listener);
+    inspector.on('match', function(match) {
+      if (match.type === Match.types.fuzzy) {
+        listener(match);
+      }
+    });
+
     inspector.run();
 
+    var match = found[0];
     expect(found).to.have.length(1);
-    expect(found[0]).to.have.length(2);
+    expect(match.type).to.be(Match.types.fuzzy);
+    expect(match.nodes).to.have.length(2);
 
-    expect(found[0][0].type).to.be('FunctionDeclaration');
-    expect(found[0][0].loc.start).to.eql({line: 1, column: 0});
-    expect(found[0][0].loc.end).to.eql({line: 9, column: 1});
+    expect(match.nodes[0].type).to.be('FunctionDeclaration');
+    expect(match.nodes[0].loc.start).to.eql({line: 1, column: 0});
+    expect(match.nodes[0].loc.end).to.eql({line: 9, column: 1});
 
-    expect(found[0][1].type).to.be('FunctionExpression');
-    expect(found[0][1].loc.start).to.eql({line: 11, column: 11});
-    expect(found[0][1].loc.end).to.eql({line: 19, column: 1});
+    expect(match.nodes[1].type).to.be('FunctionExpression');
+    expect(match.nodes[1].loc.start).to.eql({line: 11, column: 11});
+    expect(match.nodes[1].loc.end).to.eql({line: 19, column: 1});
+  });
+
+  it('includes a diff with the match, if enabled', function() {
+    var inspector = new Inspector([fixtures['intersection.js']], {
+      threshold: 11,
+      diff: true
+    });
+
+    inspector.on('match', listener);
+    inspector.run();
+
+    var match = found[0];
+    expect(found).to.have.length(1);
+    expect(match.nodes).to.have.length(2);
+    expect(match.diffs).to.have.length(1);
+    expect(match.diffs[0]).to.have.length(3);
   });
 });
