@@ -53,9 +53,9 @@ describe('Inspector', function() {
       expect(inspector._distance).to.be(0);
     });
 
-    it('assigns a default threshold of 11', function() {
+    it('assigns a default threshold of 20', function() {
       var inspector = new Inspector([]);
-      expect(inspector._threshold).to.be(11);
+      expect(inspector._threshold).to.be(20);
     });
   });
 
@@ -83,7 +83,10 @@ describe('Inspector', function() {
     });
 
     it('emits the "identical" event when an exact match is found', function() {
-      var inspector = new Inspector([fixtures['intersection.js']]);
+      var inspector = new Inspector([fixtures['intersection.js']], {
+        threshold: 11
+      });
+
       inspector.on('identical', listener);
       inspector.run();
 
@@ -92,7 +95,10 @@ describe('Inspector', function() {
   });
 
   it('can find an exact match between two nodes', function() {
-    var inspector = new Inspector([fixtures['intersection.js']]);
+    var inspector = new Inspector([fixtures['intersection.js']], {
+      threshold: 11
+    });
+
     inspector.on('identical', listener);
     inspector.run();
 
@@ -109,7 +115,10 @@ describe('Inspector', function() {
   });
 
   it('can find the largest match between two nodes', function() {
-    var inspector = new Inspector([fixtures['redundantIntersection.js']]);
+    var inspector = new Inspector([fixtures['redundantIntersection.js']], {
+      threshold: 11
+    });
+
     inspector.on('identical', listener);
     inspector.run();
 
