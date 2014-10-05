@@ -8,7 +8,6 @@ var Inspector = require('../lib/inspector');
 program
   .version(require('../package.json').version)
   .usage('[options] <paths ...>')
-  .option('-f, --fuzzy [head|tail|both]', 'fuzzy matching type (default: head)')
   .option('-d, --distance <number>',
     'max edit distance for fuzzy matching (default: 0)')
   .option('-D, --no-diff', 'display a diff of similar code')
@@ -45,7 +44,6 @@ if (!paths.length) {
 }
 
 var inspector = new Inspector(paths, {
-  fuzzy:     program.fuzzy,
   distance:  program.distance,
   threshold: program.threshold,
   diff:      program.diff
