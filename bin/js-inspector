@@ -11,10 +11,10 @@ program
   .usage('[options] <paths ...>')
   .option('-f, --fuzzy <number>',
     'max edit distance for fuzzy matching (default: 0)')
-  .option('-D, --no-diff', 'display a diff of similar code')
+  .option('-D, --no-diff', 'disable 2-way diffs')
   .option('-t, --threshold <number>', 'minimum size of nodes (default: 15)')
   // .option('-r, --reporter [default|json]', 'specify the reporter to use')
-  .option('-C, --no-color', 'disables colors')
+  .option('-C, --no-color', 'disable colors')
   .parse(process.argv);
 
 // Assume all unconsumed arguments are paths
