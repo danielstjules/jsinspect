@@ -4,15 +4,16 @@ var chalk     = require('chalk');
 var filepaths = require('node-filepaths');
 var program   = require('commander');
 var Inspector = require('../lib/inspector');
+var reporters = require('../lib/reporters');
 
 program
   .version(require('../package.json').version)
   .usage('[options] <paths ...>')
-  .option('-d, --distance <number>',
+  .option('-f, --fuzzy <number>',
     'max edit distance for fuzzy matching (default: 0)')
   .option('-D, --no-diff', 'display a diff of similar code')
   .option('-t, --threshold <number>', 'minimum size of nodes (default: 15)')
-  .option('-r, --reporter [default|json]', 'specify the reporter to use')
+  // .option('-r, --reporter [default|json]', 'specify the reporter to use')
   .option('-C, --no-color', 'disables colors')
   .parse(process.argv);
 
@@ -44,10 +45,14 @@ if (!paths.length) {
 }
 
 var inspector = new Inspector(paths, {
-  distance:  program.distance,
+  distance:  program.fuzzy,
   threshold: program.threshold,
   diff:      program.diff
 });
+
+// Retrieve the requested reporter
+var reporterType = reporters[program.reporter] || reporters.default;
+var reporter = new reporterType(inspector, program.diff);
 
 try {
   process.exit(inspector.run());
