@@ -47,9 +47,9 @@ describe('Inspector', function() {
       expect(inspector._distance).to.be(0);
     });
 
-    it('assigns a default threshold of 15', function() {
+    it('assigns a default threshold of 20', function() {
       var inspector = new Inspector([]);
-      expect(inspector._threshold).to.be(15);
+      expect(inspector._threshold).to.be(20);
     });
   });
 
@@ -196,6 +196,6 @@ describe('Inspector', function() {
     expect(found).to.have.length(1);
     expect(match.nodes).to.have.length(2);
     expect(match.diffs).to.have.length(1);
-    expect(match.diffs[0]).to.have.length(3);
+    expect(match.diffs[0]).to.have.length(2);
   });
 });
