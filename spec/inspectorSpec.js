@@ -134,11 +134,14 @@ describe('Inspector', function() {
 
   it('can use fuzzy matching', function() {
     var inspector = new Inspector([fixtures['fuzzyIntersection.js']], {
-      threshold: 5,
+      threshold: 14,
       distance: 1
     });
 
-    inspector.on('match', listener);
+    inspector.on('match', function(match) {
+      if (match.fuzzy) listener(match);
+    });
+
     inspector.run();
 
     var match = found[0];

@@ -12,8 +12,9 @@ program
   .option('-i, --identifiers', 'enforce matching identifiers')
   .option('-l, --literals', 'enforce matching literals')
   .option('-f, --fuzzy <number>',
-    'max edit distance for fuzzy matching (default: 0)')
-  .option('-t, --threshold <number>', 'minimum size of nodes (default: 15)')
+    'max edit distance for fuzzy matching (default: 0)', parseInt)
+  .option('-t, --threshold <number>',
+    'minimum size of nodes (default: 15)', parseInt)
   .option('-D, --no-diff', 'disable 2-way diffs')
   .option('-C, --no-color', 'disable colors')
   // .option('-r, --reporter [default|json]', 'specify the reporter to use')
