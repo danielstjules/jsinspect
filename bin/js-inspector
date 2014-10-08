@@ -6,13 +6,26 @@ var program   = require('commander');
 var Inspector = require('../lib/inspector');
 var reporters = require('../lib/reporters');
 
+var summary, suppliedPaths, paths, inspector, reporterType, reporter;
+
+summary = "  Duplicate code and structure detection. By default, the\n" +
+          "  tool is ran using the following options:\n" +
+          "  jsinspect -f 0 -t 20 -i fn,var -l bool,int,float,string\n\n" +
+          "  Available identifier types for matching consist of both\n" +
+          "  variables and functions. The following literals can also\n" +
+          "  be specified: bool, int, float, and string.";
+
 program
   .version(require('../package.json').version)
-  .usage('[options] <paths ...>')
+  .usage("[options] <paths ...>\n\n" + summary)
   .option('-f, --fuzzy <number>',
-    'max edit distance for fuzzy matching (default: 0)', parseInt)
+    'max distance for fuzzy matching (default: 0)', parseInt)
   .option('-t, --threshold <number>',
-    'minimum size of nodes (default: 15)', parseInt)
+    'minimum size of nodes (default: 20)', parseInt)
+  .option('-i, --identifiers <types>',
+    'match identifiers (default: fn,var)')
+  .option('-l, --literals <types>',
+    'match literals (default: bool,int,float,string)')
   .option('-I, --no-identifiers', 'disable enforcing matching identifiers')
   .option('-L, --no-literals', 'disable enforcing matching literals')
   .option('-D, --no-diff', 'disable 2-way diffs')
@@ -21,7 +34,7 @@ program
   .parse(process.argv);
 
 // Assume all unconsumed arguments are paths
-var suppliedPaths = program.args || [];
+suppliedPaths = program.args || [];
 if (!suppliedPaths.length) {
   console.log('Please provide a list of filenames or directories');
   process.exit(0);
@@ -33,7 +46,7 @@ if (!program.color) {
 }
 
 try {
-  var paths = filepaths.getSync(suppliedPaths, {
+  paths = filepaths.getSync(suppliedPaths, {
     suffix: '.js',
     ignore: 'node_modules'
   });
@@ -56,8 +69,8 @@ var inspector = new Inspector(paths, {
 });
 
 // Retrieve the requested reporter
-var reporterType = reporters[program.reporter] || reporters.default;
-var reporter = new reporterType(inspector, program.diff);
+reporterType = reporters[program.reporter] || reporters.default;
+reporter = new reporterType(inspector, program.diff);
 
 try {
   process.exit(inspector.run());
