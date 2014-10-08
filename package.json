@@ -1,6 +1,6 @@
 {
-  "name": "js-inspector",
-  "version": "0.0.1",
+  "name": "jsinspect",
+  "version": "0.0.2",
   "description": "Detect structural similarities in your code",
   "keywords": [
     "inspect",
@@ -13,10 +13,10 @@
   ],
   "author": "Daniel St. Jules <danielst.jules@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/danielstjules/js-inspector",
+  "homepage": "https://github.com/danielstjules/jsinspect",
   "repository": {
     "type": "git",
-    "url": "https://github.com/danielstjules/js-inspector.git"
+    "url": "https://github.com/danielstjules/jsinspect.git"
   },
   "dependencies": {
     "acorn": "0.7.0",
@@ -30,7 +30,7 @@
     "expect.js": "*"
   },
   "bin": {
-    "js-inspector": "./bin/js-inspector"
+    "jsinspect": "./bin/jsinspect"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha --recursive -R spec spec"
