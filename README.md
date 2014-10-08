@@ -55,10 +55,10 @@ Options:
 
   -h, --help                output usage information
   -V, --version             output the version number
-  -i, --identifiers         enforce matching identifiers
-  -l, --literals            enforce matching literals
   -f, --fuzzy <number>      max edit distance for fuzzy matching (default: 0)
   -t, --threshold <number>  minimum size of nodes (default: 15)
+  -I, --no-identifiers      disable enforcing matching identifiers
+  -L, --no-literals         disable enforcing matching literals
   -D, --no-diff             disable 2-way diffs
   -C, --no-color            disable colors
 ```
@@ -68,7 +68,7 @@ Options:
 It's simple to run js-inspector on your library source as part of a build
 process. It will exit with an error code of 0 when no matches are found,
 resulting in a passing step, and a positive error code corresponding to its
-failure. For example, with Travis CI, you could add the following two entries
+failure. For example, with Travis CI, you could add the following entries
 to your `.travis.yml`:
 
 ``` yaml
@@ -76,11 +76,11 @@ before_script:
   - "npm install -g js-inspector"
 
 script:
-  - "js-inspector -t 25 ./path/to/src"       # Look for structural similarities
-  - "js-inspector -i -l -t 15 ./path/to/src" # Look for copy-pasted code
+  - "js-inspector -t 15 ./path/to/src"       # Look for copy-pasted code
+  - "js-inspector -I -L -t 30 ./path/to/src" # Look for structural similarities
 ```
 
-Note that in the above example, we're using a threshold of 25 for detecting
+Note that in the above example, we're using a threshold of 30 for detecting
 structurally similar code. A lower threshold may work for your build process,
-but ~25 should help identify both duplicate code and unnecessary boilerplate,
+but ~30 should help identify both duplicate code and unnecessary boilerplate,
 while avoiding excessive output.
