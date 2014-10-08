@@ -9,12 +9,12 @@ var reporters = require('../lib/reporters');
 program
   .version(require('../package.json').version)
   .usage('[options] <paths ...>')
-  .option('-i, --identifiers', 'enforce matching identifiers')
-  .option('-l, --literals', 'enforce matching literals')
   .option('-f, --fuzzy <number>',
     'max edit distance for fuzzy matching (default: 0)', parseInt)
   .option('-t, --threshold <number>',
     'minimum size of nodes (default: 15)', parseInt)
+  .option('-I, --no-identifiers', 'disable enforcing matching identifiers')
+  .option('-L, --no-literals', 'disable enforcing matching literals')
   .option('-D, --no-diff', 'disable 2-way diffs')
   .option('-C, --no-color', 'disable colors')
   // .option('-r, --reporter [default|json]', 'specify the reporter to use')
@@ -48,9 +48,11 @@ if (!paths.length) {
 }
 
 var inspector = new Inspector(paths, {
-  distance:  program.fuzzy,
-  threshold: program.threshold,
-  diff:      program.diff
+  distance:    program.fuzzy,
+  threshold:   program.threshold,
+  diff:        program.diff,
+  identifiers: program.identifiers,
+  literals:    program.literals
 });
 
 // Retrieve the requested reporter
