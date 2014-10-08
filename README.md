@@ -1,4 +1,4 @@
-![jsinspect](http://danielstjules.com/github/jsinspector-logo.png)
+![jsinspect](http://danielstjules.com/github/jsinspect-logo.png)
 
 Detect copy-pasted and structurally similar code. The inspector identifies
 duplicate code, even if modified, as well as common boilerplate or logic that
