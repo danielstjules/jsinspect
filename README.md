@@ -19,8 +19,9 @@ use-case for a helpful CLI tool.
 
 Existing solutions do exist for this purpose, but are often token-based and
 rely on string searching methods such as the Rabin–Karp algorithm. Why isn't
-this ideal? Those tools tend to struggle with code that has wildly varying
-identifiers, despite having the same structure and behavior.
+this always ideal? Those tools may struggle with code that has wildly varying
+identifiers, despite having the same structure and behavior. They may also
+ignore small changes in a line that completely alter a result.
 
 And copy-pasted code is but one type of code duplication. Common boilerplate
 and repeated logic can be identified as well using jsinspect, since it
