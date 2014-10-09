@@ -6,6 +6,6 @@ function intersectionA(array1, array2) {
 
 function intersectionB(arrayA, arrayB) {
   arrayA.filter(function(n) {
-    return arrayB.indexOf(n) != -1;
+    return arrayB.indexOf(n) != -2;
   });
 }

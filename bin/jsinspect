@@ -6,7 +6,7 @@ var program   = require('commander');
 var Inspector = require('../lib/inspector');
 var reporters = require('../lib/reporters');
 
-var summary, suppliedPaths, paths, inspector, reporterType, reporter;
+var summary, suppliedPaths, paths, inspector, reporterType, literals;
 
 summary = "  Duplicate code and structure detection for JavaScript.\n\n"+
           "  Identifier matching is enabled by default, while literal\n" +
@@ -56,17 +56,28 @@ if (!paths.length) {
   process.exit(0);
 }
 
-var inspector = new Inspector(paths, {
+
+// Gather literals to match, if available
+if (program.literals) {
+  literals = {};
+  program.literals.split(',').forEach(function(type) {
+    if (!Inspector.availableLiterals[type]) return;
+
+    literals[type] = true;
+  });
+}
+
+inspector = new Inspector(paths, {
   distance:    program.fuzzy,
   threshold:   program.threshold,
   diff:        program.diff,
   identifiers: program.identifiers,
-  literals:    program.literals
+  literals:    literals
 });
 
 // Retrieve the requested reporter
 reporterType = reporters[program.reporter] || reporters.default;
-reporter = new reporterType(inspector, program.diff);
+new reporterType(inspector, program.diff);
 
 try {
   process.exit(inspector.run());
