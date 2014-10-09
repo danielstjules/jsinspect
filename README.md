@@ -13,7 +13,7 @@ should be the target of refactoring.
 
 ## Overview
 
-We've all had to deal with code smell, and duplicated code is a common source.
+We've all had to deal with code smell, and duplicate code is a common source.
 While some instances are easy to spot, this type of searching is the perfect
 use-case for a helpful CLI tool.
 
@@ -51,26 +51,26 @@ npm install -g jsinspect
 ```
 Usage: jsinspect [options] <paths ...>
 
-Duplicate code and structure detection. By default, the
-tool is ran using the following options:
-jsinspect -f 0 -t 20 -i fn,var -l bool,int,float,string
+Duplicate code and structure detection for JavaScript.
 
-Available identifier types for matching consist of both
-variables and functions. The following literals can also
-be specified: bool, int, float, and string.
+Identifier matching is enabled by default, while literal
+matching is disabled unless specified. The option accepts
+a list, and the available types are: boolean, number, and
+string. Example use:
+
+jsinspect -t 15 -l boolean,number,string
+
 
 Options:
 
-  -h, --help                 output usage information
-  -V, --version              output the version number
-  -f, --fuzzy <number>       max distance for fuzzy matching (default: 0)
-  -t, --threshold <number>   minimum size of nodes (default: 20)
-  -i, --identifiers <types>  match identifiers (default: fn,var)
-  -l, --literals <types>     match literals (default: bool,int,float,string)
-  -I, --no-identifiers       disable enforcing matching identifiers
-  -L, --no-literals          disable enforcing matching literals
-  -D, --no-diff              disable 2-way diffs
-  -C, --no-color             disable colors
+  -h, --help                output usage information
+  -V, --version             output the version number
+  -f, --fuzzy <number>      max distance for fuzzy matching (default: 0)
+  -t, --threshold <number>  minimum size of nodes (default: 20)
+  -l, --literals <types>    match literals
+  -I, --no-identifiers      disable matching identifiers
+  -D, --no-diff             disable 2-way diffs
+  -C, --no-color            disable colors
 ```
 
 ## Integration

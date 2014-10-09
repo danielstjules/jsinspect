@@ -8,12 +8,12 @@ var reporters = require('../lib/reporters');
 
 var summary, suppliedPaths, paths, inspector, reporterType, reporter;
 
-summary = "  Duplicate code and structure detection. By default, the\n" +
-          "  tool is ran using the following options:\n" +
-          "  jsinspect -f 0 -t 20 -i fn,var -l bool,int,float,string\n\n" +
-          "  Available identifier types for matching consist of both\n" +
-          "  variables and functions. The following literals can also\n" +
-          "  be specified: bool, int, float, and string.";
+summary = "  Duplicate code and structure detection for JavaScript.\n\n"+
+          "  Identifier matching is enabled by default, while literal\n" +
+          "  matching is disabled unless specified. The option accepts\n" +
+          "  a list, and the available types are: boolean, number, and\n" +
+          "  string. Example use:\n\n" +
+          "  jsinspect -t 15 -l boolean,number,string\n";
 
 program
   .version(require('../package.json').version)
@@ -22,12 +22,8 @@ program
     'max distance for fuzzy matching (default: 0)', parseInt)
   .option('-t, --threshold <number>',
     'minimum size of nodes (default: 20)', parseInt)
-  .option('-i, --identifiers <types>',
-    'match identifiers (default: fn,var)')
-  .option('-l, --literals <types>',
-    'match literals (default: bool,int,float,string)')
-  .option('-I, --no-identifiers', 'disable enforcing matching identifiers')
-  .option('-L, --no-literals', 'disable enforcing matching literals')
+  .option('-l, --literals <types>', 'match literals')
+  .option('-I, --no-identifiers', 'disable matching identifiers')
   .option('-D, --no-diff', 'disable 2-way diffs')
   .option('-C, --no-color', 'disable colors')
   // .option('-r, --reporter [default|json]', 'specify the reporter to use')
