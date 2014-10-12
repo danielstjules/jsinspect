@@ -78,7 +78,7 @@ describe('Inspector', function() {
 
     it('emits the "match" event when a match is found', function() {
       var inspector = new Inspector([fixtures['intersection.js']], {
-        threshold: 8
+        threshold: 10
       });
 
       inspector.on('match', listener);
@@ -90,7 +90,7 @@ describe('Inspector', function() {
 
   it('can find an exact match between two nodes', function() {
     var inspector = new Inspector([fixtures['intersection.js']], {
-      threshold: 11
+      threshold: 15
     });
 
     inspector.on('match', listener);
