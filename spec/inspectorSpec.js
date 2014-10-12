@@ -47,9 +47,9 @@ describe('Inspector', function() {
       expect(inspector._distance).to.be(0);
     });
 
-    it('assigns a default threshold of 20', function() {
+    it('assigns a default threshold of 15', function() {
       var inspector = new Inspector([]);
-      expect(inspector._threshold).to.be(20);
+      expect(inspector._threshold).to.be(15);
     });
   });
 
@@ -78,7 +78,7 @@ describe('Inspector', function() {
 
     it('emits the "match" event when a match is found', function() {
       var inspector = new Inspector([fixtures['intersection.js']], {
-        threshold: 11
+        threshold: 8
       });
 
       inspector.on('match', listener);

@@ -20,8 +20,7 @@ use-case for a helpful CLI tool.
 Existing solutions do exist for this purpose, but are often token-based and
 rely on string searching methods such as the Rabin–Karp algorithm. Why isn't
 this always ideal? Those tools may struggle with code that has wildly varying
-identifiers, despite having the same structure and behavior. They may also
-ignore small changes in a line that completely alter a result.
+identifiers, despite having the same structure and behavior.
 
 And copy-pasted code is but one type of code duplication. Common boilerplate
 and repeated logic can be identified as well using jsinspect, since it
@@ -37,7 +36,8 @@ matching literals or identifiers.
 The tool accepts a list of paths to parse, and outputs any matches along
 with a series of 2-way diffs if enabled. Any directories among the paths are
 walked recursively, and only `.js` files are analyzed. Any `node_modules` dirs
-are also ignored.
+are also ignored. Being built for JavaScript, it also ignores CommonJS require
+statements, and AMD define expressions.
 
 ## Installation
 
@@ -59,7 +59,7 @@ matching is disabled unless specified. The option accepts
 a list, and the available types are: boolean, number, and
 string. Example use:
 
-jsinspect -t 15 -l boolean,number,string
+jsinspect -t 10 -l boolean,number,string
 
 
 Options:
@@ -67,7 +67,7 @@ Options:
   -h, --help                output usage information
   -V, --version             output the version number
   -f, --fuzzy <number>      max distance for fuzzy matching (default: 0)
-  -t, --threshold <number>  minimum size of nodes (default: 20)
+  -t, --threshold <number>  minimum size of nodes (default: 15)
   -l, --literals <types>    match literals
   -I, --no-identifiers      disable matching identifiers
   -D, --no-diff             disable 2-way diffs
@@ -93,5 +93,4 @@ script:
 
 Note that in the above example, we're using a threshold of 30 for detecting
 structurally similar code. A lower threshold may work for your build process,
-but ~30 should help identify both duplicate code and unnecessary boilerplate,
-while avoiding excessive output.
+but ~30 should help unnecessary boilerplate, while avoiding excessive output.

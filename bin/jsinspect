@@ -13,7 +13,7 @@ summary = "  Duplicate code and structure detection for JavaScript.\n\n"+
           "  matching is disabled unless specified. The option accepts\n" +
           "  a list, and the available types are: boolean, number, and\n" +
           "  string. Example use:\n\n" +
-          "  jsinspect -t 15 -l boolean,number,string\n";
+          "  jsinspect -t 10 -l boolean,number,string\n";
 
 program
   .version(require('../package.json').version)
@@ -21,7 +21,7 @@ program
   .option('-f, --fuzzy <number>',
     'max distance for fuzzy matching (default: 0)', parseInt)
   .option('-t, --threshold <number>',
-    'minimum size of nodes (default: 20)', parseInt)
+    'minimum size of nodes (default: 15)', parseInt)
   .option('-l, --literals <types>', 'match literals')
   .option('-I, --no-identifiers', 'disable matching identifiers')
   .option('-D, --no-diff', 'disable 2-way diffs')
