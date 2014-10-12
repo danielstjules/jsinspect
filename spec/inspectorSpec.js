@@ -30,21 +30,14 @@ describe('Inspector', function() {
 
     it('accepts an options object', function() {
       var opts = {
-        distance: 10,
         threshold: 12,
         diff: false
       };
 
       var inspector = new Inspector([], opts);
 
-      expect(inspector._distance).to.be(opts.distance);
       expect(inspector._threshold).to.be(opts.threshold);
       expect(inspector._diff).to.be(opts.diff);
-    });
-
-    it('assigns a default fuzzy distance of 0', function() {
-      var inspector = new Inspector([]);
-      expect(inspector._distance).to.be(0);
     });
 
     it('assigns a default threshold of 15', function() {
@@ -98,7 +91,6 @@ describe('Inspector', function() {
 
     var match = found[0];
     expect(found).to.have.length(1);
-    expect(match.fuzzy).to.be(false);
     expect(match.nodes).to.have.length(2);
 
     expect(match.nodes[0].type).to.be('FunctionDeclaration');
@@ -120,7 +112,6 @@ describe('Inspector', function() {
 
     var match = found[0];
     expect(found).to.have.length(1);
-    expect(match.fuzzy).to.be(false);
     expect(match.nodes).to.have.length(2);
 
     expect(match.nodes[0].type).to.be('FunctionDeclaration');
@@ -129,58 +120,6 @@ describe('Inspector', function() {
 
     expect(match.nodes[1].type).to.be('FunctionDeclaration');
     expect(match.nodes[1].loc.start).to.eql({line: 11, column: 0});
-    expect(match.nodes[1].loc.end).to.eql({line: 19, column: 1});
-  });
-
-  it('can use fuzzy matching', function() {
-    var inspector = new Inspector([fixtures['fuzzyIntersection.js']], {
-      threshold: 14,
-      distance: 1
-    });
-
-    inspector.on('match', function(match) {
-      if (match.fuzzy) listener(match);
-    });
-
-    inspector.run();
-
-    var match = found[0];
-    expect(found).to.have.length(1);
-    expect(match.fuzzy).to.be(true);
-    expect(match.nodes).to.have.length(2);
-
-    expect(match.nodes[0].type).to.be('FunctionDeclaration');
-    expect(match.nodes[0].loc.start).to.eql({line: 1, column: 0});
-    expect(match.nodes[0].loc.end).to.eql({line: 9, column: 1});
-
-    expect(match.nodes[1].type).to.be('FunctionExpression');
-    expect(match.nodes[1].loc.start).to.eql({line: 11, column: 11});
-    expect(match.nodes[1].loc.end).to.eql({line: 19, column: 1});
-  });
-
-  it('will find the largest fuzzy match between two nodes', function() {
-    var inspector = new Inspector([fixtures['fuzzyIntersection.js']], {
-      threshold: 10,
-      distance: 1
-    });
-
-    inspector.on('match', function(match) {
-      if (match.fuzzy) listener(match);
-    });
-
-    inspector.run();
-
-    var match = found[0];
-    expect(found).to.have.length(1);
-    expect(match.fuzzy).to.be(true);
-    expect(match.nodes).to.have.length(2);
-
-    expect(match.nodes[0].type).to.be('FunctionDeclaration');
-    expect(match.nodes[0].loc.start).to.eql({line: 1, column: 0});
-    expect(match.nodes[0].loc.end).to.eql({line: 9, column: 1});
-
-    expect(match.nodes[1].type).to.be('FunctionExpression');
-    expect(match.nodes[1].loc.start).to.eql({line: 11, column: 11});
     expect(match.nodes[1].loc.end).to.eql({line: 19, column: 1});
   });
 
@@ -197,6 +136,6 @@ describe('Inspector', function() {
     expect(found).to.have.length(1);
     expect(match.nodes).to.have.length(2);
     expect(match.diffs).to.have.length(1);
-    expect(match.diffs[0]).to.have.length(2);
+    expect(match.diffs[0]).to.have.length(3);
   });
 });

@@ -27,16 +27,15 @@ and repeated logic can be identified as well using jsinspect, since it
 doesn't work on tokens - it uses the ASTs of the parsed code.
 
 You have the freedom to specify a threshold determining the smallest subset of
-AST nodes to analyze, as well as an edit distance to enable fuzzy matching.
-By default, this will identify code with a similar structure, based on the
-AST node types, e.g. BlockStatement, VariableDeclaration, ObjectExpression, etc.
-For copy-paste oriented detection, you can limit the search to nodes with
-matching literals or identifiers.
+AST nodes to analyze. This will identify code with a similar structure, based
+on the AST node types, e.g. BlockStatement, VariableDeclaration,
+ObjectExpression, etc. For copy-paste oriented detection, you can even limit
+the search to nodes with matching literals and identifiers.
 
 The tool accepts a list of paths to parse, and outputs any matches along
-with a series of 2-way diffs if enabled. Any directories among the paths are
-walked recursively, and only `.js` files are analyzed. Any `node_modules` dirs
-are also ignored. Being built for JavaScript, it also ignores CommonJS require
+with a series of 2-way diffs. Any directories among the paths are walked
+recursively, and only `.js` files are analyzed. Any `node_modules` dirs are
+also ignored. Being built for JavaScript, it also ignores CommonJS require
 statements, and AMD define expressions.
 
 ## Installation
@@ -66,7 +65,6 @@ Options:
 
   -h, --help                output usage information
   -V, --version             output the version number
-  -f, --fuzzy <number>      max distance for fuzzy matching (default: 0)
   -t, --threshold <number>  minimum size of nodes (default: 15)
   -l, --literals <types>    match literals
   -I, --no-identifiers      disable matching identifiers
@@ -87,10 +85,10 @@ before_script:
   - "npm install -g jsinspect"
 
 script:
-  - "jsinspect -t 15 ./path/to/src"       # Look for copy-pasted code
-  - "jsinspect -I -L -t 30 ./path/to/src" # Look for structural similarities
+  - "jsinspect -t 15 ./path/to/src"    # Look for copy-pasted code
+  - "jsinspect -I -t 20 ./path/to/src" # Look for structural similarities
 ```
 
-Note that in the above example, we're using a threshold of 30 for detecting
+Note that in the above example, we're using a threshold of 20 for detecting
 structurally similar code. A lower threshold may work for your build process,
-but ~30 should help unnecessary boilerplate, while avoiding excessive output.
+but ~20 should help unnecessary boilerplate, while avoiding excessive output.
