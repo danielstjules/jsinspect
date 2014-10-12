@@ -53,10 +53,9 @@ Usage: jsinspect [options] <paths ...>
 
 Duplicate code and structure detection for JavaScript.
 
-Identifier matching is enabled by default, while literal
-matching is disabled unless specified. The option accepts
-a list, and the available types are: boolean, number, and
-string. Example use:
+Both identifier and literal matching are disabled by
+default. The literal option accepts a list of types,
+being any of: boolean, number, and string. Example use:
 
 jsinspect -t 10 -l boolean,number,string
 
@@ -66,8 +65,8 @@ Options:
   -h, --help                output usage information
   -V, --version             output the version number
   -t, --threshold <number>  minimum size of nodes (default: 15)
+  -i, --identifiers         match identifiers
   -l, --literals <types>    match literals
-  -I, --no-identifiers      disable matching identifiers
   -D, --no-diff             disable 2-way diffs
   -C, --no-color            disable colors
 ```
@@ -85,10 +84,11 @@ before_script:
   - "npm install -g jsinspect"
 
 script:
-  - "jsinspect -t 15 ./path/to/src"    # Look for copy-pasted code
-  - "jsinspect -I -t 20 ./path/to/src" # Look for structural similarities
+  - "jsinspect -i -t 15 ./path/to/src" # Look for copy-pasted code
+  - "jsinspect -t 20 ./path/to/src"    # Look for structural similarities
 ```
 
 Note that in the above example, we're using a threshold of 20 for detecting
 structurally similar code. A lower threshold may work for your build process,
-but ~20 should help unnecessary boilerplate, while avoiding excessive output.
+but ~20 should help detect unnecessary boilerplate, while avoiding excessive
+output.

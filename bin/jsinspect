@@ -9,10 +9,9 @@ var reporters = require('../lib/reporters');
 var summary, suppliedPaths, paths, inspector, reporterType, literals;
 
 summary = "  Duplicate code and structure detection for JavaScript.\n\n"+
-          "  Identifier matching is enabled by default, while literal\n" +
-          "  matching is disabled unless specified. The option accepts\n" +
-          "  a list, and the available types are: boolean, number, and\n" +
-          "  string. Example use:\n\n" +
+          "  Both identifier and literal matching are disabled by\n" +
+          "  default. The literal option accepts a list of types,\n" +
+          "  being any of: boolean, number, and string. Example use:\n\n" +
           "  jsinspect -t 10 -l boolean,number,string\n";
 
 program
@@ -20,8 +19,8 @@ program
   .usage("[options] <paths ...>\n\n" + summary)
   .option('-t, --threshold <number>',
     'minimum size of nodes (default: 15)', parseInt)
+  .option('-i, --identifiers', 'match identifiers')
   .option('-l, --literals <types>', 'match literals')
-  .option('-I, --no-identifiers', 'disable matching identifiers')
   .option('-D, --no-diff', 'disable 2-way diffs')
   .option('-C, --no-color', 'disable colors')
   // .option('-r, --reporter [default|json]', 'specify the reporter to use')
@@ -53,7 +52,6 @@ if (!paths.length) {
   console.log('No .js files found in the list of paths');
   process.exit(0);
 }
-
 
 // Gather literals to match, if available
 if (program.literals) {
