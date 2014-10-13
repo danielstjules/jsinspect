@@ -38,6 +38,8 @@ recursively, and only `.js` files are analyzed. Any `node_modules` dirs are
 also ignored. Being built for JavaScript, it also ignores CommonJS require
 statements, and AMD define expressions.
 
+![screenshot](http://danielstjules.com/github/jsinspect-screenshot.png)
+
 ## Installation
 
 It can be installed via `npm` using:
