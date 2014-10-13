@@ -30,7 +30,7 @@ You have the freedom to specify a threshold determining the smallest subset of
 AST nodes to analyze. This will identify code with a similar structure, based
 on the AST node types, e.g. BlockStatement, VariableDeclaration,
 ObjectExpression, etc. For copy-paste oriented detection, you can even limit
-the search to nodes with matching literals and identifiers.
+the search to nodes with matching identifiers.
 
 The tool accepts a list of paths to parse, and outputs any matches along
 with a series of 2-way diffs. Any directories among the paths are walked
@@ -54,12 +54,8 @@ npm install -g jsinspect
 Usage: jsinspect [options] <paths ...>
 
 Duplicate code and structure detection for JavaScript.
-
-Both identifier and literal matching are disabled by
-default. The literal option accepts a list of types,
-being any of: boolean, number, and string. Example use:
-
-jsinspect -t 30 -l boolean,number,string ./path/to/src
+Identifier matching is disabled by default. Example use:
+jsinspect -t 30 -i ./path/to/src
 
 
 Options:
@@ -68,7 +64,6 @@ Options:
   -V, --version             output the version number
   -t, --threshold <number>  minimum size of nodes (default: 15)
   -i, --identifiers         match identifiers
-  -l, --literals <types>    match literals
   -D, --no-diff             disable 2-way diffs
   -C, --no-color            disable colors
 ```

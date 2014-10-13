@@ -6,13 +6,11 @@ var program   = require('commander');
 var Inspector = require('../lib/inspector');
 var reporters = require('../lib/reporters');
 
-var summary, suppliedPaths, paths, inspector, reporterType, literals;
+var summary, suppliedPaths, paths, inspector, reporterType;
 
-summary = "  Duplicate code and structure detection for JavaScript.\n\n"+
-          "  Both identifier and literal matching are disabled by\n" +
-          "  default. The literal option accepts a list of types,\n" +
-          "  being any of: boolean, number, and string. Example use:\n\n" +
-          "  jsinspect -t 10 -l boolean,number,string ./path/to/src\n";
+summary = "  Duplicate code and structure detection for JavaScript.\n"+
+          "  Identifier matching is disabled by default. Example use:\n" +
+          "  jsinspect -t 30 -i ./path/to/src\n";
 
 program
   .version(require('../package.json').version)
@@ -20,7 +18,6 @@ program
   .option('-t, --threshold <number>',
     'minimum size of nodes (default: 15)', parseInt)
   .option('-i, --identifiers', 'match identifiers')
-  .option('-l, --literals <types>', 'match literals')
   .option('-D, --no-diff', 'disable 2-way diffs')
   .option('-C, --no-color', 'disable colors')
   // .option('-r, --reporter [default|json]', 'specify the reporter to use')
@@ -53,21 +50,10 @@ if (!paths.length) {
   process.exit(0);
 }
 
-// Gather literals to match, if available
-if (program.literals) {
-  literals = {};
-  program.literals.split(',').forEach(function(type) {
-    if (!Inspector.availableLiterals[type]) return;
-
-    literals[type] = true;
-  });
-}
-
 inspector = new Inspector(paths, {
   threshold:   program.threshold,
   diff:        program.diff,
-  identifiers: program.identifiers,
-  literals:    literals
+  identifiers: program.identifiers
 });
 
 // Retrieve the requested reporter
