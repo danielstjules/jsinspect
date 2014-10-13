@@ -27,7 +27,7 @@ and repeated logic can be identified as well using jsinspect, since it
 doesn't work on tokens - it uses the ASTs of the parsed code.
 
 You have the freedom to specify a threshold determining the smallest subset of
-AST nodes to analyze. This will identify code with a similar structure, based
+nodes to analyze. This will identify code with a similar structure, based
 on the AST node types, e.g. BlockStatement, VariableDeclaration,
 ObjectExpression, etc. For copy-paste oriented detection, you can even limit
 the search to nodes with matching identifiers.
