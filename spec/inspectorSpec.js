@@ -49,7 +49,7 @@ describe('Inspector', function() {
   describe('run', function() {
     it('emits a start event', function() {
       var emitted;
-      var inspector = new Inspector([fixtures['intersection.js']]);
+      var inspector = new Inspector([fixtures.intersection]);
       inspector.on('start', function() {
         emitted = true;
       });
@@ -60,7 +60,7 @@ describe('Inspector', function() {
 
     it('emits an end event', function() {
       var emitted;
-      var inspector = new Inspector([fixtures['intersection.js']]);
+      var inspector = new Inspector([fixtures.intersection]);
       inspector.on('end', function() {
         emitted = true;
       });
@@ -70,7 +70,7 @@ describe('Inspector', function() {
     });
 
     it('emits the "match" event when a match is found', function() {
-      var inspector = new Inspector([fixtures['intersection.js']], {
+      var inspector = new Inspector([fixtures.intersection], {
         threshold: 10
       });
 
@@ -82,7 +82,7 @@ describe('Inspector', function() {
   });
 
   it('can find an exact match between two nodes', function() {
-    var inspector = new Inspector([fixtures['intersection.js']], {
+    var inspector = new Inspector([fixtures.intersection], {
       threshold: 15
     });
 
@@ -103,7 +103,7 @@ describe('Inspector', function() {
   });
 
   it('will find the largest match between two nodes', function() {
-    var inspector = new Inspector([fixtures['redundantIntersection.js']], {
+    var inspector = new Inspector([fixtures.redundantIntersection], {
       threshold: 11
     });
 
@@ -124,7 +124,7 @@ describe('Inspector', function() {
   });
 
   it('includes a diff with the match, if enabled', function() {
-    var inspector = new Inspector([fixtures['intersection.js']], {
+    var inspector = new Inspector([fixtures.intersection], {
       threshold: 11,
       diff: true
     });

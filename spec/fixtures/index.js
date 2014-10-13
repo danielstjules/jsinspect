@@ -1,10 +1,10 @@
 var path = require('path');
 
-var fixturePaths = ['intersection.js', 'redundantIntersection.js'];
+var fixtures = ['intersection', 'redundantIntersection'];
 var absolutePaths = {};
 
-fixturePaths.forEach(function(fixture) {
-  absolutePaths[fixture] = path.resolve(__dirname, fixture);
+fixtures.forEach(function(fixture) {
+  absolutePaths[fixture] = path.resolve(__dirname, fixture + '.js');
 });
 
 module.exports = absolutePaths;
