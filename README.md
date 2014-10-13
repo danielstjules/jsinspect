@@ -59,7 +59,7 @@ Both identifier and literal matching are disabled by
 default. The literal option accepts a list of types,
 being any of: boolean, number, and string. Example use:
 
-jsinspect -t 10 -l boolean,number,string
+jsinspect -t 30 -l boolean,number,string ./path/to/src
 
 
 Options:
@@ -71,6 +71,14 @@ Options:
   -l, --literals <types>    match literals
   -D, --no-diff             disable 2-way diffs
   -C, --no-color            disable colors
+```
+
+On first use with a project, you may want to run the tool with the following
+options, while running explicitly on the lib/src directories, and not the
+test/spec dir.
+
+```
+jsinspect -t 30 -i ./path/to/src
 ```
 
 ## Integration
@@ -86,11 +94,10 @@ before_script:
   - "npm install -g jsinspect"
 
 script:
-  - "jsinspect -i -t 15 ./path/to/src" # Look for copy-pasted code
-  - "jsinspect -t 20 ./path/to/src"    # Look for structural similarities
+  - "jsinspect -t 30 ./path/to/src"
 ```
 
-Note that in the above example, we're using a threshold of 20 for detecting
+Note that in the above example, we're using a threshold of 30 for detecting
 structurally similar code. A lower threshold may work for your build process,
-but ~20 should help detect unnecessary boilerplate, while avoiding excessive
+but ~30 should help detect unnecessary boilerplate, while avoiding excessive
 output.

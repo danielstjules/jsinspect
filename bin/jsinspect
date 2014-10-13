@@ -12,7 +12,7 @@ summary = "  Duplicate code and structure detection for JavaScript.\n\n"+
           "  Both identifier and literal matching are disabled by\n" +
           "  default. The literal option accepts a list of types,\n" +
           "  being any of: boolean, number, and string. Example use:\n\n" +
-          "  jsinspect -t 10 -l boolean,number,string\n";
+          "  jsinspect -t 10 -l boolean,number,string ./path/to/src\n";
 
 program
   .version(require('../package.json').version)
