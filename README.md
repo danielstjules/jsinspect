@@ -10,6 +10,7 @@ should be the target of refactoring.
 * [Installation](#installation)
 * [Usage](#usage)
 * [Integration](#integration)
+* [Performance](#performance)
 
 ## Overview
 
@@ -76,6 +77,10 @@ test/spec dir.
 jsinspect -t 30 -i ./path/to/src
 ```
 
+From there, feel free to try incrementally decreasing the threshold and
+ignoring identifiers. A threshold of 20 may lead you to discover new areas of
+interest for refactoring or cleanup. Each project or library may be different.
+
 ## Integration
 
 It's simple to run jsinspect on your library source as part of a build
@@ -96,3 +101,24 @@ Note that in the above example, we're using a threshold of 30 for detecting
 structurally similar code. A lower threshold may work for your build process,
 but ~30 should help detect unnecessary boilerplate, while avoiding excessive
 output.
+
+## Performance
+
+Running on a medium sized code base yielded the following results:
+
+``` bash
+$ find src/ -name '*.js' | xargs wc -l
+# ...
+44810 total
+
+$ time jsinspect -t 30 src/
+# ...
+41 matches found across 800 files
+
+real    0m1.718s
+user    0m1.626s
+sys     0m0.097s
+```
+
+Much of the overhead comes from diff generation, so a large number of matches
+will increase running time.
