@@ -104,7 +104,8 @@ output.
 
 ## Performance
 
-Running on a medium sized code base yielded the following results:
+Running on a medium sized code base, with a 2.4Ghz i5 MPB, yielded the
+following results:
 
 ``` bash
 $ find src/ -name '*.js' | xargs wc -l
@@ -120,5 +121,5 @@ user    0m1.626s
 sys     0m0.097s
 ```
 
-Much of the overhead comes from diff generation, so a large number of matches
+Much of the overhead comes from diff generation, so a greater number of matches
 will increase running time.
