@@ -20,10 +20,11 @@
   },
   "dependencies": {
     "acorn": "0.7.0",
-    "diff": "1.0.8",
+    "chalk": "*",
     "commander": "*",
+    "diff": "1.0.8",
     "node-filepaths": "*",
-    "chalk": "*"
+    "strip-indent": "^1.0.0"
   },
   "devDependencies": {
     "mocha": "*",
