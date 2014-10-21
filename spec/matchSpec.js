@@ -18,29 +18,30 @@ describe('Match', function() {
     });
   });
 
-  describe('generateDiffs', function() {
+  function getFixture(fixtureName){
     var ast, contents;
 
-    before(function() {
-      var intersection = fs.readFileSync(fixtures.intersection, {
-        encoding: 'utf8'
-      });
+    var content = fs.readFileSync(fixtures[fixtureName], { encoding: 'utf8' });
 
-      contents = {};
-      contents[fixtures.intersection] = intersection.split("\n");
+    contents = {};
+    contents[fixtures[fixtureName]] = content.split('\n');
 
-      ast = parse(intersection, {
-        ecmaVersion: 6,
-        allowReturnOutsideFunction: true,
-        locations: true,
-        sourceFile: fixtures.intersection
-      });
+    ast = parse(content, {
+      ecmaVersion: 6,
+      allowReturnOutsideFunction: true,
+      locations: true,
+      sourceFile: fixtures[fixtureName]
     });
 
+    return { ast: ast, contents: contents };
+  }
+
+  describe('generateDiffs', function() {
     it('uses jsdiff to generate a diff of two nodes', function() {
-      var nodes = [ast.body[0], ast.body[1]];
+      var fixture = getFixture('intersection');
+      var nodes = [fixture.ast.body[0], fixture.ast.body[1]];
       var match = new Match(nodes);
-      match.generateDiffs(contents);
+      match.generateDiffs(fixture.contents);
 
       var expectedDiffs = [[
         {
@@ -54,6 +55,39 @@ describe('Match', function() {
           value: 'function intersectionA(array1, array2) {\n  '+
                  'array1.filter(function(n) {\n    ' +
                  'return array2.indexOf(n) != -1;\n',
+          added: undefined,
+          removed: true
+        },
+        {
+          value: '  });\n}',
+          added: undefined,
+          removed: undefined
+        }
+      ]];
+
+      expect(match.diffs).to.eql(expectedDiffs);
+    });
+
+    it('strips indentation for providing correct diff results', function(){
+      var fixture = getFixture('indentation');
+      var nodes = [fixture.ast.body[0], fixture.ast.body[1]];
+      var match = new Match(nodes);
+      match.generateDiffs(fixture.contents);
+
+      var expectedDiffs = [[
+        {
+          value: 'function intersectionA(array1, array2) {\n  '+
+                 'array1.filter(function(n) {\n',
+          added: undefined,
+          removed: undefined
+        },
+        {
+          value: '    return array2.indexOf(n) == -1;\n',
+          added: true,
+          removed: undefined
+        },
+        {
+          value: '    return array2.indexOf(n) != -1;\n',
           added: undefined,
           removed: true
         },

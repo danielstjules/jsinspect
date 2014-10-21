@@ -1,6 +1,6 @@
 var path = require('path');
 
-var fixtures = ['intersection', 'redundantIntersection'];
+var fixtures = ['intersection', 'redundantIntersection', 'indentation'];
 var absolutePaths = {};
 
 fixtures.forEach(function(fixture) {
