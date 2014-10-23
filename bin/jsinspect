@@ -13,7 +13,7 @@ var summary, suppliedPaths, paths, inspector, reporterType;
 
 summary = "  Duplicate code and structure detection for JavaScript.\n"+
           "  Identifier matching is disabled by default. Example use:\n" +
-          "  jsinspect -t 30 -i ./path/to/src\n";
+          "  jsinspect -t 30 -i --ignore \"Test.js\" ./path/to/src\n";
 
 program
   .version(require('../package.json').version)
@@ -23,6 +23,7 @@ program
   .option('-i, --identifiers', 'match identifiers')
   .option('-D, --no-diff', 'disable 2-way diffs')
   .option('-C, --no-color', 'disable colors')
+  .option('--ignore <pattern>', 'ignore paths matching a regex')
   // .option('-r, --reporter [default|json]', 'specify the reporter to use')
   .parse(process.argv);
 
@@ -40,7 +41,7 @@ if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
     process.exit(1);
   }
 
-  ['threshold', 'identifiers'].forEach(function(option) {
+  ['threshold', 'identifiers', 'ignore'].forEach(function(option) {
     if (program[option] === undefined) {
       program[option] = rc[option];
     }
@@ -59,10 +60,16 @@ if (!program.color) {
   chalk.enabled = false;
 }
 
+// Ignore node_modules by default, along with ignore arg
+var ignorePatterns = ['node_modules'];
+if (program.ignore) {
+  ignorePatterns.push(program.ignore);
+}
+
 try {
   paths = filepaths.getSync(suppliedPaths, {
     suffix: '.js',
-    ignore: 'node_modules'
+    ignore: ignorePatterns
   });
 } catch(e) {
   console.log(e.message);

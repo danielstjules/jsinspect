@@ -56,7 +56,7 @@ Usage: jsinspect [options] <paths ...>
 
 Duplicate code and structure detection for JavaScript.
 Identifier matching is disabled by default. Example use:
-jsinspect -t 30 -i ./path/to/src
+jsinspect -t 30 -i --ignore "Test.js" ./path/to/src
 
 
 Options:
@@ -67,6 +67,18 @@ Options:
   -i, --identifiers         match identifiers
   -D, --no-diff             disable 2-way diffs
   -C, --no-color            disable colors
+  --ignore <pattern>        ignore paths matching a regex
+```
+
+If a `.jsinspectrc` file is located in the project directory, its values will
+be used in place of the defaults listed above. For example:
+
+``` javascript
+{
+  "threshold":   30,
+  "identifiers": true,
+  "ignore":      "Test.js|Spec.js" // used as RegExp
+}
 ```
 
 On first use with a project, you may want to run the tool with the following
