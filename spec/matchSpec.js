@@ -68,7 +68,7 @@ describe('Match', function() {
       expect(match.diffs).to.eql(expectedDiffs);
     });
 
-    it('strips indentation for providing correct diff results', function(){
+    it('strips indentation to generate clean diffs', function(){
       var fixture = getFixture('indentation');
       var nodes = [fixture.ast.body[0], fixture.ast.body[1]];
       var match = new Match(nodes);
