@@ -21,6 +21,7 @@ program
   .option('-t, --threshold <number>',
     'minimum size of nodes (default: 15)', parseInt)
   .option('-i, --identifiers', 'match identifiers')
+  .option('-r, --relative', 'use relative paths in output')
   .option('-D, --no-diff', 'disable 2-way diffs')
   .option('-C, --no-color', 'disable colors')
   .option('--ignore <pattern>', 'ignore paths matching a regex')
@@ -41,7 +42,7 @@ if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
     process.exit(1);
   }
 
-  ['threshold', 'identifiers', 'ignore'].forEach(function(option) {
+  ['threshold', 'identifiers', 'relative', 'ignore'].forEach(function(option) {
     if (program[option] === undefined) {
       program[option] = rc[option];
     }
@@ -89,7 +90,10 @@ inspector = new Inspector(paths, {
 
 // Retrieve the requested reporter
 reporterType = reporters[program.reporter] || reporters.default;
-new reporterType(inspector, program.diff);
+new reporterType(inspector, {
+  diff: program.diff,
+  relative: program.relative
+});
 
 try {
   process.exit(inspector.run());

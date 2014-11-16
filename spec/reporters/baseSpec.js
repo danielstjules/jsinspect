@@ -2,6 +2,7 @@ var expect       = require('expect.js');
 var util         = require('util');
 var chalk        = require('chalk');
 var fixtures     = require('../fixtures');
+var helpers      = require('../helpers');
 var BaseReporter = require('../../lib/reporters/base.js');
 var Inspector    = require('../../lib/inspector.js');
 
@@ -33,24 +34,8 @@ describe('BaseReporter', function() {
   });
 
   describe('summary', function() {
-    var enabled, write, restoreWrite, output;
-
-    enabled = chalk.enabled;
-    write = process.stdout.write;
-    restoreWrite = function() {
-      process.stdout.write = write;
-    };
-
     beforeEach(function() {
-      chalk.enabled = false;
-      output = null;
-      process.stdout.write = function(string) {
-        output = string;
-      };
-    });
-
-    afterEach(function() {
-      chalk.enabled = enabled;
+      helpers.captureOutput();
     });
 
     it('can be printed on inspector end', function() {
@@ -58,9 +43,9 @@ describe('BaseReporter', function() {
       var reporter = new TestReporter(inspector);
 
       inspector.run();
-      restoreWrite();
+      helpers.restoreOutput();
 
-      expect(output).to.not.be(null);
+      expect(helpers.getOutput()).to.not.be(null);
     });
 
     it('prints the correct results if no matches were found', function() {
@@ -70,9 +55,9 @@ describe('BaseReporter', function() {
       var reporter = new TestReporter(inspector);
 
       inspector.run();
-      restoreWrite();
+      helpers.restoreOutput();
 
-      expect(output).to.be("\n No matches found across 1 file\n");
+      expect(helpers.getOutput()).to.be("\n No matches found across 1 file\n");
     });
 
     it('prints the correct results if magic numbers were found', function() {
@@ -80,9 +65,9 @@ describe('BaseReporter', function() {
       var reporter = new TestReporter(inspector);
 
       inspector.run();
-      restoreWrite();
+      helpers.restoreOutput();
 
-      expect(output).to.be("\n 1 match found across 1 file\n");
+      expect(helpers.getOutput()).to.be("\n 1 match found across 1 file\n");
     });
   });
 });
