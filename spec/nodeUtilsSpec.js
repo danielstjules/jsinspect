@@ -5,9 +5,19 @@ var nodeUtils = require('../lib/nodeUtils');
 
 describe('nodeUtils', function() {
   describe('getIdentifierString', function() {
+    // acorn walker traverses with DFS, but unfortunately invokes the
+    // callbacks on children first
+
     it('returns an unordered string of identifiers', function() {
-      // literals are returned in the order in which the node walker
-      // visits them
+      // Simplify by only using intersectionA
+      var nodes = [helpers.parse(fixtures.intersection)[0]];
+      var string = nodeUtils.getIdentifierString(nodes);
+
+      expect(string).to.be('array1:filter:array2:indexOf:n:n:intersectionA:' +
+        'array1:array2');
+    });
+
+    it('traverses literals in member, object and function expressions', function() {
       var nodes = helpers.parse(fixtures.identifiers);
       var string = nodeUtils.getIdentifierString(nodes);
 
