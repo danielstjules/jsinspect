@@ -1,6 +1,6 @@
 var expect   = require('expect.js');
-var fs       = require('fs');
 var parse    = require('acorn/acorn_loose').parse_dammit;
+var fs       = require('fs');
 var fixtures = require('./fixtures');
 var Match    = require('../lib/match.js');
 

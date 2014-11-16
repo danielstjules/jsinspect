@@ -1,3 +1,5 @@
+var fs    = require('fs');
+var parse = require('acorn/acorn_loose').parse_dammit;
 var chalk = require('chalk');
 
 var output, enabled, write;
@@ -5,6 +7,7 @@ var output, enabled, write;
 output = '';
 enabled = chalk.enabled;
 write = process.stdout.write;
+parseCache = {};
 
 module.exports = {
   captureOutput: function() {
@@ -23,5 +26,27 @@ module.exports = {
   restoreOutput: function() {
     chalk.enabled = enabled;
     process.stdout.write = write;
+  },
+
+  parse: function(filePath, contents) {
+    var contents, ast;
+
+    if (parseCache[filePath]) return parseCache[filePath];
+
+    contents = fs.readFileSync(filePath, {
+      encoding: 'utf8'
+    });
+
+    // Skip the parent 'Program' node
+    ast = parse(contents, {
+      ecmaVersion: 6,
+      allowReturnOutsideFunction: true,
+      locations: true,
+      sourceFile: filePath
+    }).body;
+
+    parseCache[filePath] = ast;
+
+    return ast;
   }
 };

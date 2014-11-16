@@ -1,7 +1,8 @@
 var path = require('path');
 
-var fixtures = ['intersection', 'redundantIntersection', 'indentation'];
 var absolutePaths = {};
+var fixtures = ['intersection', 'redundantIntersection', 'indentation',
+  'identifiers'];
 
 fixtures.forEach(function(fixture) {
   absolutePaths[fixture] = path.resolve(__dirname, fixture + '.js');
