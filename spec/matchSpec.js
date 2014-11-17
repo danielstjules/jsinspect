@@ -19,9 +19,11 @@ describe('Match', function() {
   });
 
   function getFixture(fixtureName){
-    var ast, contents;
+    var ast, contents, content;
 
-    var content = fs.readFileSync(fixtures[fixtureName], { encoding: 'utf8' });
+    content = fs.readFileSync(fixtures[fixtureName], {
+      encoding: 'utf8'
+    });
 
     contents = {};
     contents[fixtures[fixtureName]] = content.split('\n');
@@ -33,21 +35,22 @@ describe('Match', function() {
       sourceFile: fixtures[fixtureName]
     });
 
-    return { ast: ast, contents: contents };
+    return {ast: ast, contents: contents};
   }
 
   describe('generateDiffs', function() {
     it('uses jsdiff to generate a diff of two nodes', function() {
       var fixture = getFixture('intersection');
       var nodes = [fixture.ast.body[0], fixture.ast.body[1]];
+
       var match = new Match(nodes);
       match.generateDiffs(fixture.contents);
 
-      var expectedDiffs = [[
+      expect(match.diffs).to.eql([[
         {
           value: 'function intersectionB(arrayA, arrayB) {\n  ' +
-                  'arrayA.filter(function(n) {\n    '+
-                  'return arrayB.indexOf(n) != -1;\n',
+                 'arrayA.filter(function(n) {\n    '+
+                 'return arrayB.indexOf(n) != -1;\n',
           added: true,
           removed: undefined
         },
@@ -63,18 +66,17 @@ describe('Match', function() {
           added: undefined,
           removed: undefined
         }
-      ]];
-
-      expect(match.diffs).to.eql(expectedDiffs);
+      ]]);
     });
 
     it('strips indentation to generate clean diffs', function(){
       var fixture = getFixture('indentation');
       var nodes = [fixture.ast.body[0], fixture.ast.body[1]];
+
       var match = new Match(nodes);
       match.generateDiffs(fixture.contents);
 
-      var expectedDiffs = [[
+      expect(match.diffs).to.eql([[
         {
           value: 'function intersectionA(array1, array2) {\n  '+
                  'array1.filter(function(n) {\n',
@@ -96,9 +98,7 @@ describe('Match', function() {
           added: undefined,
           removed: undefined
         }
-      ]];
-
-      expect(match.diffs).to.eql(expectedDiffs);
+      ]]);
     });
   });
 });

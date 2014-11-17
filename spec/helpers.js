@@ -28,7 +28,7 @@ module.exports = {
     process.stdout.write = write;
   },
 
-  parse: function(filePath, contents) {
+  parse: function(filePath) {
     var contents, ast;
 
     if (parseCache[filePath]) return parseCache[filePath];
