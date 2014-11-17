@@ -25,4 +25,42 @@ describe('nodeUtils', function() {
         'key:val:key:val:set:storage');
     });
   });
+
+  describe('isAMD', function() {
+    it('returns true for an expression containing a define', function() {
+      // First expression is define
+      var nodes = [helpers.parse(fixtures.amd)[0]];
+      expect(nodeUtils.isAMD(nodes)).to.be(true);
+    });
+
+    it('returns true for an expression containing a define', function() {
+      // Third expression is require
+      var nodes = [helpers.parse(fixtures.amd)[2]];
+      expect(nodeUtils.isAMD(nodes)).to.be(true);
+    });
+
+    it('returns false otherwise', function() {
+      var nodes = helpers.parse(fixtures.commonjs);
+      expect(nodeUtils.isAMD(nodes)).to.be(false);
+    });
+  });
+
+  describe('isCommonJS', function() {
+    it('returns true for an expression containing a require', function() {
+      // First node is an ExpressionStatement
+      var nodes = [helpers.parse(fixtures.commonjs)[0]];
+      expect(nodeUtils.isCommonJS(nodes)).to.be(true);
+    });
+
+    it('returns true for a declaration containing a require', function() {
+      // Second node is a VariableDeclaration
+      var nodes = [helpers.parse(fixtures.commonjs)[1]];
+      expect(nodeUtils.isCommonJS(nodes)).to.be(true);
+    });
+
+    it('returns false otherwise', function() {
+      var nodes = helpers.parse(fixtures.amd);
+      expect(nodeUtils.isCommonJS(nodes)).to.be(false);
+    });
+  });
 });
