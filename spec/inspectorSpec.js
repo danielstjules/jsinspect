@@ -137,4 +137,26 @@ describe('Inspector', function() {
     expect(match.diffs).to.have.length(1);
     expect(match.diffs[0]).to.have.length(3);
   });
+
+  it('ignores CommonJS require statements', function() {
+    var inspector = new Inspector([fixtures.commonjs], {
+      threshold: 3
+    });
+
+    inspector.on('match', listener);
+    inspector.run();
+
+    expect(found).to.have.length(0);
+  });
+
+  it('ignores AMD define expressions', function() {
+    var inspector = new Inspector([fixtures.amd], {
+      threshold: 5
+    });
+
+    inspector.on('match', listener);
+    inspector.run();
+
+    expect(found).to.have.length(0);
+  });
 });
