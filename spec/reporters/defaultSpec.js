@@ -34,8 +34,7 @@ describe('DefaultReporter', function() {
 
     it('prints the number of instances, and their location', function() {
       var inspector = new Inspector([fixtures.intersection]);
-      var reporter = new DefaultReporter(inspector, {
-      });
+      var reporter = new DefaultReporter(inspector);
 
       inspector.removeAllListeners('end');
       inspector.run();

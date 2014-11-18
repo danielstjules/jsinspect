@@ -23,10 +23,11 @@ program
   .option('-i, --identifiers', 'match identifiers')
   .option('-c, --config',
     'path to config file (default: .jsinspectrc)')
+  .option('-r, --reporter [default|json]',
+    'specify the reporter to use')
   .option('-D, --no-diff', 'disable 2-way diffs')
   .option('-C, --no-color', 'disable colors')
   .option('--ignore <pattern>', 'ignore paths matching a regex')
-  // .option('-r, --reporter [default|json]', 'specify the reporter to use')
   .parse(process.argv);
 
 // Check and parse the config file, if it exists
