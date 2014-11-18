@@ -91,26 +91,16 @@ describe('JSONReporter', function() {
       var diffs = JSON.parse(helpers.getOutput()).diffs;
       expect(diffs).to.eql([
         {
-          '+': {
-            lines: [2,2],
-            path: 'spec/fixtures/smallDiffs.js'
-          },
-          '-': {
-            lines: [1,1],
-            path: 'spec/fixtures/smallDiffs.js'
-          },
-          diff: '+  test = function() { return 2; };\n-  test = function() { return 1; };\n'
+          '+': {lines: [2,2], path: 'spec/fixtures/smallDiffs.js'},
+          '-': {lines: [1,1], path: 'spec/fixtures/smallDiffs.js'},
+          diff: '+  test = function() { return 2; };\n' +
+                '-  test = function() { return 1; };\n'
         },
         {
-          '+': {
-            lines: [3,3],
-            path: 'spec/fixtures/smallDiffs.js'
-          },
-          '-': {
-            lines: [1,1],
-            path: 'spec/fixtures/smallDiffs.js'
-          },
-          diff: '+  test = function() { return 3; };\n-  test = function() { return 1; };\n'
+          '+': {lines: [3,3], path: 'spec/fixtures/smallDiffs.js'},
+          '-': {lines: [1,1], path: 'spec/fixtures/smallDiffs.js'},
+          diff: '+  test = function() { return 3; };\n' +
+                '-  test = function() { return 1; };\n'
         }
       ]);
     });
