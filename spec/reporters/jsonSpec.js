@@ -33,6 +33,19 @@ describe('JSONReporter', function() {
     });
   });
 
+  it('prints valid json', function() {
+    var inspector = new Inspector([fixtures.smallDiffs], {
+      threshold: 1
+    });
+    var reporter = new JSONReporter(inspector);
+
+    helpers.captureOutput();
+    inspector.run();
+    helpers.restoreOutput();
+
+    JSON.parse(helpers.getOutput());
+  });
+
   describe('given a match', function() {
     beforeEach(function() {
       helpers.captureOutput();
