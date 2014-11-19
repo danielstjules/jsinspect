@@ -23,7 +23,7 @@ program
   .option('-i, --identifiers', 'match identifiers')
   .option('-c, --config',
     'path to config file (default: .jsinspectrc)')
-  .option('-r, --reporter [default|json]',
+  .option('-r, --reporter [default|json|pmd]',
     'specify the reporter to use')
   .option('-D, --no-diff', 'disable 2-way diffs')
   .option('-C, --no-color', 'disable colors')
