@@ -7,7 +7,11 @@ var Match    = require('../lib/match.js');
 describe('Match', function() {
   describe('constructor', function() {
     it('accepts an array of nodes, storing them at match.nodes', function() {
-      var mockNodes = [{type: 'FunctionDeclaration'}, {type: 'Literal'}];
+      var mockNodes = [
+        {type: 'FunctionDeclaration'},
+        {type: 'Literal'}
+      ];
+
       var match = new Match(mockNodes);
       expect(match.nodes).to.be(mockNodes);
     });

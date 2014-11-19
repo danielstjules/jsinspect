@@ -11,13 +11,13 @@ var reporters = require('../lib/reporters');
 
 var summary, suppliedPaths, paths, inspector, reporterType;
 
-summary = "  Duplicate code and structure detection for JavaScript.\n"+
-          "  Identifier matching is disabled by default. Example use:\n" +
-          "  jsinspect -t 30 -i --ignore \"Test.js\" ./path/to/src\n";
+summary = '  Duplicate code and structure detection for JavaScript.\n'+
+          '  Identifier matching is disabled by default. Example use:\n' +
+          '  jsinspect -t 30 -i --ignore \"Test.js\" ./path/to/src\n';
 
 program
   .version(require('../package.json').version)
-  .usage("[options] <paths ...>\n\n" + summary)
+  .usage('[options] <paths ...>\n\n' + summary)
   .option('-t, --threshold <number>',
     'minimum size of nodes (default: 15)', parseInt)
   .option('-i, --identifiers', 'match identifiers')

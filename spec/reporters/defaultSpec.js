@@ -13,18 +13,19 @@ describe('DefaultReporter', function() {
       var reporter = new DefaultReporter(inspector);
       expect(reporter._inspector).to.be(inspector);
     });
+  });
 
-    it('registers a listener for the match event', function() {
-      var inspector = new Inspector(['']);
-      var reporter = new DefaultReporter(inspector);
-      expect(inspector.listeners('match')).to.have.length(1);
+  it('prints the summary on end', function() {
+    helpers.captureOutput();
+    var inspector = new Inspector([fixtures.intersection], {
+      threshold: 40
     });
+    var reporter = new DefaultReporter(inspector);
 
-    it('registers a listener for the end event', function() {
-      var inspector = new Inspector(['']);
-      var reporter = new DefaultReporter(inspector);
-      expect(inspector.listeners('end')).to.have.length(1);
-    });
+    inspector.run();
+    helpers.restoreOutput();
+
+    expect(helpers.getOutput()).to.be('\n No matches found across 1 file\n');
   });
 
   describe('given a match', function() {

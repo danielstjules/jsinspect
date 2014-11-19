@@ -13,24 +13,6 @@ describe('JSONReporter', function() {
       var reporter = new JSONReporter(inspector);
       expect(reporter._inspector).to.be(inspector);
     });
-
-    it('registers a listener for the match event', function() {
-      var inspector = new Inspector(['']);
-      var reporter = new JSONReporter(inspector);
-      expect(inspector.listeners('match')).to.have.length(1);
-    });
-
-    it('registers a listener for the start event', function() {
-      var inspector = new Inspector(['']);
-      var reporter = new JSONReporter(inspector);
-      expect(inspector.listeners('start')).to.have.length(1);
-    });
-
-    it('registers a listener for the end event', function() {
-      var inspector = new Inspector(['']);
-      var reporter = new JSONReporter(inspector);
-      expect(inspector.listeners('end')).to.have.length(1);
-    });
   });
 
   it('prints valid json', function() {

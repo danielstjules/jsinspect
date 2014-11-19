@@ -1,4 +1,4 @@
-var expect       = require('expect.js');
+  var expect       = require('expect.js');
 var util         = require('util');
 var chalk        = require('chalk');
 var fixtures     = require('../fixtures');
@@ -13,10 +13,7 @@ function TestReporter(inspector) {
 }
 
 util.inherits(TestReporter, BaseReporter);
-
-TestReporter.prototype._getOutput = function(magicNumber) {
-  return magicNumber.value;
-};
+TestReporter.prototype._getOutput = function() {};
 
 describe('BaseReporter', function() {
   describe('constructor', function() {
@@ -30,6 +27,35 @@ describe('BaseReporter', function() {
       var inspector = new Inspector(['']);
       var reporter = new BaseReporter(inspector);
       expect(inspector.listeners('match')).to.have.length(1);
+    });
+  });
+
+  describe('given a match', function() {
+    beforeEach(function() {
+      helpers.captureOutput();
+    });
+
+    it('increments the number found', function() {
+      var inspector = new Inspector([fixtures.intersection]);
+      var reporter = new TestReporter(inspector);
+
+      inspector.emit('match', {});
+      helpers.restoreOutput();
+
+      expect(reporter._found).to.be(1);
+    });
+
+    it('invokes _getOutput', function() {
+      var inspector = new Inspector([fixtures.intersection]);
+      var reporter = new TestReporter(inspector);
+      reporter._getOutput = function(match) {
+        return match;
+      };
+
+      inspector.emit('match', 'invoked');
+      helpers.restoreOutput();
+
+      expect(helpers.getOutput()).to.be('invoked');
     });
   });
 
@@ -57,17 +83,17 @@ describe('BaseReporter', function() {
       inspector.run();
       helpers.restoreOutput();
 
-      expect(helpers.getOutput()).to.be("\n No matches found across 1 file\n");
+      expect(helpers.getOutput()).to.be('\n No matches found across 1 file\n');
     });
 
-    it('prints the correct results if magic numbers were found', function() {
+    it('prints the correct results if matches were found', function() {
       var inspector = new Inspector([fixtures.intersection]);
       var reporter = new TestReporter(inspector);
 
       inspector.run();
       helpers.restoreOutput();
 
-      expect(helpers.getOutput()).to.be("\n 1 match found across 1 file\n");
+      expect(helpers.getOutput()).to.be('\n 1 match found across 1 file\n');
     });
   });
 });
