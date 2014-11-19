@@ -33,7 +33,7 @@ describe('PMDReporter', function() {
       helpers.restoreOutput();
 
       expect(helpers.getOutput()).to.eql(
-        '<dupliction>\n' +
+        '<duplication>\n' +
         '<file path=\"spec/fixtures/smallDiffs.js\" line=\"1\"/>\n' +
         '<file path=\"spec/fixtures/smallDiffs.js\" line=\"2\"/>\n' +
         '<file path=\"spec/fixtures/smallDiffs.js\" line=\"3\"/>\n' +
@@ -58,7 +58,7 @@ describe('PMDReporter', function() {
       helpers.restoreOutput();
 
       expect(helpers.getOutput()).to.eql(
-        '<dupliction>\n' +
+        '<duplication>\n' +
         '<file path=\"spec/fixtures/smallDiffs.js\" line=\"1\"/>\n' +
         '<file path=\"spec/fixtures/smallDiffs.js\" line=\"2\"/>\n' +
         '<file path=\"spec/fixtures/smallDiffs.js\" line=\"3\"/>\n' +
