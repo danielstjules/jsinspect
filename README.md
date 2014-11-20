@@ -125,12 +125,20 @@ $ find src/ -name '*.js' | xargs wc -l
 44810 total
 
 $ time jsinspect -t 30 src/
-# ...
+# Looking for structural similarities..
 41 matches found across 800 files
 
-real    0m1.718s
-user    0m1.626s
-sys     0m0.097s
+real  0m1.542s
+user  0m1.472s
+sys   0m0.071s
+
+$ time jsinspect -i -t 15 src/
+# Looking for copy-pasted code..
+96 matches found across 800 files
+
+real  0m1.283s
+user  0m1.196s
+sys   0m0.084s
 ```
 
 Much of the overhead comes from diff generation, so a greater number of matches
