@@ -132,11 +132,11 @@ has been applied.
     {"path":"spec/fixtures/intersection.js","lines":[1,5]},
     {"path":"spec/fixtures/intersection.js","lines":[7,11]}
   ],
-  "diffs":[
-    {"-":{"path":"spec/fixtures/intersection.js","lines":[1,5]},
+  "diffs":[{
+    "-":{"path":"spec/fixtures/intersection.js","lines":[1,5]},
     "+":{"path":"spec/fixtures/intersection.js","lines":[7,11]},
-    "diff":"+  function intersectionB(arrayA, arrayB) {\n+    arrayA.filter(function(n) {\n+      return arrayB.indexOf(n) != -1;\n-  function intersectionA(array1, array2) {\n-    array1.filter(function(n) {\n-      return array2.indexOf(n) != -1;\n     });\n   }\n"}
-  ]
+    "diff":"+  function intersectionB(arrayA, arrayB) {\n+    arrayA.filter(function(n) {\n+      return arrayB.indexOf(n) != -1;\n-  function intersectionA(array1, array2) {\n-    array1.filter(function(n) {\n-      return array2.indexOf(n) != -1;\n     });\n   }\n"
+  }]
 }]
 ```
 
