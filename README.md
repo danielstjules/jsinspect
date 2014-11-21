@@ -10,6 +10,7 @@ should be the target of refactoring.
 * [Installation](#installation)
 * [Usage](#usage)
 * [Integration](#integration)
+* [Reporters](#reporters)
 * [Performance](#performance)
 
 ## Overview
@@ -61,13 +62,15 @@ jsinspect -t 30 -i --ignore "Test.js" ./path/to/src
 
 Options:
 
-  -h, --help                output usage information
-  -V, --version             output the version number
-  -t, --threshold <number>  minimum size of nodes (default: 15)
-  -i, --identifiers         match identifiers
-  -D, --no-diff             disable 2-way diffs
-  -C, --no-color            disable colors
-  --ignore <pattern>        ignore paths matching a regex
+  -h, --help                         output usage information
+  -V, --version                      output the version number
+  -t, --threshold <number>           number of nodes (default: 15)
+  -i, --identifiers                  match identifiers
+  -c, --config                       path to config file (default: .jsinspectrc)
+  -r, --reporter [default|json|pmd]  specify the reporter to use
+  -D, --no-diff                      disable 2-way diffs
+  -C, --no-color                     disable colors
+  --ignore <pattern>                 ignore paths matching a regex
 ```
 
 If a `.jsinspectrc` file is located in the project directory, its values will
@@ -77,7 +80,8 @@ be used in place of the defaults listed above. For example:
 {
   "threshold":   30,
   "identifiers": true,
-  "ignore":      "Test.js|Spec.js" // used as RegExp
+  "ignore":      "Test.js|Spec.js" // used as RegExp,
+  "reporter":    "json"
 }
 ```
 
@@ -113,6 +117,53 @@ Note that in the above example, we're using a threshold of 30 for detecting
 structurally similar code. A lower threshold may work for your build process,
 but ~30 should help detect unnecessary boilerplate, while avoiding excessive
 output.
+
+## Reporters
+
+Aside from the default reporter, both JSON and PMD CPD-style XML reporters are
+available. Note that in the JSON example below, indentation and formatting
+has been applied.
+
+#### JSON
+
+``` json
+[{
+  "instances":[
+    {"path":"spec/fixtures/intersection.js","lines":[1,5]},
+    {"path":"spec/fixtures/intersection.js","lines":[7,11]}
+  ],
+  "diffs":[
+    {"-":{"path":"spec/fixtures/intersection.js","lines":[1,5]},
+    "+":{"path":"spec/fixtures/intersection.js","lines":[7,11]},
+    "diff":"+  function intersectionB(arrayA, arrayB) {\n+    arrayA.filter(function(n) {\n+      return arrayB.indexOf(n) != -1;\n-  function intersectionA(array1, array2) {\n-    array1.filter(function(n) {\n-      return array2.indexOf(n) != -1;\n     });\n   }\n"}
+  ]
+}]
+```
+
+#### PMD CPD XML
+
+``` xml
+<?xml version="1.0" encoding="utf-8"?>
+<pmd-cpd>
+<duplication>
+<file path="spec/fixtures/intersection.js" line="1"/>
+<file path="spec/fixtures/intersection.js" line="7"/>
+<codefragment>
+- spec/fixtures/intersection.js:1,5
++ spec/fixtures/intersection.js:7,11
+
++  function intersectionB(arrayA, arrayB) {
++    arrayA.filter(function(n) {
++      return arrayB.indexOf(n) != -1;
+-  function intersectionA(array1, array2) {
+-    array1.filter(function(n) {
+-      return array2.indexOf(n) != -1;
+     });
+   }
+</codefragment>
+</duplication>
+</pmd-cpd>
+```
 
 ## Performance
 

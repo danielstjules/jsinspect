@@ -19,7 +19,7 @@ program
   .version(require('../package.json').version)
   .usage('[options] <paths ...>\n\n' + summary)
   .option('-t, --threshold <number>',
-    'minimum size of nodes (default: 15)', parseInt)
+    'number of nodes (default: 15)', parseInt)
   .option('-i, --identifiers', 'match identifiers')
   .option('-c, --config',
     'path to config file (default: .jsinspectrc)')
@@ -44,8 +44,8 @@ if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
     process.exit(1);
   }
 
-  ['threshold', 'identifiers', 'ignore'].forEach(function(option) {
-    if (program[option] === undefined) {
+  ['threshold', 'identifiers', 'ignore', 'reporter'].forEach(function(option) {
+    if (program[option] === undefined && (option in rc)) {
       program[option] = rc[option];
     }
   });
