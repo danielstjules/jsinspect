@@ -9,8 +9,10 @@ var Inspector   = require('../../lib/inspector.js');
 describe('PMDReporter', function() {
   describe('constructor', function() {
     it('accepts an inspector as an argument', function() {
-      var inspector = new Inspector(['']);
-      var reporter = new PMDReporter(inspector);
+      var inspector, reporter;
+
+      inspector = new Inspector(['']);
+      reporter = new PMDReporter(inspector);
       expect(reporter._inspector).to.be(inspector);
     });
   });
@@ -21,10 +23,10 @@ describe('PMDReporter', function() {
     });
 
     it('prints paths and line numbers in a duplication element', function() {
-      var inspector = new Inspector([fixtures.smallDiffs], {
-        threshold: 1
-      });
-      var reporter = new PMDReporter(inspector);
+      var inspector, reporter;
+
+      inspector = new Inspector([fixtures.smallDiffs], {threshold: 1});
+      reporter = new PMDReporter(inspector);
 
       inspector.removeAllListeners('start');
       inspector.removeAllListeners('end');
@@ -34,22 +36,22 @@ describe('PMDReporter', function() {
 
       expect(helpers.getOutput()).to.eql(
         '<duplication>\n' +
-        '<file path=\"spec/fixtures/smallDiffs.js\" line=\"1\"/>\n' +
-        '<file path=\"spec/fixtures/smallDiffs.js\" line=\"2\"/>\n' +
-        '<file path=\"spec/fixtures/smallDiffs.js\" line=\"3\"/>\n' +
+        '<file path=\"' + fixtures.smallDiffs + '\" line=\"1\"/>\n' +
+        '<file path=\"' + fixtures.smallDiffs + '\" line=\"2\"/>\n' +
+        '<file path=\"' + fixtures.smallDiffs + '\" line=\"3\"/>\n' +
         '<codefragment></codefragment>\n' +
         '</duplication>\n'
       );
     });
 
     it('prints diffs if enabled, within a codefragment element', function() {
-      var inspector = new Inspector([fixtures.smallDiffs], {
+      var inspector, reporter, absolutePath;
+
+      inspector = new Inspector([fixtures.smallDiffs], {
         diff: true,
         threshold: 1
       });
-      var reporter = new PMDReporter(inspector, {
-        diff: true
-      });
+      reporter = new PMDReporter(inspector, {diff: true});
 
       inspector.removeAllListeners('start');
       inspector.removeAllListeners('end');
@@ -59,9 +61,9 @@ describe('PMDReporter', function() {
 
       expect(helpers.getOutput()).to.eql(
         '<duplication>\n' +
-        '<file path=\"spec/fixtures/smallDiffs.js\" line=\"1\"/>\n' +
-        '<file path=\"spec/fixtures/smallDiffs.js\" line=\"2\"/>\n' +
-        '<file path=\"spec/fixtures/smallDiffs.js\" line=\"3\"/>\n' +
+        '<file path=\"' + fixtures.smallDiffs + '\" line=\"1\"/>\n' +
+        '<file path=\"' + fixtures.smallDiffs + '\" line=\"2\"/>\n' +
+        '<file path=\"' + fixtures.smallDiffs + '\" line=\"3\"/>\n' +
         '<codefragment>\n' +
         '- spec/fixtures/smallDiffs.js:1,1\n' +
         '+ spec/fixtures/smallDiffs.js:2,2\n\n' +
