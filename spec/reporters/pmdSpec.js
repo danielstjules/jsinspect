@@ -35,7 +35,7 @@ describe('PMDReporter', function() {
       helpers.restoreOutput();
 
       expect(helpers.getOutput()).to.eql(
-        '<duplication>\n' +
+        '<duplication lines=\"3\">\n' +
         '<file path=\"' + fixtures.smallDiffs + '\" line=\"1\"/>\n' +
         '<file path=\"' + fixtures.smallDiffs + '\" line=\"2\"/>\n' +
         '<file path=\"' + fixtures.smallDiffs + '\" line=\"3\"/>\n' +
@@ -60,7 +60,7 @@ describe('PMDReporter', function() {
       helpers.restoreOutput();
 
       expect(helpers.getOutput()).to.eql(
-        '<duplication>\n' +
+        '<duplication lines=\"3\">\n' +
         '<file path=\"' + fixtures.smallDiffs + '\" line=\"1\"/>\n' +
         '<file path=\"' + fixtures.smallDiffs + '\" line=\"2\"/>\n' +
         '<file path=\"' + fixtures.smallDiffs + '\" line=\"3\"/>\n' +
