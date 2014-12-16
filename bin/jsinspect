@@ -46,7 +46,8 @@ if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
     process.exit(1);
   }
 
-  ['threshold', 'identifiers', 'ignore', 'reporter', 'suppress'].forEach(function(option) {
+  ['threshold', 'identifiers', 'ignore',
+   'reporter', 'suppress'].forEach(function(option) {
     if (program[option] === undefined && (option in rc)) {
       program[option] = rc[option];
     }
