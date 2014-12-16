@@ -19,7 +19,7 @@
     "url": "https://github.com/danielstjules/jsinspect.git"
   },
   "dependencies": {
-    "acorn": "0.7.0",
+    "acorn": "0.10.0",
     "commander": "*",
     "diff": "1.0.8",
     "node-filepaths": "0.0.3",
