@@ -68,7 +68,7 @@ Options:
   -i, --identifiers                  match identifiers
   -c, --config                       path to config file (default: .jsinspectrc)
   -r, --reporter [default|json|pmd]  specify the reporter to use
-  -s, --suppress-limit <number>      on which count of lines diff should be suppressed, (default: 100, nolimit: 0)
+  -s, --suppress <number>            length to suppress diffs (default: 100, off: 0)
   -D, --no-diff                      disable 2-way diffs
   -C, --no-color                     disable colors
   --ignore <pattern>                 ignore paths matching a regex
@@ -83,7 +83,7 @@ be used in place of the defaults listed above. For example:
   "identifiers":   true,
   "ignore":        "Test.js|Spec.js", // used as RegExp,
   "reporter":      "json",
-  "suppressLinit": 100
+  "suppress":      100
 }
 ```
 

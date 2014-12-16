@@ -25,10 +25,10 @@ program
     'path to config file (default: .jsinspectrc)')
   .option('-r, --reporter [default|json|pmd]',
     'specify the reporter to use')
+  .option('-s, --suppress <number>',
+    'length to suppress diffs (default: 100, off: 0)', parseInt)
   .option('-D, --no-diff', 'disable 2-way diffs')
   .option('-C, --no-color', 'disable colors')
-  .option('-s, --suppress-limit <number>',
-    'on which count of lines diff should be suppressed, (default: 100, nolimit: 0)', parseInt)
   .option('--ignore <pattern>', 'ignore paths matching a regex')
   .parse(process.argv);
 
@@ -46,7 +46,7 @@ if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
     process.exit(1);
   }
 
-  ['threshold', 'identifiers', 'ignore', 'reporter', 'suppressLimit'].forEach(function(option) {
+  ['threshold', 'identifiers', 'ignore', 'reporter', 'suppress'].forEach(function(option) {
     if (program[option] === undefined && (option in rc)) {
       program[option] = rc[option];
     }
@@ -92,7 +92,7 @@ inspector = new Inspector(paths, {
 reporterType = reporters[program.reporter] || reporters.default;
 new reporterType(inspector, {
   diff: program.diff,
-  suppressLimit: program.suppressLimit
+  suppress: program.suppress
 });
 
 try {
