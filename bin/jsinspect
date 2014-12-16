@@ -52,11 +52,7 @@ if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
 }
 
 // Assume all unconsumed arguments are paths
-suppliedPaths = program.args || [];
-if (!suppliedPaths.length) {
-  console.log('Please provide a list of filenames or directories');
-  process.exit(0);
-}
+suppliedPaths = (program.args.length) ? program.args : ['.'];
 
 // chalk doesn't support short flags by default
 if (!program.color) {
