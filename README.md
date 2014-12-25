@@ -50,6 +50,9 @@ It can be installed via `npm` using:
 npm install -g jsinspect
 ```
 
+Also available: [grunt-jsinspect](https://github.com/stefanjudis/grunt-jsinspect),
+and [gulp-jsinspect](https://github.com/alexeyraspopov/gulp-jsinspect)
+
 ## Usage
 
 ```
