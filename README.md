@@ -150,9 +150,9 @@ has been applied.
 ``` xml
 <?xml version="1.0" encoding="utf-8"?>
 <pmd-cpd>
-<duplication>
-<file path="spec/fixtures/intersection.js" line="1"/>
-<file path="spec/fixtures/intersection.js" line="7"/>
+<duplication lines="10">
+<file path="/projects/jsinspect/spec/fixtures/intersection.js" line="1"/>
+<file path="/projects/jsinspect/spec/fixtures/intersection.js" line="7"/>
 <codefragment>
 - spec/fixtures/intersection.js:1,5
 + spec/fixtures/intersection.js:7,11
