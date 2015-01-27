@@ -33,7 +33,7 @@ program
   .parse(process.argv);
 
 // Check and parse the config file, if it exists
-var rcPath, rcContents, rc, opts;
+var rcPath, rcContents, rc, opts, ignorePatterns, matches;
 rcPath = path.resolve(process.cwd(), program.config || '.jsinspectrc');
 opts = {encoding: 'utf8'};
 
@@ -63,7 +63,7 @@ if (!program.color) {
 }
 
 // Ignore node_modules by default, along with ignore arg
-var ignorePatterns = ['node_modules'];
+ignorePatterns = ['node_modules'];
 if (program.ignore) {
   ignorePatterns.push(program.ignore);
 }
@@ -96,8 +96,15 @@ new reporterType(inspector, {
   suppress: program.suppress
 });
 
+// Track the number of matches
+matches = 0;
+inspector.on('match', function() {
+  matches++;
+});
+
 try {
-  process.exit(inspector.run());
+  inspector.run();
+  process.exit(matches);
 } catch(err) {
   console.log(err);
   process.exit(1);

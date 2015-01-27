@@ -123,6 +123,14 @@ structurally similar code. A lower threshold may work for your build process,
 but ~30 should help detect unnecessary boilerplate, while avoiding excessive
 output.
 
+To have jsinspect run with each job, but not block or fail the build, you can
+use something like the following:
+
+``` yaml
+script:
+  - "jsinspect -t 30 ./path/to/src || true"
+```
+
 ## Reporters
 
 Aside from the default reporter, both JSON and PMD CPD-style XML reporters are
