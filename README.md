@@ -69,6 +69,7 @@ Options:
   -V, --version                      output the version number
   -t, --threshold <number>           number of nodes (default: 15)
   -i, --identifiers                  match identifiers
+  -j  --jsx                          process jsx files (default off)
   -c, --config                       path to config file (default: .jsinspectrc)
   -r, --reporter [default|json|pmd]  specify the reporter to use
   -s, --suppress <number>            length to suppress diffs (default: 100, off: 0)

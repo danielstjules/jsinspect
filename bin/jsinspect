@@ -21,6 +21,7 @@ program
   .option('-t, --threshold <number>',
     'number of nodes (default: 15)', parseInt)
   .option('-i, --identifiers', 'match identifiers')
+  .option('-j --jsx', 'support jsx files')
   .option('-c, --config',
     'path to config file (default: .jsinspectrc)')
   .option('-r, --reporter [default|json|pmd]',
@@ -33,9 +34,10 @@ program
   .parse(process.argv);
 
 // Check and parse the config file, if it exists
-var rcPath, rcContents, rc, opts, ignorePatterns, matches;
+var rcPath, rcContents, rc, opts, ignorePatterns, matches, extensions;
 rcPath = path.resolve(process.cwd(), program.config || '.jsinspectrc');
 opts = {encoding: 'utf8'};
+extensions = ['.js'];
 
 if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
   try {
@@ -57,6 +59,10 @@ if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
 // Assume all unconsumed arguments are paths
 suppliedPaths = (program.args.length) ? program.args : ['.'];
 
+if (program.jsx) {
+  extensions.push('.jsx');
+}
+
 // chalk doesn't support short flags by default
 if (!program.color) {
   chalk.enabled = false;
@@ -70,7 +76,7 @@ if (program.ignore) {
 
 try {
   paths = filepaths.getSync(suppliedPaths, {
-    suffix: '.js',
+    suffix: extensions,
     ignore: ignorePatterns
   });
 } catch(e) {
@@ -79,7 +85,7 @@ try {
 }
 
 if (!paths.length) {
-  console.log('No .js files found in the list of paths');
+  console.log('No ' + extensions.join(' ') + ' files found in the list of paths');
   process.exit(0);
 }
 
