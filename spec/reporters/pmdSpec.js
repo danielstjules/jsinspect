@@ -67,12 +67,12 @@ describe('PMDReporter', function() {
         '<codefragment>\n' +
         '- spec/fixtures/smallDiffs.js:1,1\n' +
         '+ spec/fixtures/smallDiffs.js:2,2\n\n' +
-        '+  test = function() { return 2; };\n' +
-        '-  test = function() { return 1; };\n\n' +
+        '-  test = function() { return 1; };\n' +
+        '+  test = function() { return 2; };\n\n' +
         '- spec/fixtures/smallDiffs.js:1,1\n' +
         '+ spec/fixtures/smallDiffs.js:3,3\n\n' +
-        '+  test = function() { return 3; };\n' +
         '-  test = function() { return 1; };\n' +
+        '+  test = function() { return 3; };\n' +
         '</codefragment>\n'+
         '</duplication>\n'
       );

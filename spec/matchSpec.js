@@ -52,23 +52,24 @@ describe('Match', function() {
 
       expect(match.diffs).to.eql([[
         {
-          value: 'function intersectionB(arrayA, arrayB) {\n  ' +
-                 'arrayA.filter(function(n) {\n    '+
-                 'return arrayB.indexOf(n) != -1;\n',
-          added: true,
-          removed: undefined
-        },
-        {
           value: 'function intersectionA(array1, array2) {\n  '+
                  'array1.filter(function(n) {\n    ' +
                  'return array2.indexOf(n) != -1;\n',
+          count: 3,
           added: undefined,
           removed: true
         },
         {
-          value: '  });\n}',
-          added: undefined,
+          value: 'function intersectionB(arrayA, arrayB) {\n  ' +
+                 'arrayA.filter(function(n) {\n    '+
+                 'return arrayB.indexOf(n) != -1;\n',
+          count: 3,
+          added: true,
           removed: undefined
+        },
+        {
+          value: '  });\n}',
+          count: 2
         }
       ]]);
     });
@@ -84,23 +85,23 @@ describe('Match', function() {
         {
           value: 'function intersectionA(array1, array2) {\n  '+
                  'array1.filter(function(n) {\n',
-          added: undefined,
-          removed: undefined
-        },
-        {
-          value: '    return array2.indexOf(n) == -1;\n',
-          added: true,
-          removed: undefined
+          count: 2
         },
         {
           value: '    return array2.indexOf(n) != -1;\n',
+          count: 1,
           added: undefined,
           removed: true
         },
         {
-          value: '  });\n}',
-          added: undefined,
+          value: '    return array2.indexOf(n) == -1;\n',
+          count: 1,
+          added: true,
           removed: undefined
+        },
+        {
+          value: '  });\n}',
+          count: 2
         }
       ]]);
     });

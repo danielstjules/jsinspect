@@ -21,7 +21,7 @@
   "dependencies": {
     "acorn": "0.10.0",
     "commander": "*",
-    "diff": "1.0.8",
+    "diff": "1.4.0",
     "node-filepaths": "0.1.0",
     "chalk": "*",
     "strip-json-comments": "1.0.2",

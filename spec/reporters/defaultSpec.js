@@ -66,12 +66,12 @@ describe('DefaultReporter', function() {
         'spec/fixtures/intersection.js:7,11\n\n' +
         '- spec/fixtures/intersection.js:1,5\n' +
         '+ spec/fixtures/intersection.js:7,11\n'+
-        '+  function intersectionB(arrayA, arrayB) {\n' +
-        '+    arrayA.filter(function(n) {\n' +
-        '+      return arrayB.indexOf(n) != -1;\n' +
         '-  function intersectionA(array1, array2) {\n' +
         '-    array1.filter(function(n) {\n' +
         '-      return array2.indexOf(n) != -1;\n' +
+        '+  function intersectionB(arrayA, arrayB) {\n' +
+        '+    arrayA.filter(function(n) {\n' +
+        '+      return arrayB.indexOf(n) != -1;\n' +
         '     });\n   }\n'
       );
     });
