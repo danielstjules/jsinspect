@@ -22,7 +22,7 @@
     "acorn": "0.10.0",
     "commander": "*",
     "diff": "1.0.8",
-    "node-filepaths": "0.0.4",
+    "node-filepaths": "0.1.0",
     "chalk": "*",
     "strip-json-comments": "1.0.2",
     "strip-indent": "^1.0.0"

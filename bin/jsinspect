@@ -76,7 +76,7 @@ if (program.ignore) {
 
 try {
   paths = filepaths.getSync(suppliedPaths, {
-    suffix: extensions,
+    ext:    extensions,
     ignore: ignorePatterns
   });
 } catch(e) {
