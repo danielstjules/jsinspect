@@ -40,7 +40,7 @@ recursively, and only `.js` files are analyzed. Any `node_modules` dirs are
 also ignored. Being built for JavaScript, it also ignores CommonJS require
 statements, and AMD define expressions.
 
-![screenshot](http://danielstjules.com/github/jsinspect-screenshot.png)
+![screenshot](http://danielstjules.com/github/jsinspect-example.png)
 
 ## Installation
 
