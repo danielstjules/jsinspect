@@ -33,7 +33,7 @@ describe('DefaultReporter', function() {
       helpers.captureOutput();
     });
 
-    it('prints the number of instances, and their location', function() {
+    it('prints the number of instances', function() {
       var inspector = new Inspector([fixtures.intersection]);
       var reporter = new DefaultReporter(inspector);
 
@@ -41,11 +41,7 @@ describe('DefaultReporter', function() {
       inspector.run();
       helpers.restoreOutput();
 
-      expect(helpers.getOutput()).to.be(
-        '\nMatch - 2 instances\n' +
-        'spec/fixtures/intersection.js:1,5\n' +
-        'spec/fixtures/intersection.js:7,11\n'
-      );
+      expect(helpers.getOutput()).to.be('\n  Match - 2 instances\n');
     });
 
     it('prints the diffs if enabled', function() {
@@ -61,9 +57,7 @@ describe('DefaultReporter', function() {
       helpers.restoreOutput();
 
       expect(helpers.getOutput()).to.be(
-        '\nMatch - 2 instances\n' +
-        'spec/fixtures/intersection.js:1,5\n' +
-        'spec/fixtures/intersection.js:7,11\n\n' +
+        '\n  Match - 2 instances\n\n' +
         '- spec/fixtures/intersection.js:1,5\n' +
         '+ spec/fixtures/intersection.js:7,11\n'+
         '-  function intersectionA(array1, array2) {\n' +

@@ -1,5 +1,5 @@
 var fs    = require('fs');
-var parse = require('acorn/acorn_loose').parse_dammit;
+var parse = require('acorn/dist/acorn_loose').parse_dammit;
 var chalk = require('chalk');
 
 var output, enabled, write;
