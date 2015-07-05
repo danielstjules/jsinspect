@@ -69,7 +69,7 @@ if (!program.color) {
 }
 
 // Ignore node_modules by default, along with ignore arg
-ignorePatterns = ['node_modules'];
+ignorePatterns = ['node_modules', 'bower_components'];
 if (program.ignore) {
   ignorePatterns.push(program.ignore);
 }
