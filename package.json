@@ -35,6 +35,6 @@
     "jsinspect": "./bin/jsinspect"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha -R spec spec spec/reporters"
+    "test": "mocha -R spec spec spec/reporters"
   }
 }
