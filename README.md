@@ -36,9 +36,10 @@ the search to nodes with matching identifiers.
 
 The tool accepts a list of paths to parse, and outputs any matches along
 with a series of 2-way diffs. Any directories among the paths are walked
-recursively, and only `.js` files are analyzed. Any `node_modules` dirs are
-also ignored. Being built for JavaScript, it also ignores CommonJS require
-statements, and AMD define expressions.
+recursively, and only `.js` files are analyzed. Any `node_modules` and
+`bower_components` dirs are also ignored. Being built for JavaScript, it also
+ignores ES6 module declarations, CommonJS require statements, and AMD define
+expressions.
 
 ![screenshot](http://danielstjules.com/github/jsinspect-example.png)
 

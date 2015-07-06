@@ -26,6 +26,25 @@ describe('nodeUtils', function() {
     });
   });
 
+  describe('isES6Module', function() {
+    it('returns true for an import declaration', function() {
+      // ImportDeclaration
+      var nodes = [helpers.parse(fixtures.es6Module)[0]];
+      expect(nodeUtils.isES6Module(nodes)).to.be(true);
+    });
+
+    it('returns true for export declaration', function() {
+      // ExportNamedDeclaration
+      var nodes = [helpers.parse(fixtures.es6Module)[1]];
+      expect(nodeUtils.isES6Module(nodes)).to.be(true);
+    });
+
+    it('returns false otherwise', function() {
+      var nodes = helpers.parse(fixtures.commonjs);
+      expect(nodeUtils.isES6Module(nodes)).to.be(false);
+    });
+  });
+
   describe('isAMD', function() {
     it('returns true for an expression containing a define', function() {
       // First expression is define
