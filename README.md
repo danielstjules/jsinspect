@@ -147,11 +147,13 @@ has been applied.
     {"path":"spec/fixtures/intersection.js","lines":[1,5]},
     {"path":"spec/fixtures/intersection.js","lines":[7,11]}
   ],
-  "diffs":[{
-    "-":{"path":"spec/fixtures/intersection.js","lines":[1,5]},
-    "+":{"path":"spec/fixtures/intersection.js","lines":[7,11]},
-    "diff":"+  function intersectionB(arrayA, arrayB) {\n+    arrayA.filter(function(n) {\n+      return arrayB.indexOf(n) != -1;\n-  function intersectionA(array1, array2) {\n-    array1.filter(function(n) {\n-      return array2.indexOf(n) != -1;\n     });\n   }\n"
-  }]
+  "diffs":[
+    {
+      "-":{"path":"spec/fixtures/intersection.js","lines":[1,5]},
+      "+":{"path":"spec/fixtures/intersection.js","lines":[7,11]},
+      "diff":"-  function intersectionA(array1, array2) {\n-    array1.filter(function(n) {\n-      return array2.indexOf(n) != -1;\n+  function intersectionB(arrayA, arrayB) {\n+    arrayA.filter(function(n) {\n+      return arrayB.indexOf(n) != -1;\n     });\n   }\n"
+    }
+  ]
 }]
 ```
 
@@ -161,18 +163,18 @@ has been applied.
 <?xml version="1.0" encoding="utf-8"?>
 <pmd-cpd>
 <duplication lines="10">
-<file path="/projects/jsinspect/spec/fixtures/intersection.js" line="1"/>
-<file path="/projects/jsinspect/spec/fixtures/intersection.js" line="7"/>
+<file path="/jsinspect/spec/fixtures/intersection.js" line="1"/>
+<file path="/jsinspect/spec/fixtures/intersection.js" line="7"/>
 <codefragment>
 - spec/fixtures/intersection.js:1,5
 + spec/fixtures/intersection.js:7,11
 
-+  function intersectionB(arrayA, arrayB) {
-+    arrayA.filter(function(n) {
-+      return arrayB.indexOf(n) != -1;
 -  function intersectionA(array1, array2) {
 -    array1.filter(function(n) {
 -      return array2.indexOf(n) != -1;
++  function intersectionB(arrayA, arrayB) {
++    arrayA.filter(function(n) {
++      return arrayB.indexOf(n) != -1;
      });
    }
 </codefragment>
