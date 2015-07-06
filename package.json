@@ -20,12 +20,13 @@
   },
   "dependencies": {
     "acorn": "2.0.1",
+    "acorn-bfs": "0.0.1",
+    "chalk": "*",
     "commander": "*",
     "diff": "1.4.0",
     "node-filepaths": "0.1.0",
-    "chalk": "*",
-    "strip-json-comments": "1.0.2",
-    "strip-indent": "^1.0.0"
+    "strip-indent": "^1.0.0",
+    "strip-json-comments": "1.0.2"
   },
   "devDependencies": {
     "mocha": "*",

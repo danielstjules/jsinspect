@@ -63,25 +63,4 @@ describe('nodeUtils', function() {
       expect(nodeUtils.isCommonJS(nodes)).to.be(false);
     });
   });
-
-  describe('getNestedChildren', function() {
-    it('returns an array of children ordered by BFS traversal', function() {
-      var node = helpers.parse(fixtures.simple)[0];
-      var nested = nodeUtils.getNestedChildren(node, 20);
-
-      expect(nested).to.have.length(3);
-      expect(nested[0].type).to.be('BlockStatement');
-      expect(nested[1].type).to.be('ReturnStatement');
-      expect(nested[2].type).to.be('Literal');
-    });
-
-    it('trims the array to specified length', function() {
-      var node = helpers.parse(fixtures.simple)[0];
-      var nested = nodeUtils.getNestedChildren(node, 2);
-
-      expect(nested).to.have.length(2);
-      expect(nested[0].type).to.be('BlockStatement');
-      expect(nested[1].type).to.be('ReturnStatement');
-    });
-  });
 });
