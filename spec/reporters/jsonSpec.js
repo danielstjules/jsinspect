@@ -1,6 +1,7 @@
 var expect       = require('expect.js');
 var util         = require('util');
 var chalk        = require('chalk');
+var concat       = require('concat-stream')
 var fixtures     = require('../fixtures');
 var helpers      = require('../helpers');
 var JSONReporter = require('../../lib/reporters/json.js');
@@ -85,6 +86,31 @@ describe('JSONReporter', function() {
                 '+  test = function() { return 3; };\n'
         }
       ]);
+    });
+  });
+
+  describe('writes to custom stream', function() {
+    it('prints the number of instances, and their location', function(done) {
+      var inspector = new Inspector([fixtures.smallDiffs], {
+        threshold: 1
+      });
+      var concatStream = concat(onFinish);
+      var reporter = new JSONReporter(inspector, {
+        writeStream: concatStream
+      });
+
+      inspector.run();
+
+      function onFinish(data) {
+        expect(JSON.parse(data)).to.eql([{
+          instances: [
+            {path: 'spec/fixtures/smallDiffs.js', lines: [1,1]},
+            {path: 'spec/fixtures/smallDiffs.js', lines: [2,2]},
+            {path: 'spec/fixtures/smallDiffs.js', lines: [3,3]}
+          ]
+        }]);
+        done();
+      }
     });
   });
 });
