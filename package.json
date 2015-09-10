@@ -29,8 +29,9 @@
     "strip-json-comments": "1.0.2"
   },
   "devDependencies": {
-    "mocha": "*",
-    "expect.js": "*"
+    "concat-stream": "^1.5.0",
+    "expect.js": "*",
+    "mocha": "*"
   },
   "bin": {
     "jsinspect": "./bin/jsinspect"
