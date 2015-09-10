@@ -89,28 +89,26 @@ describe('JSONReporter', function() {
     });
   });
 
-  describe('writes to custom stream', function() {
-    it('prints the number of instances, and their location', function(done) {
-      var inspector = new Inspector([fixtures.smallDiffs], {
-        threshold: 1
-      });
-      var concatStream = concat(onFinish);
-      var reporter = new JSONReporter(inspector, {
-        writeStream: concatStream
-      });
-
-      inspector.run();
-
-      function onFinish(data) {
-        expect(JSON.parse(data)).to.eql([{
-          instances: [
-            {path: 'spec/fixtures/smallDiffs.js', lines: [1,1]},
-            {path: 'spec/fixtures/smallDiffs.js', lines: [2,2]},
-            {path: 'spec/fixtures/smallDiffs.js', lines: [3,3]}
-          ]
-        }]);
-        done();
-      }
+  it('can write to a custom stream', function(done) {
+    var inspector = new Inspector([fixtures.smallDiffs], {
+      threshold: 1
     });
+    var concatStream = concat(onFinish);
+    var reporter = new JSONReporter(inspector, {
+      writableStream: concatStream
+    });
+
+    inspector.run();
+
+    function onFinish(data) {
+      expect(JSON.parse(data)).to.eql([{
+        instances: [
+          {path: 'spec/fixtures/smallDiffs.js', lines: [1,1]},
+          {path: 'spec/fixtures/smallDiffs.js', lines: [2,2]},
+          {path: 'spec/fixtures/smallDiffs.js', lines: [3,3]}
+        ]
+      }]);
+      done();
+    }
   });
 });
