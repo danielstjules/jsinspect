@@ -13,3 +13,19 @@ require(['foo', 'bar', 'baz'], function(foo, bar, baz) {
 require(['foo', 'bar', 'baz'], function(foo, bar, baz) {
   foo.doSomething();
 });
+
+example.require(['foo', 'bar', 'baz'], function(foo, bar, baz) {
+  bar.somethingElse();
+});
+
+example.require(['foo', 'bar', 'baz'], function(foo, bar, baz) {
+  bar.somethingElse();
+});
+
+namespace.example.define('test', ['foo', 'bar', 'baz'], function(foo, bar, baz) {
+  bar.somethingElse();
+});
+
+namespace.example.define('test', ['foo', 'bar', 'baz'], function(foo, bar, baz) {
+  bar.somethingElse();
+});

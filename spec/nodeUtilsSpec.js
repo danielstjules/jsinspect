@@ -58,6 +58,16 @@ describe('nodeUtils', function() {
       expect(nodeUtils.isAMD(nodes)).to.be(true);
     });
 
+    it('returns true even if the function is a property', function() {
+      var nodes = [helpers.parse(fixtures.amd)[4]];
+      expect(nodeUtils.isAMD(nodes)).to.be(true);
+    });
+
+    it('returns true even if a nested property', function() {
+      var nodes = [helpers.parse(fixtures.amd)[6]];
+      expect(nodeUtils.isAMD(nodes)).to.be(true);
+    });
+
     it('returns false otherwise', function() {
       var nodes = helpers.parse(fixtures.commonjs);
       expect(nodeUtils.isAMD(nodes)).to.be(false);
