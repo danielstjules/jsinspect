@@ -42,6 +42,7 @@ module.exports = {
       ecmaVersion: 6,
       allowReturnOutsideFunction: true,
       locations: true,
+      sourceType: 'module',
       sourceFile: filePath
     }).body;
 
