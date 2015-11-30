@@ -23,10 +23,11 @@ describe('PMDReporter', function() {
     });
 
     it('prints paths and line numbers in a duplication element', function() {
-      var inspector, reporter;
+      var inspector, reporter, matches;
 
       inspector = new Inspector([fixtures.smallDiffs], {threshold: 1});
       reporter = new PMDReporter(inspector);
+      matches = helpers.collectMatches(inspector);
 
       inspector.removeAllListeners('start');
       inspector.removeAllListeners('end');
@@ -35,7 +36,7 @@ describe('PMDReporter', function() {
       helpers.restoreOutput();
 
       expect(helpers.getOutput()).to.eql(
-        '<duplication lines=\"3\">\n' +
+        '<duplication lines=\"3\" id="' + matches[0].hash + '">\n' +
         '<file path=\"' + fixtures.smallDiffs + '\" line=\"1\"/>\n' +
         '<file path=\"' + fixtures.smallDiffs + '\" line=\"2\"/>\n' +
         '<file path=\"' + fixtures.smallDiffs + '\" line=\"3\"/>\n' +
@@ -45,13 +46,14 @@ describe('PMDReporter', function() {
     });
 
     it('prints diffs if enabled, within a codefragment element', function() {
-      var inspector, reporter, absolutePath;
+      var inspector, reporter, absolutePath, matches;
 
       inspector = new Inspector([fixtures.smallDiffs], {
         diff: true,
         threshold: 1
       });
       reporter = new PMDReporter(inspector, {diff: true});
+      matches = helpers.collectMatches(inspector);
 
       inspector.removeAllListeners('start');
       inspector.removeAllListeners('end');
@@ -60,7 +62,7 @@ describe('PMDReporter', function() {
       helpers.restoreOutput();
 
       expect(helpers.getOutput()).to.eql(
-        '<duplication lines=\"3\">\n' +
+        '<duplication lines=\"3\" id="' + matches[0].hash + '">\n' +
         '<file path=\"' + fixtures.smallDiffs + '\" line=\"1\"/>\n' +
         '<file path=\"' + fixtures.smallDiffs + '\" line=\"2\"/>\n' +
         '<file path=\"' + fixtures.smallDiffs + '\" line=\"3\"/>\n' +
