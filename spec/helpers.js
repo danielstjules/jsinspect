@@ -19,6 +19,14 @@ module.exports = {
     };
   },
 
+  collectMatches: function(inspector) {
+    var array = [];
+    inspector.on('match', function(match) {
+      array.push(match);
+    });
+    return array;
+  },
+
   getOutput: function() {
     return output;
   },

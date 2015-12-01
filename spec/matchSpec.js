@@ -12,13 +12,26 @@ describe('Match', function() {
         {type: 'Literal'}
       ];
 
-      var match = new Match(mockNodes);
+      var match = new Match(mockNodes, 'key');
       expect(match.nodes).to.be(mockNodes);
     });
 
     it('initializes the object with an empty array for match.diffs', function() {
-      var match = new Match([]);
+      var match = new Match([], '');
       expect(match.diffs).to.eql([]);
+    });
+  });
+
+  describe('hash', function() {
+    it('returns a different hash for different key', function() {
+      var match1 = new Match([], 'a');
+      var match2 = new Match([], 'b');
+      expect(match1.hash).not.to.equal(match2.hash);
+    });
+    it('returns a same hash for same key', function() {
+      var match1 = new Match([], 'a');
+      var match2 = new Match([], 'a');
+      expect(match1.hash).to.equal(match2.hash);
     });
   });
 

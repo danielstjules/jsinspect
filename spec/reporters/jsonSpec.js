@@ -39,6 +39,7 @@ describe('JSONReporter', function() {
         threshold: 1
       });
       var reporter = new JSONReporter(inspector);
+      var matches = helpers.collectMatches(inspector);
 
       inspector.removeAllListeners('start');
       inspector.removeAllListeners('end');
@@ -48,6 +49,7 @@ describe('JSONReporter', function() {
 
       var parsedOutput = JSON.parse(helpers.getOutput());
       expect(parsedOutput).to.eql({
+        id: matches[0].hash,
         instances: [
           {path: 'spec/fixtures/smallDiffs.js', lines: [1,1]},
           {path: 'spec/fixtures/smallDiffs.js', lines: [2,2]},
@@ -97,11 +99,13 @@ describe('JSONReporter', function() {
     var reporter = new JSONReporter(inspector, {
       writableStream: concatStream
     });
+    var matches = helpers.collectMatches(inspector);
 
     inspector.run();
 
     function onFinish(data) {
       expect(JSON.parse(data)).to.eql([{
+        id: matches[0].hash,
         instances: [
           {path: 'spec/fixtures/smallDiffs.js', lines: [1,1]},
           {path: 'spec/fixtures/smallDiffs.js', lines: [2,2]},
