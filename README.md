@@ -82,11 +82,12 @@ Options:
 If a `.jsinspectrc` file is located in the project directory, its values will
 be used in place of the defaults listed above. For example:
 
-``` javascript
+``` json
 {
   "threshold":     30,
   "identifiers":   true,
   "ignore":        "Test.js|Spec.js", // used as RegExp,
+  "jsx":           true,
   "reporter":      "json",
   "suppress":      100
 }
