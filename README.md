@@ -82,7 +82,7 @@ Options:
 If a `.jsinspectrc` file is located in the project directory, its values will
 be used in place of the defaults listed above. For example:
 
-``` json
+``` javascript
 {
   "threshold":     30,
   "identifiers":   true,
