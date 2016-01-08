@@ -21,7 +21,7 @@ program
   .option('-t, --threshold <number>',
     'number of nodes (default: 15)', parseInt)
   .option('-i, --identifiers', 'match identifiers')
-  .option('-j --jsx', 'support jsx files')
+  .option('-j, --jsx', 'support jsx files (default: false)')
   .option('-c, --config',
     'path to config file (default: .jsinspectrc)')
   .option('-r, --reporter [default|json|pmd]',
