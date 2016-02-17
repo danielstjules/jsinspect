@@ -138,12 +138,15 @@ script:
 
 Aside from the default reporter, both JSON and PMD CPD-style XML reporters are
 available. Note that in the JSON example below, indentation and formatting
-has been applied.
+has been applied. Furthermore, the id property available in these reporters is
+useful for parsing by automatic scripts to determine whether or not duplicate
+code has changed between builds.
 
 #### JSON
 
 ``` json
 [{
+  "id":"566f58e984ad337cf78588771e3b7cc908f270c8",
   "instances":[
     {"path":"spec/fixtures/intersection.js","lines":[1,5]},
     {"path":"spec/fixtures/intersection.js","lines":[7,11]}
@@ -163,7 +166,7 @@ has been applied.
 ``` xml
 <?xml version="1.0" encoding="utf-8"?>
 <pmd-cpd>
-<duplication lines="10">
+<duplication lines="10" id="566f58e984ad337cf78588771e3b7cc908f270c8">
 <file path="/jsinspect/spec/fixtures/intersection.js" line="1"/>
 <file path="/jsinspect/spec/fixtures/intersection.js" line="7"/>
 <codefragment>
