@@ -70,7 +70,8 @@ Options:
   -V, --version                      output the version number
   -t, --threshold <number>           number of nodes (default: 15)
   -i, --identifiers                  match identifiers
-  -j, --jsx                          process jsx files (default: false)
+  -m, --matches <number>             min number of instances for a match (default: 2)
+  -j, --jsx                          support jsx files (default: false)
   -c, --config                       path to config file (default: .jsinspectrc)
   -r, --reporter [default|json|pmd]  specify the reporter to use
   -s, --suppress <number>            length to suppress diffs (default: 100, off: 0)
@@ -86,10 +87,11 @@ be used in place of the defaults listed above. For example:
 {
   "threshold":     30,
   "identifiers":   true,
+  "matches":       2,
   "ignore":        "Test.js|Spec.js", // used as RegExp,
   "jsx":           true,
   "reporter":      "json",
-  "suppress":      100
+  "suppress":      100,
 }
 ```
 

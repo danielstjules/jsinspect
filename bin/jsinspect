@@ -21,6 +21,8 @@ program
   .option('-t, --threshold <number>',
     'number of nodes (default: 15)', parseInt)
   .option('-i, --identifiers', 'match identifiers')
+  .option('-m, --matches <number>',
+    'min number of instances for a match (default: 2)', parseInt)
   .option('-j, --jsx', 'support jsx files (default: false)')
   .option('-c, --config',
     'path to config file (default: .jsinspectrc)')
@@ -48,7 +50,7 @@ if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
     process.exit(3);
   }
 
-  ['threshold', 'identifiers', 'ignore', 'jsx',
+  ['threshold', 'identifiers', 'ignore', 'matches', 'jsx',
    'reporter', 'suppress'].forEach(function(option) {
     if (program[option] === undefined && (option in rc)) {
       program[option] = rc[option];
@@ -92,7 +94,8 @@ if (!paths.length) {
 inspector = new Inspector(paths, {
   threshold:   program.threshold,
   diff:        program.diff,
-  identifiers: program.identifiers
+  identifiers: program.identifiers,
+  matches:     program.matches
 });
 
 // Retrieve the requested reporter

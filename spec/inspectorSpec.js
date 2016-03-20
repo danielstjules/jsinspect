@@ -138,6 +138,19 @@ describe('Inspector', function() {
     expect(match.diffs[0]).to.have.length(3);
   });
 
+  it('ignores matches with less than the supplied minimum', function() {
+    var inspector = new Inspector([fixtures.matches], {
+      threshold: 2,
+      matches: 3
+    });
+
+    inspector.on('match', listener);
+    inspector.run();
+
+    expect(found).to.have.length(1);
+    expect(found[0].nodes).to.have.length(3);
+  });
+
   it('ignores CommonJS require statements', function() {
     var inspector = new Inspector([fixtures.commonjs], {
       threshold: 3
