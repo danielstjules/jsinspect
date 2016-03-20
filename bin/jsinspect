@@ -45,7 +45,7 @@ if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
     rc = JSON.parse(rcContents);
   } catch (e) {
     console.log('Invalid config file:', e.message);
-    process.exit(1);
+    process.exit(3);
   }
 
   ['threshold', 'identifiers', 'ignore', 'jsx',
@@ -81,7 +81,7 @@ try {
   });
 } catch(e) {
   console.log(e.message);
-  process.exit(3);
+  process.exit(4);
 }
 
 if (!paths.length) {
@@ -110,7 +110,7 @@ inspector.on('match', function() {
 
 try {
   inspector.run();
-  process.exit(matches);
+  process.exit(matches ? 5 : 0);
 } catch(err) {
   console.log(err);
   process.exit(1);
