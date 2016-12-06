@@ -33,6 +33,7 @@
     "expect.js": "*",
     "mocha": "*"
   },
+  "main": "./lib/inspector.js",
   "bin": {
     "jsinspect": "./bin/jsinspect"
   },
