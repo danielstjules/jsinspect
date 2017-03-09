@@ -31,7 +31,8 @@
   "devDependencies": {
     "concat-stream": "^1.5.0",
     "expect.js": "*",
-    "mocha": "*"
+    "mocha": "*",
+    "dirmap": "0.0.2"
   },
   "bin": {
     "jsinspect": "./bin/jsinspect"
