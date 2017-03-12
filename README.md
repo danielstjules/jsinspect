@@ -59,6 +59,7 @@ and [gulp-jsinspect](https://github.com/alexeyraspopov/gulp-jsinspect)
 ```
 Usage: jsinspect [options] <paths ...>
 
+
 Duplicate code and structure detection for JavaScript.
 Identifier matching is disabled by default. Example use:
 jsinspect -t 30 -i --ignore "Test.js" ./path/to/src

@@ -23,7 +23,6 @@ describe('Inspector', function() {
     it('accepts an array of file paths', function() {
       var filePaths = ['path1.js', 'path2.js'];
       var inspector = new Inspector(filePaths);
-
       expect(inspector._filePaths).to.be(filePaths);
     });
 
@@ -34,7 +33,6 @@ describe('Inspector', function() {
       };
 
       var inspector = new Inspector([], opts);
-
       expect(inspector._threshold).to.be(opts.threshold);
       expect(inspector._diff).to.be(opts.diff);
     });
@@ -75,7 +73,6 @@ describe('Inspector', function() {
 
       inspector.on('match', listener);
       inspector.run();
-
       expect(found).to.have.length(1);
     });
   });
@@ -91,11 +88,9 @@ describe('Inspector', function() {
     var match = found[0];
     expect(found).to.have.length(1);
     expect(match.nodes).to.have.length(2);
-
     expect(match.nodes[0].type).to.be('FunctionDeclaration');
     expect(match.nodes[0].loc.start).to.eql({line: 1, column: 0});
     expect(match.nodes[0].loc.end).to.eql({line: 5, column: 1});
-
     expect(match.nodes[1].type).to.be('FunctionDeclaration');
     expect(match.nodes[1].loc.start).to.eql({line: 7, column: 0});
     expect(match.nodes[1].loc.end).to.eql({line: 11, column: 1});
@@ -112,11 +107,9 @@ describe('Inspector', function() {
     var match = found[0];
     expect(found).to.have.length(1);
     expect(match.nodes).to.have.length(2);
-
     expect(match.nodes[0].type).to.be('FunctionDeclaration');
     expect(match.nodes[0].loc.start).to.eql({line: 1, column: 0});
     expect(match.nodes[0].loc.end).to.eql({line: 9, column: 1});
-
     expect(match.nodes[1].type).to.be('FunctionDeclaration');
     expect(match.nodes[1].loc.start).to.eql({line: 11, column: 0});
     expect(match.nodes[1].loc.end).to.eql({line: 19, column: 1});
@@ -146,7 +139,6 @@ describe('Inspector', function() {
 
     inspector.on('match', listener);
     inspector.run();
-
     expect(found).to.have.length(1);
     expect(found[0].nodes).to.have.length(3);
   });
@@ -158,7 +150,6 @@ describe('Inspector', function() {
 
     inspector.on('match', listener);
     inspector.run();
-
     expect(found).to.have.length(0);
   });
 
@@ -169,7 +160,6 @@ describe('Inspector', function() {
 
     inspector.on('match', listener);
     inspector.run();
-
     expect(found).to.have.length(0);
   });
 });

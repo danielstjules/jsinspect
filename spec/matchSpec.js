@@ -28,6 +28,7 @@ describe('Match', function() {
       var match2 = new Match([], 'b');
       expect(match1.hash).not.to.equal(match2.hash);
     });
+
     it('returns a same hash for same key', function() {
       var match1 = new Match([], 'a');
       var match2 = new Match([], 'a');
@@ -35,17 +36,15 @@ describe('Match', function() {
     });
   });
 
-  function getFixture(fixtureName){
-    var ast, contents, content;
-
-    content = fs.readFileSync(fixtures[fixtureName], {
+  function getFixture(fixtureName) {
+    var content = fs.readFileSync(fixtures[fixtureName], {
       encoding: 'utf8'
     });
 
-    contents = {};
+    var contents = {};
     contents[fixtures[fixtureName]] = content.split('\n');
 
-    ast = parse(content, {
+    var ast = parse(content, {
       ecmaVersion: 6,
       allowReturnOutsideFunction: true,
       locations: true,

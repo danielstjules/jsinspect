@@ -2,12 +2,10 @@ var fs    = require('fs');
 var parse = require('acorn/dist/acorn_loose').parse_dammit;
 var chalk = require('chalk');
 
-var output, enabled, write;
-
-output = '';
-enabled = chalk.enabled;
-write = process.stdout.write;
-parseCache = {};
+var output = '';
+var enabled = chalk.enabled;
+var write = process.stdout.write;
+var parseCache = {};
 
 module.exports = {
   captureOutput: function() {

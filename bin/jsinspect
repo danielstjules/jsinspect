@@ -9,11 +9,11 @@ var program   = require('commander');
 var Inspector = require('../lib/inspector');
 var reporters = require('../lib/reporters');
 
-var summary, suppliedPaths, paths, inspector, reporterType;
-
-summary = '  Duplicate code and structure detection for JavaScript.\n'+
-          '  Identifier matching is disabled by default. Example use:\n' +
-          '  jsinspect -t 30 -i --ignore \"Test.js\" ./path/to/src\n';
+var summary = `
+  Duplicate code and structure detection for JavaScript.
+  Identifier matching is disabled by default. Example use:
+  jsinspect -t 30 -i --ignore "Test.js" ./path/to/src
+`;
 
 program
   .version(require('../package.json').version)
@@ -36,10 +36,10 @@ program
   .parse(process.argv);
 
 // Check and parse the config file, if it exists
-var rcPath, rcContents, rc, opts, ignorePatterns, matches, extensions;
-rcPath = path.resolve(process.cwd(), program.config || '.jsinspectrc');
-opts = {encoding: 'utf8'};
-extensions = ['.js'];
+var rcPath = path.resolve(process.cwd(), program.config || '.jsinspectrc');
+var opts = {encoding: 'utf8'};
+var extensions = ['.js'];
+var rcContents, rc, paths;
 
 if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
   try {
@@ -51,7 +51,7 @@ if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
   }
 
   ['threshold', 'identifiers', 'ignore', 'matches', 'jsx',
-   'reporter', 'suppress'].forEach(function(option) {
+   'reporter', 'suppress'].forEach((option) => {
     if (program[option] === undefined && (option in rc)) {
       program[option] = rc[option];
     }
@@ -59,7 +59,7 @@ if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
 }
 
 // Assume all unconsumed arguments are paths
-suppliedPaths = (program.args.length) ? program.args : ['.'];
+var suppliedPaths = (program.args.length) ? program.args : ['.'];
 
 if (program.jsx) {
   extensions.push('.jsx');
@@ -71,14 +71,14 @@ if (!program.color) {
 }
 
 // Ignore node_modules by default, along with ignore arg
-ignorePatterns = ['node_modules', 'bower_components'];
+var ignorePatterns = ['node_modules', 'bower_components'];
 if (program.ignore) {
   ignorePatterns.push(program.ignore);
 }
 
 try {
   paths = filepaths.getSync(suppliedPaths, {
-    ext:    extensions,
+    ext: extensions,
     ignore: ignorePatterns
   });
 } catch(e) {
@@ -87,11 +87,11 @@ try {
 }
 
 if (!paths.length) {
-  console.log('No ' + extensions.join(' ') + ' files found in the list of paths');
+  console.log(`No ${extensions.join(' ')} files found in the list of paths`);
   process.exit(0);
 }
 
-inspector = new Inspector(paths, {
+var inspector = new Inspector(paths, {
   threshold:   program.threshold,
   diff:        program.diff,
   identifiers: program.identifiers,
@@ -99,17 +99,15 @@ inspector = new Inspector(paths, {
 });
 
 // Retrieve the requested reporter
-reporterType = reporters[program.reporter] || reporters.default;
+var reporterType = reporters[program.reporter] || reporters.default;
 new reporterType(inspector, {
   diff: program.diff,
   suppress: program.suppress
 });
 
 // Track the number of matches
-matches = 0;
-inspector.on('match', function() {
-  matches++;
-});
+var matches = 0;
+inspector.on('match', () => matches++);
 
 try {
   inspector.run();
