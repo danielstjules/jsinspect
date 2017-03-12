@@ -12,17 +12,17 @@ describe('nodeUtils', function() {
       // Simplify by only using intersectionA
       var nodes = [helpers.parse(fixtures.intersection)[0]];
       var string = nodeUtils.getIdentifierString(nodes);
-
-      expect(string).to.be('array1:filter:array2:indexOf:n:n:intersectionA:' +
-        'array1:array2');
+      expect(string).to.be(
+        'intersectionA:array1:array2:array1:filter:n:array2:indexOf:n'
+      );
     });
 
     it('traverses literals in member, object and function expressions', function() {
       var nodes = helpers.parse(fixtures.identifiers);
       var string = nodeUtils.getIdentifierString(nodes);
-
-      expect(string).to.be('cache:storage:cache:key:key:get:storage:cache:' +
-        'key:val:key:val:set:storage');
+      expect(string).to.be(
+        'storage:cache:get:key:storage:cache:key:set:key:val:storage:cache:key:val'
+      );
     });
   });
 
