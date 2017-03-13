@@ -1,9 +1,7 @@
-export function sum(a, b) {
-  var x = 1;
-  var y = 2;
+export function sumA(a, b) {
   return a + b;
 }
 
-export function sum(a, b) {
+export function sumB(a, b) {
   return a + b;
 }
