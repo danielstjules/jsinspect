@@ -114,6 +114,23 @@ describe('Inspector', function() {
     expect(match.nodes[1].loc.end).to.eql({line: 19, column: 1});
   });
 
+  it('supports JSX', function() {
+    var inspector = new Inspector([fixtures.basicJSX]);
+
+    inspector.on('match', listener);
+    inspector.run();
+
+    var match = found[0];
+    expect(found).to.have.length(1);
+    expect(match.nodes).to.have.length(2);
+    expect(match.nodes[0].type).to.be('FunctionDeclaration');
+    expect(match.nodes[0].loc.start).to.eql({line: 3, column: 0});
+    expect(match.nodes[0].loc.end).to.eql({line: 9, column: 1});
+    expect(match.nodes[1].type).to.be('FunctionDeclaration');
+    expect(match.nodes[1].loc.start).to.eql({line: 11, column: 0});
+    expect(match.nodes[1].loc.end).to.eql({line: 17, column: 1});
+  });
+
   it('includes a diff with the match, if enabled', function() {
     var inspector = new Inspector([fixtures.intersection], {
       threshold: 11,

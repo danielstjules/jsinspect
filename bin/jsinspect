@@ -38,7 +38,7 @@ program
 // Check and parse the config file, if it exists
 var rcPath = path.resolve(process.cwd(), program.config || '.jsinspectrc');
 var opts = {encoding: 'utf8'};
-var extensions = ['.js'];
+var extensions = ['.js', '.jsx'];
 var rcContents, rc, paths;
 
 if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {

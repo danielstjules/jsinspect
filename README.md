@@ -3,7 +3,7 @@
 Detect copy-pasted and structurally similar code. The inspector identifies
 duplicate code, even if modified, as well as common boilerplate or logic that
 should be the target of refactoring. Compatible with Node.js 6.0+, and supports
-JSX as well as Flow.
+ES6, JSX as well as Flow.
 
 **Note: Currently being rewritten**
 
@@ -39,8 +39,8 @@ the search to nodes with matching identifiers.
 
 The tool accepts a list of paths to parse, and outputs any matches along
 with a series of 2-way diffs. Any directories among the paths are walked
-recursively, and only `.js` files are analyzed. Any `node_modules` and
-`bower_components` dirs are also ignored.
+recursively, and only `.js` and `.jsx` files are analyzed. Any `node_modules`
+and `bower_components` dirs are also ignored.
 
 ![screenshot](http://danielstjules.com/github/jsinspect-example.png)
 
