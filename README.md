@@ -4,6 +4,8 @@ Detect copy-pasted and structurally similar code. The inspector identifies
 duplicate code, even if modified, as well as common boilerplate or logic that
 should be the target of refactoring. Compatible with Node.js 6.0+
 
+**Note: Currently being rewritten**
+
 [![Build Status](https://travis-ci.org/danielstjules/jsinspect.svg?branch=master)](https://travis-ci.org/danielstjules/jsinspect)
 
 * [Overview](#overview)
