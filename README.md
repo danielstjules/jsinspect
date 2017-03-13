@@ -22,14 +22,14 @@ We've all had to deal with code smell, and duplicate code is a common source.
 While some instances are easy to spot, this type of searching is the perfect
 use-case for a helpful CLI tool.
 
-Existing solutions do exist for this purpose, but are often token-based and
-rely on string searching methods such as the Rabin–Karp algorithm. Why isn't
-this always ideal? Those tools may struggle with code that has wildly varying
-identifiers, despite having the same structure and behavior.
+Existing solutions do exist for this purpose, but some struggle with code
+that has wildly varying identifiers or literals, and others have lackluster
+support for the JS ecosystem: ES6, JSX, Flow, ignoring module declarations
+and imports, etc.
 
 And copy-pasted code is but one type of code duplication. Common boilerplate
 and repeated logic can be identified as well using jsinspect, since it
-doesn't work on tokens - it uses the ASTs of the parsed code.
+doesn't operate directly on tokens - it uses the ASTs of the parsed code.
 
 You have the freedom to specify a threshold determining the smallest subset of
 nodes to analyze. This will identify code with a similar structure, based
@@ -40,9 +40,7 @@ the search to nodes with matching identifiers.
 The tool accepts a list of paths to parse, and outputs any matches along
 with a series of 2-way diffs. Any directories among the paths are walked
 recursively, and only `.js` files are analyzed. Any `node_modules` and
-`bower_components` dirs are also ignored. Being built for JavaScript, it also
-ignores ES6 module declarations, CommonJS require statements, and AMD define
-expressions.
+`bower_components` dirs are also ignored.
 
 ![screenshot](http://danielstjules.com/github/jsinspect-example.png)
 
