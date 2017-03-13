@@ -41,7 +41,11 @@ describe('DefaultReporter', function() {
       inspector.run();
       helpers.restoreOutput();
 
-      expect(helpers.getOutput()).to.be('\n  Match - 2 instances\n');
+      expect(helpers.getOutput()).to.be(
+        '\n  Match - 2 instances\n' +
+        '  spec/fixtures/intersection.js:1,5\n' +
+        '  spec/fixtures/intersection.js:7,11\n'
+      );
     });
 
     it('prints the diffs if enabled', function() {
