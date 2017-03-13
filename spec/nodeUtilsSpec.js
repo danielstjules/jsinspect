@@ -5,9 +5,6 @@ var nodeUtils = require('../lib/nodeUtils');
 
 describe('nodeUtils', function() {
   describe('getIdentifierString', function() {
-    // acorn walker traverses with DFS, but unfortunately invokes the
-    // callbacks on children first
-
     it('returns an unordered string of identifiers', function() {
       // Simplify by only using intersectionA
       var nodes = [helpers.parse(fixtures.intersection)[0]];

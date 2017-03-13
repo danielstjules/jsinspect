@@ -1,5 +1,5 @@
 var fs    = require('fs');
-var parse = require('acorn/dist/acorn_loose').parse_dammit;
+var parse = require('../lib/parser').parse;
 var chalk = require('chalk');
 
 var output = '';
@@ -35,23 +35,11 @@ module.exports = {
   },
 
   parse: function(filePath) {
-    var contents, ast;
-
     if (parseCache[filePath]) return parseCache[filePath];
 
-    contents = fs.readFileSync(filePath, {
-      encoding: 'utf8'
-    });
-
-    // Skip the parent 'Program' node
-    ast = parse(contents, {
-      ecmaVersion: 6,
-      allowReturnOutsideFunction: true,
-      locations: true,
-      sourceType: 'module',
-      sourceFile: filePath
-    }).body;
-
+    // Skip the root Program node
+    var src = fs.readFileSync(filePath, {encoding: 'utf8'});
+    var ast = parse(src, filePath).body;
     parseCache[filePath] = ast;
 
     return ast;

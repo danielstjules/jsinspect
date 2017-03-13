@@ -19,7 +19,7 @@
     "url": "https://github.com/danielstjules/jsinspect.git"
   },
   "dependencies": {
-    "acorn": "4.0.11",
+    "babylon": "6.16.1",
     "chalk": "*",
     "commander": "*",
     "diff": "1.4.0",

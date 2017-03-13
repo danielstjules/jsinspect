@@ -1,5 +1,5 @@
 var expect   = require('expect.js');
-var parse    = require('acorn/dist/acorn_loose').parse_dammit;
+var parse    = require('../lib/parser').parse;
 var fs       = require('fs');
 var fixtures = require('./fixtures');
 var Match    = require('../lib/match.js');
@@ -43,13 +43,7 @@ describe('Match', function() {
 
     var contents = {};
     contents[fixtures[fixtureName]] = content.split('\n');
-
-    var ast = parse(content, {
-      ecmaVersion: 6,
-      allowReturnOutsideFunction: true,
-      locations: true,
-      sourceFile: fixtures[fixtureName]
-    });
+    var ast = parse(content, fixtures[fixtureName]);
 
     return {ast: ast, contents: contents};
   }
