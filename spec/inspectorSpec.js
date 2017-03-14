@@ -114,6 +114,23 @@ describe('Inspector', function() {
     expect(match.nodes[1].loc.end).to.eql({line: 19, column: 1});
   });
 
+  it('supports ES6', function() {
+    var inspector = new Inspector([fixtures.es6ClassExport]);
+
+    inspector.on('match', listener);
+    inspector.run();
+
+    var match = found[0];
+    expect(found).to.have.length(1);
+    expect(match.nodes).to.have.length(2);
+    expect(match.nodes[0].type).to.be('ClassMethod');
+    expect(match.nodes[0].loc.start).to.eql({line: 2, column: 2});
+    expect(match.nodes[0].loc.end).to.eql({line: 6, column: 3});
+    expect(match.nodes[1].type).to.be('ClassMethod');
+    expect(match.nodes[1].loc.start).to.eql({line: 8, column: 2});
+    expect(match.nodes[1].loc.end).to.eql({line: 12, column: 3});
+  });
+
   it('supports JSX', function() {
     var inspector = new Inspector([fixtures.jsxTodo]);
 
