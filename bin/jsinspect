@@ -23,7 +23,6 @@ program
   .option('-i, --identifiers', 'match identifiers')
   .option('-m, --matches <number>',
     'min number of instances for a match (default: 2)', parseInt)
-  .option('-j, --jsx', 'support jsx files (default: false)')
   .option('-c, --config',
     'path to config file (default: .jsinspectrc)')
   .option('-r, --reporter [default|json|pmd]',
@@ -38,7 +37,6 @@ program
 // Check and parse the config file, if it exists
 var rcPath = path.resolve(process.cwd(), program.config || '.jsinspectrc');
 var opts = {encoding: 'utf8'};
-var extensions = ['.js', '.jsx'];
 var rcContents, rc, paths;
 
 if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
@@ -50,7 +48,7 @@ if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
     process.exit(3);
   }
 
-  ['threshold', 'identifiers', 'ignore', 'matches', 'jsx',
+  ['threshold', 'identifiers', 'ignore', 'matches',
    'reporter', 'suppress'].forEach((option) => {
     if (program[option] === undefined && (option in rc)) {
       program[option] = rc[option];
@@ -60,10 +58,6 @@ if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
 
 // Assume all unconsumed arguments are paths
 var suppliedPaths = (program.args.length) ? program.args : ['.'];
-
-if (program.jsx) {
-  extensions.push('.jsx');
-}
 
 // chalk doesn't support short flags by default
 if (!program.color) {
@@ -78,7 +72,7 @@ if (program.ignore) {
 
 try {
   paths = filepaths.getSync(suppliedPaths, {
-    ext: extensions,
+    ext: ['.js', '.jsx'],
     ignore: ignorePatterns
   });
 } catch(e) {

@@ -1,9 +1,7 @@
 ![jsinspect](http://danielstjules.com/github/jsinspect-logo.png)
 
-Detect copy-pasted and structurally similar code. The inspector identifies
-duplicate code, even if modified, as well as common boilerplate or logic that
-should be the target of refactoring. Compatible with Node.js 6.0+, and supports
-ES6, JSX as well as Flow.
+Detect copy-pasted and structurally similar JavaScript code. Compatible with
+Node.js 6.0+, and supports ES6, JSX as well as Flow.
 
 **Note: Currently being rewritten, these docs reflect the latest master branch
 and not the latest release**
@@ -38,10 +36,10 @@ on the AST node types, e.g. BlockStatement, VariableDeclaration,
 ObjectExpression, etc. For copy-paste oriented detection, you can even limit
 the search to nodes with matching identifiers.
 
-The tool accepts a list of paths to parse, and outputs any matches along
-with a series of 2-way diffs. Any directories among the paths are walked
-recursively, and only `.js` and `.jsx` files are analyzed. Any `node_modules`
-and `bower_components` dirs are also ignored.
+The tool accepts a list of paths to parse and prints any found matches. Any
+directories among the paths are walked recursively, and only `.js` and `.jsx`
+files are analyzed. Any `node_modules` and `bower_components` dirs are also
+ignored.
 
 ![screenshot](http://danielstjules.com/github/jsinspect-example.png)
 
@@ -92,7 +90,6 @@ be used in place of the defaults listed above. For example:
   "identifiers":   true,
   "matches":       2,
   "ignore":        "Test.js|Spec.js", // used as RegExp,
-  "jsx":           true,
   "reporter":      "json",
   "suppress":      100,
 }
