@@ -1,7 +1,7 @@
 ![jsinspect](http://danielstjules.com/github/jsinspect-logo.png)
 
-Detect copy-pasted and structurally similar JavaScript code. Compatible with
-Node.js 6.0+, and supports ES6, JSX as well as Flow.
+Detect copy-pasted and structurally similar JavaScript code. Requires Node.js
+6.0+, and supports ES6, JSX as well as Flow.
 
 **Note: Currently being rewritten, these docs reflect the latest master branch
 and not the latest release**
