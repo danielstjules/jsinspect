@@ -5,7 +5,8 @@ duplicate code, even if modified, as well as common boilerplate or logic that
 should be the target of refactoring. Compatible with Node.js 6.0+, and supports
 ES6, JSX as well as Flow.
 
-**Note: Currently being rewritten**
+**Note: Currently being rewritten, these docs reflect the latest master branch
+and not the latest release**
 
 [![Build Status](https://travis-ci.org/danielstjules/jsinspect.svg?branch=master)](https://travis-ci.org/danielstjules/jsinspect)
 
