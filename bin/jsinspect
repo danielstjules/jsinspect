@@ -10,28 +10,26 @@ var Inspector = require('../lib/inspector');
 var reporters = require('../lib/reporters');
 
 var summary = `
-  Duplicate code and structure detection for JavaScript.
-  Identifier matching is disabled by default. Example use:
-  jsinspect -t 30 -i --ignore "Test.js" ./path/to/src
+  Detect copy-pasted and structurally similar JavaScript code
+  Example use: jsinspect -I --ignore "test" ./path/to/src
 `;
 
 program
   .version(require('../package.json').version)
   .usage('[options] <paths ...>\n\n' + summary)
   .option('-t, --threshold <number>',
-    'number of nodes (default: 15)', parseInt)
-  .option('-i, --identifiers', 'match identifiers')
-  .option('-m, --matches <number>',
-    'min number of instances for a match (default: 2)', parseInt)
+    'number of nodes (default: 30)', parseInt)
+  .option('-m, --min-instances <number>',
+    'min instances for a match (default: 2)', parseInt)
   .option('-c, --config',
     'path to config file (default: .jsinspectrc)')
   .option('-r, --reporter [default|json|pmd]',
     'specify the reporter to use')
-  .option('-s, --suppress <number>',
-    'length to suppress diffs (default: 100, off: 0)', parseInt)
-  .option('-D, --no-diff', 'disable 2-way diffs')
+  .option('-I, --no-identifiers', 'do not match identifiers')
   .option('-C, --no-color', 'disable colors')
   .option('--ignore <pattern>', 'ignore paths matching a regex')
+  .option('--truncate <number>',
+    'length to truncate lines (default: 100, off: 0)', parseInt)
   .parse(process.argv);
 
 // Check and parse the config file, if it exists
@@ -48,8 +46,8 @@ if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
     process.exit(3);
   }
 
-  ['threshold', 'identifiers', 'ignore', 'matches',
-   'reporter', 'suppress'].forEach((option) => {
+  ['threshold', 'identifiers', 'ignore', 'minInstances',
+   'reporter', 'truncate'].forEach((option) => {
     if (program[option] === undefined && (option in rc)) {
       program[option] = rc[option];
     }
@@ -86,17 +84,15 @@ if (!paths.length) {
 }
 
 var inspector = new Inspector(paths, {
-  threshold:   program.threshold,
-  diff:        program.diff,
-  identifiers: program.identifiers,
-  matches:     program.matches
+  threshold:    program.threshold,
+  identifiers:  program.identifiers,
+  minInstances: program.minInstances
 });
 
 // Retrieve the requested reporter
 var reporterType = reporters[program.reporter] || reporters.default;
 new reporterType(inspector, {
-  diff: program.diff,
-  suppress: program.suppress
+  truncate: program.truncate
 });
 
 // Track the number of matches

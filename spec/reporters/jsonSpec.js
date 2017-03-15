@@ -8,6 +8,10 @@ var JSONReporter = require('../../lib/reporters/json.js');
 var Inspector    = require('../../lib/inspector.js');
 
 describe('JSONReporter', function() {
+  afterEach(function() {
+    helpers.restoreOutput();
+  });
+
   describe('constructor', function() {
     it('accepts an inspector as an argument', function() {
       var inspector = new Inspector(['']);
@@ -17,7 +21,7 @@ describe('JSONReporter', function() {
   });
 
   it('prints valid json', function() {
-    var inspector = new Inspector([fixtures.smallDiffs], {
+    var inspector = new Inspector([fixtures.smallLines], {
       threshold: 1
     });
     var reporter = new JSONReporter(inspector);
@@ -34,8 +38,8 @@ describe('JSONReporter', function() {
       helpers.captureOutput();
     });
 
-    it('prints the number of instances, and their location', function() {
-      var inspector = new Inspector([fixtures.smallDiffs], {
+    it('prints the instances and their location', function() {
+      var inspector = new Inspector([fixtures.smallLines], {
         threshold: 1
       });
       var reporter = new JSONReporter(inspector);
@@ -49,50 +53,30 @@ describe('JSONReporter', function() {
 
       var parsedOutput = JSON.parse(helpers.getOutput());
       expect(parsedOutput).to.eql({
-        id: matches[0].hash,
+        id: '8ee1b37f99571a8917be385c2924f659762c1349',
         instances: [
-          {path: 'spec/fixtures/smallDiffs.js', lines: [1,1]},
-          {path: 'spec/fixtures/smallDiffs.js', lines: [2,2]},
-          {path: 'spec/fixtures/smallDiffs.js', lines: [3,3]}
+          {
+            path: 'spec/fixtures/smallLines.js',
+            lines: [1,1],
+            code: 'test = function() { return 1; };'
+          },
+          {
+            path: 'spec/fixtures/smallLines.js',
+            lines: [2,2],
+            code: 'test = function() { return 2; };'
+          },
+          {
+            path: 'spec/fixtures/smallLines.js',
+            lines: [3,3],
+            code: 'test = function() { return 3; };'
+          }
         ]
       });
-    });
-
-    it('prints the diffs if enabled', function() {
-      var inspector = new Inspector([fixtures.smallDiffs], {
-        diff: true,
-        threshold: 1
-      });
-      var reporter = new JSONReporter(inspector, {
-        diff: true
-      });
-
-      inspector.removeAllListeners('start');
-      inspector.removeAllListeners('end');
-
-      inspector.run();
-      helpers.restoreOutput();
-
-      var diffs = JSON.parse(helpers.getOutput()).diffs;
-      expect(diffs).to.eql([
-        {
-          '+': {lines: [2,2], path: 'spec/fixtures/smallDiffs.js'},
-          '-': {lines: [1,1], path: 'spec/fixtures/smallDiffs.js'},
-          diff: '-  test = function() { return 1; };\n' +
-                '+  test = function() { return 2; };\n'
-        },
-        {
-          '+': {lines: [3,3], path: 'spec/fixtures/smallDiffs.js'},
-          '-': {lines: [1,1], path: 'spec/fixtures/smallDiffs.js'},
-          diff: '-  test = function() { return 1; };\n' +
-                '+  test = function() { return 3; };\n'
-        }
-      ]);
     });
   });
 
   it('can write to a custom stream', function(done) {
-    var inspector = new Inspector([fixtures.smallDiffs], {
+    var inspector = new Inspector([fixtures.smallLines], {
       threshold: 1
     });
     var concatStream = concat(onFinish);
@@ -104,14 +88,9 @@ describe('JSONReporter', function() {
     inspector.run();
 
     function onFinish(data) {
-      expect(JSON.parse(data)).to.eql([{
-        id: matches[0].hash,
-        instances: [
-          {path: 'spec/fixtures/smallDiffs.js', lines: [1,1]},
-          {path: 'spec/fixtures/smallDiffs.js', lines: [2,2]},
-          {path: 'spec/fixtures/smallDiffs.js', lines: [3,3]}
-        ]
-      }]);
+      expect(JSON.parse(data)[0].id).to.be(
+        '8ee1b37f99571a8917be385c2924f659762c1349'
+      );
       done();
     }
   });

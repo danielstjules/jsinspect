@@ -21,7 +21,9 @@ describe('BaseReporter', function() {
 
   beforeEach(function() {
     helpers.captureOutput();
-    inspector = new Inspector([fixtures.intersection]);
+    inspector = new Inspector([fixtures.intersection], {
+      threshold: 15
+    });
     reporter = new TestReporter(inspector);
   });
 
@@ -72,13 +74,13 @@ describe('BaseReporter', function() {
 
       inspector.run();
       helpers.restoreOutput();
-      expect(helpers.getOutput()).to.be('\n No matches found across 1 file\n');
+      expect(helpers.getOutput()).to.be('\nNo matches found across 1 file\n');
     });
 
     it('prints the correct results if matches were found', function() {
       inspector.run();
       helpers.restoreOutput();
-      expect(helpers.getOutput()).to.be('\n 1 match found across 1 file\n');
+      expect(helpers.getOutput()).to.be('\n1 match found across 1 file\n');
     });
   });
 });

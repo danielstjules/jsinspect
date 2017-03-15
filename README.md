@@ -1,10 +1,8 @@
 ![jsinspect](http://danielstjules.com/github/jsinspect-logo.png)
 
 Detect copy-pasted and structurally similar JavaScript code. Requires Node.js
-6.0+, and supports ES6, JSX as well as Flow.
-
-**Note: Currently being rewritten, these docs reflect the latest master branch
-and not the latest release**
+6.0+, and supports ES6, JSX as well as Flow. Note: the project has been mostly
+rewritten for the 0.10 release and saw several breaking changes.
 
 [![Build Status](https://travis-ci.org/danielstjules/jsinspect.svg?branch=master)](https://travis-ci.org/danielstjules/jsinspect)
 
@@ -33,8 +31,8 @@ doesn't operate directly on tokens - it uses the ASTs of the parsed code.
 You have the freedom to specify a threshold determining the smallest subset of
 nodes to analyze. This will identify code with a similar structure, based
 on the AST node types, e.g. BlockStatement, VariableDeclaration,
-ObjectExpression, etc. For copy-paste oriented detection, you can even limit
-the search to nodes with matching identifiers.
+ObjectExpression, etc. By default, it searches nodes with matching identifiers
+for copy-paste oriented detection, but this can be disabled.
 
 The tool accepts a list of paths to parse and prints any found matches. Any
 directories among the paths are walked recursively, and only `.js` and `.jsx`
@@ -60,25 +58,22 @@ and [gulp-jsinspect](https://github.com/alexeyraspopov/gulp-jsinspect)
 Usage: jsinspect [options] <paths ...>
 
 
-Duplicate code and structure detection for JavaScript.
-Identifier matching is disabled by default. Example use:
-jsinspect -t 30 -i --ignore "Test.js" ./path/to/src
+Detect copy-pasted and structurally similar JavaScript code
+Example use: jsinspect -I --ignore "test" ./path/to/src
 
 
 Options:
 
   -h, --help                         output usage information
   -V, --version                      output the version number
-  -t, --threshold <number>           number of nodes (default: 15)
-  -i, --identifiers                  match identifiers
-  -m, --matches <number>             min number of instances for a match (default: 2)
-  -j, --jsx                          support jsx files (default: false)
+  -t, --threshold <number>           number of nodes (default: 30)
+  -m, --min-instances <number>       min instances for a match (default: 2)
   -c, --config                       path to config file (default: .jsinspectrc)
   -r, --reporter [default|json|pmd]  specify the reporter to use
-  -s, --suppress <number>            length to suppress diffs (default: 100, off: 0)
-  -D, --no-diff                      disable 2-way diffs
+  -I, --no-identifiers               do not match identifiers
   -C, --no-color                     disable colors
   --ignore <pattern>                 ignore paths matching a regex
+  --truncate <number>                length to truncate lines (default: 100, off: 0)
 ```
 
 If a `.jsinspectrc` file is located in the project directory, its values will
@@ -88,10 +83,9 @@ be used in place of the defaults listed above. For example:
 {
   "threshold":     30,
   "identifiers":   true,
-  "matches":       2,
-  "ignore":        "Test.js|Spec.js", // used as RegExp,
+  "ignore":        "Test.js|Spec.js",
   "reporter":      "json",
-  "suppress":      100,
+  "truncate":      100,
 }
 ```
 
@@ -148,16 +142,17 @@ code has changed between builds.
 
 ``` json
 [{
-  "id":"566f58e984ad337cf78588771e3b7cc908f270c8",
+  "id":"6ceb36d5891732db3835c4954d48d1b90368a475",
   "instances":[
-    {"path":"spec/fixtures/intersection.js","lines":[1,5]},
-    {"path":"spec/fixtures/intersection.js","lines":[7,11]}
-  ],
-  "diffs":[
     {
-      "-":{"path":"spec/fixtures/intersection.js","lines":[1,5]},
-      "+":{"path":"spec/fixtures/intersection.js","lines":[7,11]},
-      "diff":"-  function intersectionA(array1, array2) {\n-    array1.filter(function(n) {\n-      return array2.indexOf(n) != -1;\n+  function intersectionB(arrayA, arrayB) {\n+    arrayA.filter(function(n) {\n+      return arrayB.indexOf(n) != -1;\n     });\n   }\n"
+      "path":"spec/fixtures/intersection.js",
+      "lines":[1,5],
+      "code":"function intersectionA(array1, array2) {\n  array1.filter(function(n) {\n    return array2.indexOf(n) != -1;\n  });\n}"
+    },
+    {
+      "path":"spec/fixtures/intersection.js",
+      "lines":[7,11],
+      "code":"function intersectionB(arrayA, arrayB) {\n  arrayA.filter(function(n) {\n    return arrayB.indexOf(n) != -1;\n  });\n}"
     }
   ]
 }]
@@ -168,52 +163,24 @@ code has changed between builds.
 ``` xml
 <?xml version="1.0" encoding="utf-8"?>
 <pmd-cpd>
-<duplication lines="10" id="566f58e984ad337cf78588771e3b7cc908f270c8">
+<duplication lines="10" id="6ceb36d5891732db3835c4954d48d1b90368a475">
 <file path="/jsinspect/spec/fixtures/intersection.js" line="1"/>
 <file path="/jsinspect/spec/fixtures/intersection.js" line="7"/>
 <codefragment>
-- spec/fixtures/intersection.js:1,5
-+ spec/fixtures/intersection.js:7,11
+spec/fixtures/intersection.js:1,5
+function intersectionA(array1, array2) {
+  array1.filter(function(n) {
+    return array2.indexOf(n) != -1;
+  });
+}
 
--  function intersectionA(array1, array2) {
--    array1.filter(function(n) {
--      return array2.indexOf(n) != -1;
-+  function intersectionB(arrayA, arrayB) {
-+    arrayA.filter(function(n) {
-+      return arrayB.indexOf(n) != -1;
-     });
-   }
+spec/fixtures/intersection.js:7,11
+function intersectionB(arrayA, arrayB) {
+  arrayA.filter(function(n) {
+    return arrayB.indexOf(n) != -1;
+  });
+}
 </codefragment>
 </duplication>
 </pmd-cpd>
 ```
-
-## Performance
-
-Running on a medium sized code base, with a 2.4Ghz i5 MPB, yielded the
-following results:
-
-``` bash
-$ find src/ -name '*.js' | xargs wc -l
-# ...
-44810 total
-
-$ time jsinspect -t 30 src/
-# Looking for structural similarities..
-41 matches found across 800 files
-
-real  0m1.542s
-user  0m1.472s
-sys   0m0.071s
-
-$ time jsinspect -i -t 15 src/
-# Looking for copy-pasted code..
-96 matches found across 800 files
-
-real  0m1.283s
-user  0m1.196s
-sys   0m0.084s
-```
-
-Much of the overhead comes from diff generation, so a greater number of matches
-will increase running time.

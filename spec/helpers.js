@@ -8,6 +8,10 @@ var write = process.stdout.write;
 var parseCache = {};
 
 module.exports = {
+  trimlines: function(str) {
+    return str.split('\n').map(str => str.trim()).join('\n');
+  },
+
   captureOutput: function() {
     chalk.enabled = false;
     output = '';
