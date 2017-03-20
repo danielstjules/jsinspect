@@ -32,11 +32,14 @@ You have the freedom to specify a threshold determining the smallest subset of
 nodes to analyze. This will identify code with a similar structure, based
 on the AST node types, e.g. BlockStatement, VariableDeclaration,
 ObjectExpression, etc. By default, it searches nodes with matching identifiers
-for copy-paste oriented detection, but this can be disabled.
+and literals for copy-paste oriented detection, but this can be disabled.
+For context, identifiers include the names of variables, methods, properties,
+etc, while literals are strings, numbers, etc.
 
 The tool accepts a list of paths to parse and prints any found matches. Any
 directories among the paths are walked recursively, and only `.js` and `.jsx`
-files are analyzed. Any `node_modules` and `bower_components` dirs are also
+files are analyzed. You can explicitly pass file paths that include a different
+extension as well. Any `node_modules` and `bower_components` dirs are also
 ignored.
 
 ![screenshot](http://danielstjules.com/github/jsinspect-example.png)
@@ -59,7 +62,7 @@ Usage: jsinspect [options] <paths ...>
 
 
 Detect copy-pasted and structurally similar JavaScript code
-Example use: jsinspect -I --ignore "test" ./path/to/src
+Example use: jsinspect -I -L --ignore "test" ./path/to/src
 
 
 Options:
@@ -71,6 +74,7 @@ Options:
   -c, --config                       path to config file (default: .jsinspectrc)
   -r, --reporter [default|json|pmd]  specify the reporter to use
   -I, --no-identifiers               do not match identifiers
+  -L, --no-literals                  do not match literals
   -C, --no-color                     disable colors
   --ignore <pattern>                 ignore paths matching a regex
   --truncate <number>                length to truncate lines (default: 100, off: 0)
@@ -83,6 +87,7 @@ be used in place of the defaults listed above. For example:
 {
   "threshold":     30,
   "identifiers":   true,
+  "literals":      true,
   "ignore":        "Test.js|Spec.js",
   "reporter":      "json",
   "truncate":      100,
@@ -97,9 +102,9 @@ test/spec dir.
 jsinspect -t 50 --ignore "test" ./path/to/src
 ```
 
-From there, feel free to try decreasing the threshold and ignoring identifiers
-using the `-I` flag. A threshold of 30 may lead you to discover new areas of
-interest for refactoring or cleanup.
+From there, feel free to try decreasing the threshold, ignoring identifiers
+using the `-I` flag and ignoring literals with `-L`. A lower threshold may lead
+you to discover new areas of interest for refactoring or cleanup.
 
 ## Integration
 

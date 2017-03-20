@@ -11,7 +11,7 @@ var reporters = require('../lib/reporters');
 
 var summary = `
   Detect copy-pasted and structurally similar JavaScript code
-  Example use: jsinspect -I --ignore "test" ./path/to/src
+  Example use: jsinspect -I -L --ignore "test" ./path/to/src
 `;
 
 program
@@ -26,6 +26,7 @@ program
   .option('-r, --reporter [default|json|pmd]',
     'specify the reporter to use')
   .option('-I, --no-identifiers', 'do not match identifiers')
+  .option('-L, --no-literals', 'do not match literals')
   .option('-C, --no-color', 'disable colors')
   .option('--ignore <pattern>', 'ignore paths matching a regex')
   .option('--truncate <number>',
@@ -46,7 +47,7 @@ if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
     process.exit(3);
   }
 
-  ['threshold', 'identifiers', 'ignore', 'minInstances',
+  ['threshold', 'identifiers', 'literals', 'ignore', 'minInstances',
    'reporter', 'truncate'].forEach((option) => {
     if (program[option] === undefined && (option in rc)) {
       program[option] = rc[option];
@@ -86,6 +87,7 @@ if (!paths.length) {
 var inspector = new Inspector(paths, {
   threshold:    program.threshold,
   identifiers:  program.identifiers,
+  literals:     program.literals,
   minInstances: program.minInstances
 });
 
