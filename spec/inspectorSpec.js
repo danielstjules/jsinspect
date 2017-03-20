@@ -186,7 +186,7 @@ describe('Inspector', function() {
   it('ignores matches with less than the supplied minimum', function() {
     var inspector = new Inspector([fixtures.matches], {
       threshold: 2,
-      matches: 3
+      minInstances: 3
     });
 
     inspector.on('match', listener);
