@@ -94,12 +94,12 @@ options, while running explicitly on the lib/src directories, and not the
 test/spec dir.
 
 ```
-jsinspect -t 30 -i ./path/to/src
+jsinspect -t 50 --ignore "test" ./path/to/src
 ```
 
-From there, feel free to try incrementally decreasing the threshold and
-ignoring identifiers. A threshold of 20 may lead you to discover new areas of
-interest for refactoring or cleanup. Each project or library may be different.
+From there, feel free to try decreasing the threshold and ignoring identifiers
+using the `-I` flag. A threshold of 30 may lead you to discover new areas of
+interest for refactoring or cleanup.
 
 ## Integration
 
@@ -114,20 +114,18 @@ before_script:
   - "npm install -g jsinspect"
 
 script:
-  - "jsinspect -t 30 ./path/to/src"
+  - "jsinspect ./path/to/src"
 ```
 
 Note that in the above example, we're using a threshold of 30 for detecting
-structurally similar code. A lower threshold may work for your build process,
-but ~30 should help detect unnecessary boilerplate, while avoiding excessive
-output.
+structurally similar code. A higher threshold may be appropriate as well.
 
 To have jsinspect run with each job, but not block or fail the build, you can
 use something like the following:
 
 ``` yaml
 script:
-  - "jsinspect -t 30 ./path/to/src || true"
+  - "jsinspect ./path/to/src || true"
 ```
 
 ## Reporters
