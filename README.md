@@ -88,7 +88,7 @@ be used in place of the defaults listed above. For example:
   "threshold":     30,
   "identifiers":   true,
   "literals":      true,
-  "ignore":        "Test.js|Spec.js",
+  "ignore":        "test|spec|mock",
   "reporter":      "json",
   "truncate":      100,
 }
