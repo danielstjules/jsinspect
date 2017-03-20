@@ -42,7 +42,7 @@ files are analyzed. You can explicitly pass file paths that include a different
 extension as well. Any `node_modules` and `bower_components` dirs are also
 ignored.
 
-![screenshot](http://danielstjules.com/github/jsinspect-example.png)
+![screenshot](https://cloud.githubusercontent.com/assets/817212/24123498/22f04d86-0d96-11e7-94f9-dd6d5f9fca13.png)
 
 ## Installation
 
