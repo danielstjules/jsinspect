@@ -4,6 +4,17 @@ var helpers   = require('./helpers');
 var nodeUtils = require('../lib/nodeUtils');
 
 describe('nodeUtils', function() {
+  describe('getChildren', function() {
+    it('ignores null children', function() {
+      var node = helpers.parse(fixtures.nullChildren)[1].expression.left;
+      // node.elements is an array with a leading null that should be ignored,
+      // followed by an identifier
+      var res = nodeUtils.getChildren(node);
+      expect(res).to.have.length(1);
+      expect(res[0].type).to.be('Identifier');
+    });
+  });
+
   describe('isES6ModuleImport', function() {
     it('returns true for an import declaration', function() {
       // ImportDeclaration
