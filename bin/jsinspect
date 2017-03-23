@@ -69,9 +69,10 @@ if (program.ignore) {
   ignorePatterns.push(program.ignore);
 }
 
+var extensions = ['.js', '.jsx'];
 try {
   paths = filepaths.getSync(suppliedPaths, {
-    ext: ['.js', '.jsx'],
+    ext: extensions,
     ignore: ignorePatterns
   });
 } catch(e) {
