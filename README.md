@@ -62,7 +62,7 @@ Usage: jsinspect [options] <paths ...>
 
 
 Detect copy-pasted and structurally similar JavaScript code
-Example use: jsinspect -I -L --ignore "test" ./path/to/src
+Example use: jsinspect -I -L -t 20 --ignore "test" ./path/to/src
 
 
 Options:
