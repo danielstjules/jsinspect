@@ -31,6 +31,7 @@ program
   .option('--ignore <pattern>', 'ignore paths matching a regex')
   .option('--truncate <number>',
     'length to truncate lines (default: 100, off: 0)', parseInt)
+  .option('--debug')
   .parse(process.argv);
 
 // Check and parse the config file, if it exists
@@ -62,6 +63,9 @@ var suppliedPaths = (program.args.length) ? program.args : ['.'];
 if (!program.color) {
   chalk.enabled = false;
 }
+
+// Set debug based on flag
+process.env.DEBUG = program.debug || '';
 
 // Ignore node_modules by default, along with ignore arg
 var ignorePatterns = ['node_modules', 'bower_components'];
