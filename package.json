@@ -1,6 +1,6 @@
 {
   "name": "jsinspect",
-  "version": "0.11.4",
+  "version": "0.12.0",
   "description": "Detect structural similarities in your code",
   "keywords": [
     "inspect",
