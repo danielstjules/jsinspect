@@ -4,14 +4,77 @@ var helpers   = require('./helpers');
 var NodeUtils = require('../lib/nodeUtils');
 
 describe('NodeUtils', function() {
+  describe('walkSubtrees', function() {
+    it('walks each child node using DFS', function() {
+      var res = [];
+      var root = helpers.parse(fixtures.simple)[0];
+      NodeUtils.walkSubtrees(root, node => res.push(node.type));
+      expect(res).to.eql([
+        'ExpressionStatement',
+        'UpdateExpression',
+        'Identifier',
+        'ExpressionStatement',
+        'CallExpression',
+        'Identifier'
+      ]);
+    });
+  });
+
+  describe('getDFSTraversal', function() {
+    it('returns the DFS traversal of the AST', function() {
+      var res = [];
+      var ast = helpers.parse(fixtures.simple)[0];
+      var res = NodeUtils.getDFSTraversal(ast).map(node => node.type);
+      expect(res).to.eql([
+        'BlockStatement',
+        'ExpressionStatement',
+        'UpdateExpression',
+        'Identifier',
+        'ExpressionStatement',
+        'CallExpression',
+        'Identifier'
+      ]);
+    });
+  });
+
+  describe('getBFSTraversal', function() {
+    it('returns the BFS traversal of the AST', function() {
+      var res = [];
+      var ast = helpers.parse(fixtures.simple)[0];
+      var res = NodeUtils.getBFSTraversal(ast).map(node => node.type);
+      expect(res).to.eql([
+        'BlockStatement',
+        'ExpressionStatement',
+        'ExpressionStatement',
+        'UpdateExpression',
+        'CallExpression',
+        'Identifier',
+        'Identifier'
+      ]);
+    });
+  });
+
   describe('getChildren', function() {
     it('ignores null children', function() {
-      var node = helpers.parse(fixtures.nullChildren)[1].expression.left;
-      // node.elements is an array with a leading null that should be ignored,
+      var parent = helpers.parse(fixtures.nullChildren)[1].expression.left;
+      // parent.elements is an array with a leading null that should be ignored,
       // followed by an identifier
-      var res = NodeUtils.getChildren(node);
+      var res = NodeUtils.getChildren(parent);
       expect(res).to.have.length(1);
       expect(res[0].type).to.be('Identifier');
+    });
+
+    it('returns the children of a Node', function() {
+      var parent = helpers.parse(fixtures.intersection)[0];
+      var res = NodeUtils.getChildren(parent);
+      // Children should be the three identifiers intersectionA,
+      // array1, and array2, followed by a block statement
+      expect(res.map(node => node.type)).to.eql([
+        'Identifier',
+        'Identifier',
+        'Identifier',
+        'BlockStatement'
+      ])
     });
   });
 
@@ -79,6 +142,67 @@ describe('NodeUtils', function() {
     it('returns false otherwise', function() {
       var nodes = helpers.parse(fixtures.amd);
       expect(NodeUtils.isCommonJS(nodes)).to.be(false);
+    });
+  });
+
+  describe('typesMatch', function() {
+    it('returns true if all node types match', function() {
+      var res = NodeUtils.typesMatch([
+        {type: 'a'}, {type: 'a'}, {type: 'a'}
+      ]);
+      expect(res).to.be(true);
+    });
+
+    it('returns false if not all node types match', function() {
+      var res = NodeUtils.typesMatch([
+        {type: 'a'}, {type: 'a'}, {type: 'b'}
+      ]);
+      expect(res).to.be(false);
+    });
+  });
+
+  describe('identifiersMatch', function() {
+    it('returns true if all node are matching identifiers', function() {
+      var res = NodeUtils.identifiersMatch([
+        {name: 'a'}, {name: 'a'}, {name: 'a'}
+      ]);
+      expect(res).to.be(true);
+    });
+
+    it('returns false if not all node names match', function() {
+      var res = NodeUtils.identifiersMatch([
+        {name: 'a'}, {name: 'a'}, {name: 'b'}
+      ]);
+      expect(res).to.be(false);
+    });
+  });
+
+  describe('literalsMatch', function() {
+    it('returns true if all literals have the same value', function() {
+      var res = NodeUtils.literalsMatch([
+        {type: 'Literal', value: 'a'},
+        {type: 'Literal', value: 'a'},
+        {type: 'Literal', value: 'a'}
+      ]);
+      expect(res).to.be(true);
+    });
+
+    it('returns false if not all literals have the same value', function() {
+      var res = NodeUtils.literalsMatch([
+        {type: 'Literal', value: 'a'},
+        {type: 'Literal', value: 'a'},
+        {type: 'Literal', value: 'b'}
+      ]);
+      expect(res).to.be(false);
+    });
+
+    it('ignores the values of nodes which are not literals', function() {
+      var res = NodeUtils.literalsMatch([
+        {type: 'Foo', value: 'a'},
+        {type: 'Foo', value: 'a'},
+        {type: 'Foo', value: 'b'}
+      ]);
+      expect(res).to.be(true);
     });
   });
 });

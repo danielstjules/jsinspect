@@ -1,3 +1,4 @@
-function test() {
-  return true;
+{
+  x++;
+  y();
 }
