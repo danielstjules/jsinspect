@@ -1,6 +1,6 @@
 var expect       = require('expect.js');
 var EventEmitter = require('events').EventEmitter;
-var Inspector    = require('../lib/inspector.js');
+var Inspector    = require('../lib/inspector');
 var fixtures     = require('./fixtures');
 
 describe('Inspector', function() {

@@ -3,8 +3,8 @@ var util            = require('util');
 var chalk           = require('chalk');
 var fixtures        = require('../fixtures');
 var helpers         = require('../helpers');
-var DefaultReporter = require('../../lib/reporters/default.js');
-var Inspector       = require('../../lib/inspector.js');
+var DefaultReporter = require('../../lib/reporters/default');
+var Inspector       = require('../../lib/inspector');
 
 describe('DefaultReporter', function() {
   afterEach(function() {

@@ -3,8 +3,8 @@ var util        = require('util');
 var chalk       = require('chalk');
 var fixtures    = require('../fixtures');
 var helpers     = require('../helpers');
-var PMDReporter = require('../../lib/reporters/pmd.js');
-var Inspector   = require('../../lib/inspector.js');
+var PMDReporter = require('../../lib/reporters/pmd');
+var Inspector   = require('../../lib/inspector');
 
 describe('PMDReporter', function() {
   afterEach(function() {

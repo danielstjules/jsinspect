@@ -4,8 +4,8 @@ var chalk        = require('chalk');
 var concat       = require('concat-stream')
 var fixtures     = require('../fixtures');
 var helpers      = require('../helpers');
-var JSONReporter = require('../../lib/reporters/json.js');
-var Inspector    = require('../../lib/inspector.js');
+var JSONReporter = require('../../lib/reporters/json');
+var Inspector    = require('../../lib/inspector');
 
 describe('JSONReporter', function() {
   afterEach(function() {

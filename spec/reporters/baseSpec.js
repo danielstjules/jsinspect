@@ -3,8 +3,8 @@ var util         = require('util');
 var chalk        = require('chalk');
 var fixtures     = require('../fixtures');
 var helpers      = require('../helpers');
-var BaseReporter = require('../../lib/reporters/base.js');
-var Inspector    = require('../../lib/inspector.js');
+var BaseReporter = require('../../lib/reporters/base');
+var Inspector    = require('../../lib/inspector');
 
 // A simple TestReporter for testing the BaseReporter
 class TestReporter extends BaseReporter {
