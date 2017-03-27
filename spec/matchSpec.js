@@ -1,7 +1,8 @@
-var expect   = require('expect.js');
-var Match    = require('../lib/match');
-var fixtures = require('./fixtures');
-var crypto   = require('crypto');
+var expect    = require('expect.js');
+var Match     = require('../lib/match');
+var fixtures  = require('./fixtures');
+var NodeUtils = require('../lib/nodeUtils');
+var crypto    = require('crypto');
 
 describe('Match', function() {
   var nodeArrays = [
@@ -26,6 +27,28 @@ describe('Match', function() {
     var match = new Match(nodeArrays);
     expect(match.instances).to.have.length(2);
     expect(match.instances[0]).to.eql(nodeArrays[0][0].loc);
+  });
+
+  it('uses the minimum start value of nodes in an instance', function() {
+    var match = new Match([[
+      {
+        type: 'a',
+        loc: {filename: 'a', start: {line: 2, column: 0}, end: {line: 2, column: 0}}
+      },
+      {
+        type: 'a',
+        loc: {filename: 'a', start: {line: 1, column: 2}, end: {line: 1, column: 2}}
+      },
+      {
+        type: 'a',
+        loc: {filename: 'a', start: {line: 1, column: 0}, end: {line: 1, column: 0}}
+      },
+      {
+        type: 'a',
+        loc: {filename: 'a', start: {line: 3, column: 0}, end: {line: 3, column: 0}}
+      }
+    ]]);
+    expect(match.instances[0].start).to.eql({line: 1, column: 0});
   });
 
   describe('populateLines', function() {
