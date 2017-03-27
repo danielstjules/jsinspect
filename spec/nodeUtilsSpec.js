@@ -1,7 +1,7 @@
 var expect    = require('expect.js');
 var fixtures  = require('./fixtures');
 var helpers   = require('./helpers');
-var NodeUtils = require('../lib/NodeUtils');
+var NodeUtils = require('../lib/nodeUtils');
 
 describe('NodeUtils', function() {
   describe('getChildren', function() {
