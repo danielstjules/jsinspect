@@ -78,6 +78,44 @@ describe('NodeUtils', function() {
     });
   });
 
+  describe('isBefore', function() {
+    describe('given nodes with different line numbers', function() {
+      it('returns true if the first node has a lower line number', function() {
+        var res = NodeUtils.isBefore(
+          {loc: {start: {line: 0, column: 0}}},
+          {loc: {start: {line: 1, column: 0}}}
+        );
+        expect(res).to.be(true);
+      });
+
+      it('returns false if the first node has a higher numbered line', function() {
+        var res = NodeUtils.isBefore(
+          {loc: {start: {line: 1, column: 0}}},
+          {loc: {start: {line: 0, column: 0}}}
+        );
+        expect(res).to.be(false);
+      });
+    });
+
+    describe('given nodes with the same line number', function() {
+      it('returns true if the first node has a lower column number', function() {
+        var res = NodeUtils.isBefore(
+          {loc: {start: {line: 0, column: 0}}},
+          {loc: {start: {line: 0, column: 1}}}
+        );
+        expect(res).to.be(true);
+      });
+
+      it('returns false if the first node has a higher column number', function() {
+        var res = NodeUtils.isBefore(
+          {loc: {start: {line: 0, column: 1}}},
+          {loc: {start: {line: 0, column: 0}}}
+        );
+        expect(res).to.be(false);
+      });
+    });
+  });
+
   describe('isES6ModuleImport', function() {
     it('returns true for an import declaration', function() {
       // ImportDeclaration
