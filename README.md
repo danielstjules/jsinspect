@@ -77,6 +77,7 @@ Options:
   -C, --no-color                     disable colors
   --ignore <pattern>                 ignore paths matching a regex
   --truncate <number>                length to truncate lines (default: 100, off: 0)
+  --debug                            print debug information
 ```
 
 If a `.jsinspectrc` file is located in the project directory, its values will
