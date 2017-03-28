@@ -11,7 +11,6 @@ rewritten for the 0.10 release and saw several breaking changes.
 * [Usage](#usage)
 * [Integration](#integration)
 * [Reporters](#reporters)
-* [Performance](#performance)
 
 ## Overview
 
