@@ -55,15 +55,6 @@ describe('NodeUtils', function() {
   });
 
   describe('getChildren', function() {
-    it('ignores null children', function() {
-      var parent = helpers.parse(fixtures.nullChildren)[1].expression.left;
-      // parent.elements is an array with a leading null that should be ignored,
-      // followed by an identifier
-      var res = NodeUtils.getChildren(parent);
-      expect(res).to.have.length(1);
-      expect(res[0].type).to.be('Identifier');
-    });
-
     it('returns the children of a Node', function() {
       var parent = helpers.parse(fixtures.intersection)[0];
       var res = NodeUtils.getChildren(parent);
@@ -75,6 +66,21 @@ describe('NodeUtils', function() {
         'Identifier',
         'BlockStatement'
       ])
+    });
+
+    it('ignores null children', function() {
+      var parent = helpers.parse(fixtures.nullChildren)[1].expression.left;
+      // parent.elements is an array with a leading null that should be ignored,
+      // followed by an identifier
+      var res = NodeUtils.getChildren(parent);
+      expect(res).to.have.length(1);
+      expect(res[0].type).to.be('Identifier');
+    });
+
+    it('ignores empty JSXText nodes', function() {
+      var parent = helpers.parse(fixtures.jsxNesting)[0].expression;
+      var res = NodeUtils.getChildren(parent);
+      res.forEach(node => expect(node.type).not.to.be('JSXText'));
     });
   });
 
