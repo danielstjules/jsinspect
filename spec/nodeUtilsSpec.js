@@ -234,6 +234,15 @@ describe('NodeUtils', function() {
       expect(res).to.be(false);
     });
 
+    it('treats JSXText as a literal', function() {
+      var res = NodeUtils.literalsMatch([
+        {type: 'JSXText', value: 'a'},
+        {type: 'JSXText', value: 'a'},
+        {type: 'JSXText', value: 'b'}
+      ]);
+      expect(res).to.be(false);
+    });
+
     it('ignores the values of nodes which are not literals', function() {
       var res = NodeUtils.literalsMatch([
         {type: 'Foo', value: 'a'},
