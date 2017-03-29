@@ -20,5 +20,13 @@ describe('parse', function() {
         expect(err.message).to.contain(`${src}\n    ^`);
       });
     });
+
+    it('does not include the src line if longer than 100 chars', function() {
+      var src = ' '.repeat(100) + ']';
+      var fn = () => Parser.parse(src, filePath);
+      expect(fn).to.throwException((err) => {
+        expect(err.message).not.to.contain(`^`);
+      });
+    });
   });
 });
