@@ -31,6 +31,7 @@ program
   .option('--ignore <pattern>', 'ignore paths matching a regex')
   .option('--truncate <number>',
     'length to truncate lines (default: 100, off: 0)', parseInt)
+  .option('-f, --force', 'force parsing, ignoring errors')
   .option('--debug', 'print debug information')
   .parse(process.argv);
 

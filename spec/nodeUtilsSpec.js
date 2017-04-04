@@ -4,8 +4,25 @@ var helpers   = require('./helpers');
 var NodeUtils = require('../lib/nodeUtils');
 
 describe('NodeUtils', function() {
+  describe('walk', function() {
+    it('walks each node using DFS', function() {
+      var res = [];
+      var root = helpers.parse(fixtures.simple)[0];
+      NodeUtils.walk(root, node => res.push(node.type));
+      expect(res).to.eql([
+        'BlockStatement',
+        'ExpressionStatement',
+        'UpdateExpression',
+        'Identifier',
+        'ExpressionStatement',
+        'CallExpression',
+        'Identifier'
+      ]);
+    });
+  });
+
   describe('walkSubtrees', function() {
-    it('walks each child node using DFS', function() {
+    it('walks each child using DFS, ignoring the root node', function() {
       var res = [];
       var root = helpers.parse(fixtures.simple)[0];
       NodeUtils.walkSubtrees(root, node => res.push(node.type));
