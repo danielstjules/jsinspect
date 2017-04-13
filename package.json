@@ -33,6 +33,7 @@
     "mocha": "*",
     "dirmap": "0.0.2"
   },
+  "main": "./lib/inspector.js",
   "bin": {
     "jsinspect": "./bin/jsinspect"
   },
