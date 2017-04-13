@@ -5,6 +5,7 @@ Detect copy-pasted and structurally similar JavaScript code. Requires Node.js
 rewritten for the 0.10 release and saw several breaking changes.
 
 [![Build Status](https://travis-ci.org/danielstjules/jsinspect.svg?branch=master)](https://travis-ci.org/danielstjules/jsinspect)
+[![Code Climate](https://codeclimate.com/github/danielstjules/jsinspect/badges/gpa.svg)](https://codeclimate.com/github/danielstjules/jsinspect)
 
 * [Overview](#overview)
 * [Installation](#installation)
