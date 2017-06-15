@@ -67,9 +67,9 @@ if (!program.color) {
 // Set debug based on flag
 process.env.DEBUG = program.debug || '';
 
-// Ignore node_modules by default, along with ignore arg
+// By default, ignore deps, tests and build files
 var ignorePatterns = [
-  'node_modules', 'bower_components',
+  'node_modules', 'bower_components', 'build',
   'test', 'spec', 'mock', 'fixture'
 ];
 
