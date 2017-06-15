@@ -68,7 +68,11 @@ if (!program.color) {
 process.env.DEBUG = program.debug || '';
 
 // Ignore node_modules by default, along with ignore arg
-var ignorePatterns = ['node_modules', 'bower_components'];
+var ignorePatterns = [
+  'node_modules', 'bower_components',
+  'test', 'spec', 'mock', 'fixture'
+];
+
 if (program.ignore) {
   ignorePatterns.push(program.ignore);
 }
