@@ -67,8 +67,8 @@ if (!program.color) {
 // Set debug based on flag
 process.env.DEBUG = program.debug || '';
 
-// Ignore deps by default
-var ignorePatterns = ['node_modules', 'bower_components'];
+// By default, ignore deps and tests
+var ignorePatterns = ['node_modules', 'bower_components', 'test', 'spec'];
 if (program.ignore) {
   ignorePatterns.push(program.ignore);
 }
