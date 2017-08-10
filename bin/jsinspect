@@ -21,8 +21,8 @@ program
     'number of nodes (default: 30)', parseInt)
   .option('-m, --min-instances <number>',
     'min instances for a match (default: 2)', parseInt)
-  .option('-c, --config',
-    'path to config file (default: .jsinspectrc)')
+  .option('-c, --config [config]',
+    'path to config file [.jsinspectrc]', '.jsinspectrc')
   .option('-r, --reporter [default|json|pmd]',
     'specify the reporter to use')
   .option('-I, --no-identifiers', 'do not match identifiers')
@@ -35,7 +35,7 @@ program
   .parse(process.argv);
 
 // Check and parse the config file, if it exists
-var rcPath = path.resolve(process.cwd(), program.config || '.jsinspectrc');
+var rcPath = path.resolve(process.cwd(), program.config);
 var opts = {encoding: 'utf8'};
 var rcContents, rc, paths;
 
