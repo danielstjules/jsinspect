@@ -22,7 +22,7 @@ program
   .option('-m, --min-instances <number>',
     'min instances for a match (default: 2)', parseInt)
   .option('-c, --config [config]',
-    'path to config file [.jsinspectrc]', '.jsinspectrc')
+    'path to config file (default: .jsinspectrc)', '.jsinspectrc')
   .option('-r, --reporter [default|json|pmd]',
     'specify the reporter to use')
   .option('-I, --no-identifiers', 'do not match identifiers')

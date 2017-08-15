@@ -67,7 +67,7 @@ Options:
   -V, --version                      output the version number
   -t, --threshold <number>           number of nodes (default: 30)
   -m, --min-instances <number>       min instances for a match (default: 2)
-  -c, --config                       path to config file (default: .jsinspectrc)
+  -c, --config [config]              path to config file (default: .jsinspectrc)
   -r, --reporter [default|json|pmd]  specify the reporter to use
   -I, --no-identifiers               do not match identifiers
   -L, --no-literals                  do not match literals
