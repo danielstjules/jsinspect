@@ -20,18 +20,18 @@
   },
   "dependencies": {
     "babylon": "6.16.1",
-    "chalk": "*",
-    "commander": "*",
+    "chalk": "^2.1.0",
+    "commander": "^2.11.0",
     "filepaths": "0.3.0",
-    "stable": "0.1.6",
-    "strip-indent": "^1.0.0",
+    "stable": "^0.1.6",
+    "strip-indent": "^1.0.1",
     "strip-json-comments": "1.0.2"
   },
   "devDependencies": {
     "concat-stream": "^1.5.0",
-    "expect.js": "*",
-    "mocha": "*",
-    "dirmap": "0.0.2"
+    "dirmap": "^0.0.2",
+    "expect.js": "^0.3.1",
+    "mocha": "^3.5.0"
   },
   "bin": {
     "jsinspect": "./bin/jsinspect"
