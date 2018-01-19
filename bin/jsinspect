@@ -108,8 +108,8 @@ inspector.on('match', () => matches++);
 
 try {
   inspector.run();
-  process.exit(matches ? 5 : 0);
+  process.exitCode = matches ? 5 : 0;
 } catch(err) {
   console.log(err);
-  process.exit(1);
+  process.exitCode = 1;
 }
