@@ -1,0 +1,50 @@
+{
+  "source": "./lib",
+  "destination": "./docs",
+  "includes": ["\\.js$"],
+  "excludes": [],
+  "index": "./README.md",
+  "package": "./package.json",
+  "plugins": [
+    {
+      "name": "esdoc-standard-plugin",
+      "option": {
+        "lint": {"enable": true},
+        "coverage": {"enable": true},
+        "accessor": {"access": ["public", "protected", "private"], "autoPrivate": true},
+        "undocumentIdentifier": {"enable": false},
+        "unexportedIdentifier": {"enable": true},
+        "typeInference": {"enable": true},
+        "brand": {
+          "logo": "",
+          "title": "jsinspect",
+          "description": "jsinspect",
+          "repository": "https://github.com/danielstjules/jsinspect",
+          "site": "",
+          "author": "https://github.com/danielstjules",
+          "image": "https://github.com/danielstjules/logo.png"
+        },
+        "test": {
+          "source": "./spec/",
+          "interfaces": ["describe", "it", "context", "suite", "test"],
+          "includes": ["(spec|Spec|test|Test)\\.js$"],
+          "excludes": ["\\.config\\.js$"]
+        }
+      }
+    },
+    {
+      "name": "esdoc-ecmascript-proposal-plugin",
+      "option": {
+        "classProperties": true,
+        "objectRestSpread": true,
+        "doExpressions": true,
+        "functionBind": true,
+        "functionSent": true,
+        "asyncGenerators": true,
+        "decorators": true,
+        "exportExtensions": true,
+        "dynamicImport": true
+      }
+    }
+  ]
+}

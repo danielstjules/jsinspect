@@ -30,6 +30,9 @@
   "devDependencies": {
     "concat-stream": "^1.5.0",
     "dirmap": "^0.0.2",
+    "esdoc": "^1.0.4",
+    "esdoc-ecmascript-proposal-plugin": "^1.0.0",
+    "esdoc-standard-plugin": "^1.0.0",
     "expect.js": "^0.3.1",
     "mocha": "^3.5.0"
   },
@@ -37,6 +40,8 @@
     "jsinspect": "./bin/jsinspect"
   },
   "scripts": {
-    "test": "mocha -R spec spec spec/reporters"
+    "test": "mocha -R spec spec spec/reporters",
+    "docs": "./node_modules/.bin/esdoc",
+    "docs-open": "npm run docs && open docs/index.html"
   }
 }
