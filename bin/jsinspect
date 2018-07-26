@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-var fs = require('fs');
-var path = require('path');
-var strip = require('strip-json-comments');
-var chalk = require('chalk');
+var fs        = require('fs');
+var path      = require('path');
+var strip     = require('strip-json-comments');
+var chalk     = require('chalk');
 var filepaths = require('filepaths');
-var program = require('commander');
+var program   = require('commander');
 var Inspector = require('../lib/inspector');
 var reporters = require('../lib/reporters');
 
@@ -49,7 +49,7 @@ if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
   }
 
   ['threshold', 'identifiers', 'literals', 'ignore', 'minInstances',
-    'reporter', 'truncate'].forEach((option) => {
+   'reporter', 'truncate'].forEach((option) => {
     if (program[option] === undefined && (option in rc)) {
       program[option] = rc[option];
     }
@@ -79,7 +79,7 @@ try {
     ext: extensions,
     ignore: ignorePatterns
   });
-} catch (e) {
+} catch(e) {
   console.log(e.message);
   process.exit(4);
 }
@@ -90,9 +90,9 @@ if (!paths.length) {
 }
 
 var inspector = new Inspector(paths, {
-  threshold: program.threshold,
-  identifiers: program.identifiers,
-  literals: program.literals,
+  threshold:    program.threshold,
+  identifiers:  program.identifiers,
+  literals:     program.literals,
   minInstances: program.minInstances
 });
 
@@ -109,7 +109,7 @@ inspector.on('match', () => matches++);
 try {
   inspector.run();
   process.exit(matches ? 5 : 0);
-} catch (err) {
+} catch(err) {
   console.log(err);
   process.exit(1);
 }
