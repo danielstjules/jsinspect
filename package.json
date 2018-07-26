@@ -25,7 +25,9 @@
     "filepaths": "0.3.0",
     "stable": "^0.1.6",
     "strip-indent": "^1.0.1",
-    "strip-json-comments": "1.0.2"
+    "strip-json-comments": "1.0.2",
+    "de-indent": "^1.0.2",
+    "parse5": "^2.1.0"
   },
   "devDependencies": {
     "concat-stream": "^1.5.0",
