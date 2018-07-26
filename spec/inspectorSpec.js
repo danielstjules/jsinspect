@@ -1,47 +1,47 @@
-var expect = require('expect.js');
+var expect       = require('expect.js');
 var EventEmitter = require('events').EventEmitter;
-var Inspector = require('../lib/inspector');
-var fixtures = require('./fixtures');
+var Inspector    = require('../lib/inspector');
+var fixtures     = require('./fixtures');
 
-describe('Inspector', function () {
+describe('Inspector', function() {
   // Used to test emitted events
   var found;
-  var listener = function (match) {
+  var listener = function(match) {
     found.push(match);
   };
 
-  beforeEach(function () {
+  beforeEach(function() {
     found = [];
   });
 
-  describe('constructor', function () {
-    it('inherits from EventEmitter', function () {
+  describe('constructor', function() {
+    it('inherits from EventEmitter', function() {
       expect(new Inspector()).to.be.an(EventEmitter);
     });
 
-    it('accepts an array of file paths', function () {
+    it('accepts an array of file paths', function() {
       var filePaths = ['path1.js', 'path2.js'];
       var inspector = new Inspector(filePaths);
       expect(inspector._filePaths).to.be(filePaths);
     });
 
-    it('assigns a default threshold of 30', function () {
+    it('assigns a default threshold of 30', function() {
       var inspector = new Inspector([]);
       expect(inspector._threshold).to.be(30);
     });
 
-    it('accepts an options object', function () {
+    it('accepts an options object', function() {
       var opts = {threshold: 12};
       var inspector = new Inspector([], opts);
       expect(inspector._threshold).to.be(opts.threshold);
     });
   });
 
-  describe('run', function () {
-    it('emits a start event', function () {
+  describe('run', function() {
+    it('emits a start event', function() {
       var emitted;
       var inspector = new Inspector([fixtures.intersection]);
-      inspector.on('start', function () {
+      inspector.on('start', function() {
         emitted = true;
       });
 
@@ -49,10 +49,10 @@ describe('Inspector', function () {
       expect(emitted).to.be(true);
     });
 
-    it('emits an end event', function () {
+    it('emits an end event', function() {
       var emitted;
       var inspector = new Inspector([fixtures.intersection]);
-      inspector.on('end', function () {
+      inspector.on('end', function() {
         emitted = true;
       });
 
@@ -60,7 +60,7 @@ describe('Inspector', function () {
       expect(emitted).to.be(true);
     });
 
-    it('emits the "match" event when a match is found', function () {
+    it('emits the "match" event when a match is found', function() {
       var inspector = new Inspector([fixtures.intersection], {
         threshold: 10
       });
@@ -71,7 +71,7 @@ describe('Inspector', function () {
     });
   });
 
-  it('can find an exact match between instances', function () {
+  it('can find an exact match between instances', function() {
     var inspector = new Inspector([fixtures.intersection], {
       threshold: 15
     });
@@ -88,7 +88,7 @@ describe('Inspector', function () {
     expect(match.instances[1].end).to.eql({line: 11, column: 1});
   });
 
-  it('can find the largest match between two instances', function () {
+  it('can find the largest match between two instances', function() {
     var inspector = new Inspector([fixtures.redundantIntersection], {
       threshold: 11
     });
@@ -105,7 +105,7 @@ describe('Inspector', function () {
     expect(match.instances[1].end).to.eql({line: 19, column: 1});
   });
 
-  it('supports ES6', function () {
+  it('supports ES6', function() {
     var inspector = new Inspector([fixtures.es6ClassExport], {
       threshold: 20
     });
@@ -122,7 +122,7 @@ describe('Inspector', function () {
     expect(match.instances[1].end).to.eql({line: 12, column: 3});
   });
 
-  it('supports JSX', function () {
+  it('supports JSX', function() {
     var inspector = new Inspector([fixtures.jsxTodo], {
       threshold: 20
     });
@@ -139,7 +139,7 @@ describe('Inspector', function () {
     expect(match.instances[1].end).to.eql({line: 17, column: 1});
   });
 
-  it('supports Flow', function () {
+  it('supports Flow', function() {
     var inspector = new Inspector([fixtures.flowIntersection], {
       threshold: 20
     });
@@ -156,7 +156,7 @@ describe('Inspector', function () {
     expect(match.instances[1].end).to.eql({line: 11, column: 1});
   });
 
-  it('includes the lines with the match', function () {
+  it('includes the lines with the match', function() {
     var inspector = new Inspector([fixtures.intersection], {
       threshold: 11,
     });
@@ -183,7 +183,7 @@ describe('Inspector', function () {
     );
   });
 
-  it('ignores matches with less than the supplied minimum', function () {
+  it('ignores matches with less than the supplied minimum', function() {
     var inspector = new Inspector([fixtures.matches], {
       threshold: 2,
       minInstances: 3
@@ -195,7 +195,7 @@ describe('Inspector', function () {
     expect(found[0].instances).to.have.length(3);
   });
 
-  it('ignores CommonJS require statements', function () {
+  it('ignores CommonJS require statements', function() {
     var inspector = new Inspector([fixtures.commonjs], {
       threshold: 3
     });
@@ -205,7 +205,7 @@ describe('Inspector', function () {
     expect(found).to.have.length(0);
   });
 
-  it('ignores AMD define expressions', function () {
+  it('ignores AMD define expressions', function() {
     var inspector = new Inspector([fixtures.amd], {
       threshold: 5
     });
