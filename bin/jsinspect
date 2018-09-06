@@ -49,7 +49,7 @@ if (fs.existsSync(rcPath) && fs.lstatSync(rcPath).isFile()) {
   }
 
   ['threshold', 'identifiers', 'literals', 'ignore', 'minInstances',
-   'reporter', 'truncate'].forEach((option) => {
+   'reporter', 'truncate', 'lineNumber'].forEach((option) => {
     if (program[option] === undefined && (option in rc)) {
       program[option] = rc[option];
     }
@@ -99,7 +99,8 @@ var inspector = new Inspector(paths, {
 // Retrieve the requested reporter
 var reporterType = reporters[program.reporter] || reporters.default;
 new reporterType(inspector, {
-  truncate: program.truncate
+  truncate: program.truncate,
+  lineNumber: program.lineNumber
 });
 
 // Track the number of matches
