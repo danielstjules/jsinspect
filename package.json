@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "babylon": "6.16.1",
+    "vue-parser": "1.1.6",
     "chalk": "^2.1.0",
     "commander": "^2.11.0",
     "filepaths": "0.3.0",
