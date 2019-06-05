@@ -1,10 +1,10 @@
 {
-  "name": "jsinspect",
+  "name": "jsinspect-next",
   "version": "0.12.7",
   "description": "Detect structural similarities in your code",
   "keywords": [
     "inspect",
-    "detect",
+    "detect", 
     "code",
     "duplicate",
     "structure",
@@ -16,7 +16,7 @@
   "homepage": "https://github.com/danielstjules/jsinspect",
   "repository": {
     "type": "git",
-    "url": "https://github.com/danielstjules/jsinspect.git"
+    "url": "https://github.com/ustbhuangyi/jsinspect"
   },
   "dependencies": {
     "babylon": "6.16.1",
