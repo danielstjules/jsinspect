@@ -214,4 +214,23 @@ describe('Inspector', function() {
     inspector.run();
     expect(found).to.have.length(0);
   });
+
+  it('supports Vue', function () {
+    console.log(fixtures.vueFile)
+    var inspector = new Inspector([fixtures.vueFile], {
+      threshold: 10
+    });
+
+    inspector.on('match', listener);
+    inspector.run();
+
+    var match = found[0];
+    expect(found).to.have.length(1);
+    expect(match.instances).to.have.length(2);
+    expect(match.instances[0].start.line).to.eql(12);
+    expect(match.instances[0].end.line).to.eql(16);
+    expect(match.instances[1].start.line).to.eql(17);
+    expect(match.instances[1].end.line).to.eql(22);
+  })
 });
+

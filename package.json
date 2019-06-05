@@ -1,5 +1,5 @@
 {
-  "name": "jsinspect",
+  "name": "jsinspect-next",
   "version": "0.12.7",
   "description": "Detect structural similarities in your code",
   "keywords": [
@@ -16,7 +16,7 @@
   "homepage": "https://github.com/danielstjules/jsinspect",
   "repository": {
     "type": "git",
-    "url": "https://github.com/danielstjules/jsinspect.git"
+    "url": "https://github.com/ustbhuangyi/jsinspect"
   },
   "dependencies": {
     "babylon": "6.16.1",
@@ -25,7 +25,9 @@
     "filepaths": "0.3.0",
     "stable": "^0.1.6",
     "strip-indent": "^1.0.1",
-    "strip-json-comments": "1.0.2"
+    "strip-json-comments": "1.0.2",
+    "de-indent": "^1.0.2",
+    "parse5": "^2.1.0"
   },
   "devDependencies": {
     "concat-stream": "^1.5.0",

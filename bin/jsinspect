@@ -73,7 +73,7 @@ if (program.ignore) {
   ignorePatterns.push(program.ignore);
 }
 
-var extensions = ['.js', '.jsx'];
+var extensions = ['.js', '.jsx', '.vue'];
 try {
   paths = filepaths.getSync(suppliedPaths, {
     ext: extensions,
