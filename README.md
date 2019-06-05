@@ -48,7 +48,7 @@ ignored.
 It can be installed via `npm` using:
 
 ``` bash
-npm install -g jsinspect
+npm install -g jsinspect-next
 ```
 
 ## Usage
