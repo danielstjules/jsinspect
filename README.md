@@ -89,7 +89,7 @@ be used in place of the defaults listed above. For example:
   "minInstances":  2,
   "ignore":        "test|spec|mock",
   "reporter":      "json",
-  "truncate":      100,
+  "truncate":      100
 }
 ```
 
