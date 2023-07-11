@@ -22,6 +22,7 @@
     "babylon": "6.16.1",
     "chalk": "^2.1.0",
     "commander": "^2.11.0",
+    "ember-template-recast": "^6.1.4",
     "filepaths": "0.3.0",
     "stable": "^0.1.6",
     "strip-indent": "^1.0.1",
